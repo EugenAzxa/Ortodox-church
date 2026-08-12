@@ -37,8 +37,23 @@ voice with a transcript, the photograph count, a sealed time capsule where the f
 the blockchain anchor that makes the record unalterable. One-time purchase, no subscription — the
 Saylavy model, which is the whole reason it suits a memorial rather than a social feed.
 
+**The super menu.** The whole site on one screen, opened from *Explore*. It leads with a three-step
+path for a first visit — see who we remember, light a candle, see how a page works — then lays out
+every destination in three groups with an icon and a line of explanation, and closes with the live
+counts. It is the only menu control at any width; below 900px the inline nav links give way to it
+entirely. A visitor should be able to open this and understand the memorial before scrolling
+anywhere.
+
 **The candle stand.** Light a candle for a name; it flickers on the stand with the others. In this
 demo they persist in your browser only.
+
+**A candle with photographic proof.** The one that matters if you are not in Ontario. A candle on a
+screen is an intention; this orders a wax candle on the actual stand in Richmond Hill, lit by a
+parishioner at the next Liturgy, photographed where it stands, and the picture sent back to you —
+and onto the Memory Page of the person it was lit for, if they have one. Three options (a candle, a
+large candle, a vigil lamp kept burning through the forty days), and a four-step track showing what
+comes back. The Liturgy date is computed as the coming Sunday rather than written down. Nothing is
+charged and nothing is sent — see [Demonstration data](#demonstration-data).
 
 **Days of remembrance.** The four Serbian Zadušnice with their reckoning rules — they follow Pascha
 and the calendar, not a fixed date, so the page states the rule rather than inventing a date. Next
@@ -87,6 +102,11 @@ that entering the wall feels like stepping from the daylight into the narthex an
 Motifs come from the iconostasis in the parish photographs: the round arch as a portrait frame, the
 gold hairline, the beeswax flame, the ☦ between sections.
 
+Icons are one inline sprite of 24 stroked symbols, referenced as
+`<svg class="i"><use href="#i-candle"/></svg>`, so every icon inherits its colour and line weight
+from context. Sizing them in `em` off a small label lands them around 13px, which reads as clutter
+rather than an icon — the small-label cases carry an absolute size instead.
+
 A few deliberate choices worth naming:
 
 - **No stock faces.** Memory Pages for fictional people show a gold monogram in the arch and the
@@ -110,6 +130,10 @@ reference to, that reference is silently replaced and writes go to a detached el
 All six people on the memorial wall are **fictional**. Their names, dates, life stories, voice
 transcripts and time capsules were written for this demonstration to show how a Memory Page reads
 when it is full. No real parishioner is represented anywhere in this repository.
+
+The candle-with-proof flow **takes no payment and sends no email**. The prices are illustrative, the
+confirmation is written on the page and nowhere else, and the "example of what arrives" is one of the
+parish's own service photographs standing in for a photo that would be taken for you.
 
 Congregation photographs from the parish site were deliberately **not** used for memorial
 portraits — those show living, identifiable people, and placing them in a memorial would imply

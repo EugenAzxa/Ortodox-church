@@ -29,21 +29,43 @@
   addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  const burger = $('#burger');
-  const navLinks = $('#navLinks');
-  /* The open menu panel slides in behind the bar and covers its background,
-     so the bar has to switch to its light-on-dark colours while it is open. */
+  /* ------------------------------------------------------------ Super menu
+     The whole site on one screen, and the only menu control at any width. */
+  const sm       = $('#superMenu');
+  const smPanel  = $('#menuPanel');
+  const menuBtn  = $('#menuOpen');
+  let smLast = null;
+
   function setMenu(open) {
-    burger.setAttribute('aria-expanded', String(open));
-    navLinks.classList.toggle('is-open', open);
-    nav.classList.toggle('is-menu-open', open);
+    menuBtn.setAttribute('aria-expanded', String(open));
+    if (open) {
+      smLast = document.activeElement;
+      sm.hidden = false;
+      requestAnimationFrame(() => sm.classList.add('is-open'));
+      document.body.style.overflow = 'hidden';
+      $('#menuClose').focus();
+    } else {
+      sm.classList.remove('is-open');
+      document.body.style.overflow = '';
+      const done = () => { sm.hidden = true; };
+      reduced ? done() : setTimeout(done, 420);
+      smLast?.focus();
+    }
   }
 
-  burger.addEventListener('click', () => {
-    setMenu(burger.getAttribute('aria-expanded') !== 'true');
-  });
-  navLinks.addEventListener('click', e => {
-    if (e.target.closest('a')) setMenu(false);
+  menuBtn.addEventListener('click', () => setMenu(sm.hidden));
+  $('#menuClose').addEventListener('click', () => setMenu(false));
+  $('#menuScrim').addEventListener('click', () => setMenu(false));
+  // Any destination closes the menu behind you.
+  smPanel.addEventListener('click', e => { if (e.target.closest('a')) setMenu(false); });
+
+  sm.addEventListener('keydown', e => {
+    if (e.key !== 'Tab' || sm.hidden) return;
+    const f = $$('button, a[href]', smPanel).filter(el => el.offsetParent !== null);
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   });
 
   /* -------------------------------------------------------- Hero parallax */
@@ -94,6 +116,7 @@
     renderWall();
     renderCandles();
     renderQuestion(false);
+    renderProof();
     reckon();
     if (openId) openMemoryPage(openId, true);
   }
@@ -158,6 +181,11 @@
     countTo($('#statSouls'), souls);
     countTo($('#statCandles'), lit);
     countTo($('#statVoices'), voices);
+
+    // The same three figures appear in the super menu.
+    $('#smSouls').textContent   = souls.toLocaleString();
+    $('#smCandles').textContent = lit.toLocaleString();
+    $('#smVoices').textContent  = voices.toLocaleString();
   }
 
   function countTo(el, target) {
@@ -535,6 +563,84 @@
     parastosForm.reset();
   });
 
+  /* ------------------------------------------- A candle with photographic proof
+     Choose what gets lit, and the track shows what comes back. The Liturgy date
+     is the coming Sunday, computed rather than written down. */
+  const proofForm = $('#proofForm');
+  const cfTotal   = $('#cfTotal');
+
+  function nextSunday() {
+    const d = new Date();
+    d.setHours(0, 0, 0, 0);
+    // Sunday is 0; if today is Sunday the candle goes on next week's Liturgy.
+    d.setDate(d.getDate() + ((7 - d.getDay()) || 7));
+    return d;
+  }
+
+  function chosenCandle() {
+    return $('input[name="ctype"]:checked', proofForm);
+  }
+
+  function renderProof() {
+    const pick = chosenCandle();
+    const price = +pick.dataset.price;
+    const days = +pick.dataset.days;
+    cfTotal.textContent = '$' + price;
+
+    const sunday = nextSunday();
+    $('#trackWhen').textContent = days > 1
+      ? t(`From ${longDate(sunday)}, for forty days`,
+          `Од ${longDate(sunday)}, четрдесет дана`)
+      : longDate(sunday);
+  }
+
+  $$('input[name="ctype"]', proofForm).forEach(r => r.addEventListener('change', renderProof));
+
+  proofForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const forWhom = $('#cfFor').value.trim();
+    const email   = $('#cfEmail').value.trim();
+    const status  = $('#proofStatus');
+
+    if (!forWhom) {
+      status.textContent = t('Please add a name for the candle.', 'Молимо унесите име за свећу.');
+      $('#cfFor').focus();
+      return;
+    }
+    // Good enough for a demo, and it catches the mistakes people actually make.
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+      status.textContent = t('Please add an address the photograph can go to.',
+                             'Молимо унесите адресу на коју да пошаљемо фотографију.');
+      $('#cfEmail').focus();
+      return;
+    }
+
+    // Walk the track forward so the flow is legible.
+    const steps = $$('.track__i', $('#proofTrack'));
+    steps.forEach((li, i) => {
+      li.classList.toggle('is-done', i === 0);
+      li.classList.toggle('is-now', i === 1);
+    });
+
+    const intent = $('#cfIntent').value === 'health'
+      ? t('for the health of', 'за здравље')
+      : t('for the repose of', 'за упокојење');
+
+    status.textContent = t(
+      `Thank you. A candle ${intent} ${forWhom} would be lit at the Liturgy on ` +
+      `${longDate(nextSunday())}, photographed on the stand, and the picture sent to ${email}.`,
+      `Хвала вам. Свећа ${intent} ${forWhom} била би упаљена на Литургији ` +
+      `${longDate(nextSunday())}, фотографисана на свећњаку, а слика послата на ${email}.`
+    );
+
+    // Light one on the on-screen stand too, so the two halves agree.
+    addCandle(forWhom, '');
+    proofForm.reset();
+    renderProof();
+  });
+
+  renderProof();
+
   /* --------------------------------------------- The Little Chronicler deck
      Twelve oral-history prompts a child takes to an older parishioner. Which
      ones have been asked is kept in the browser so a child can come back to
@@ -706,7 +812,7 @@
     if (e.key === 'Escape') {
       if (!lightbox.hidden) closeLightbox();
       else if (!mp.hidden) closeMemoryPage();
-      else if (navLinks.classList.contains('is-open')) setMenu(false);
+      else if (!sm.hidden) setMenu(false);
     }
     // "/" jumps to the memorial search, as long as you are not already typing.
     if (e.key === '/' && !/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName)) {

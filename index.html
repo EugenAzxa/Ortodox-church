@@ -21,6 +21,38 @@
 
 <a class="skip" href="#wall">Skip to the memorial wall</a>
 
+<!-- ====================== ICONS ======================
+     One sprite, referenced everywhere with <svg class="i"><use href="#i-…">.
+     All 24×24, stroked, so they inherit colour and line weight from context. -->
+<svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <g id="i-arch"><path d="M5 21V10.5a7 7 0 0 1 14 0V21M3 21h18M9.5 21v-6a2.5 2.5 0 0 1 5 0v6"/></g>
+    <g id="i-candle"><path d="M12 2.5c1.6 1.9 2.3 2.9 2.3 4a2.3 2.3 0 0 1-4.6 0c0-1.1.7-2.1 2.3-4zM12 8.8v1.7M9 10.5h6V21H9zM7 21h10"/></g>
+    <g id="i-flame"><path d="M12 2s5.5 4.8 5.5 9.5a5.5 5.5 0 0 1-11 0C6.5 6.8 12 2 12 2z"/><path d="M12 18a2.4 2.4 0 0 0 2.4-2.4c0-2-2.4-3.9-2.4-3.9s-2.4 1.9-2.4 3.9A2.4 2.4 0 0 0 12 18z"/></g>
+    <g id="i-calendar"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M8 14h3M8 17.5h6"/></g>
+    <g id="i-clock"><circle cx="12" cy="12" r="9"/><path d="M12 6.5V12l4 2.4"/></g>
+    <g id="i-book"><path d="M5 4a2 2 0 0 1 2-2h12v20H7a2 2 0 0 1-2-2z"/><path d="M5 18h14M12 5.5v6M9.5 8h5"/></g>
+    <g id="i-pencil"><path d="M4 20h4L20.5 7.5a2.1 2.1 0 0 0-3-3L5 17v3zM14.5 6l3.5 3.5"/></g>
+    <g id="i-children"><circle cx="8" cy="6.5" r="2.5"/><circle cx="16.5" cy="9" r="2"/><path d="M3.5 21v-4a4.5 4.5 0 0 1 9 0v4M14 21v-3a3.5 3.5 0 0 1 6.5-1.8"/></g>
+    <g id="i-camera"><path d="M3 8.5A2 2 0 0 1 5 6.5h2.2l1.3-2h7l1.3 2H19a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><circle cx="12" cy="13" r="3.4"/></g>
+    <g id="i-photos"><rect x="7" y="3" width="14" height="14" rx="2"/><path d="M17 17v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7h2M10 9.5a1.4 1.4 0 1 0 0-2.8 1.4 1.4 0 0 0 0 2.8zM21 13l-4-4-6 6"/></g>
+    <g id="i-mic"><rect x="9" y="2.5" width="6" height="10.5" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3.5M8.5 21.5h7"/></g>
+    <g id="i-wheat"><path d="M12 21V9M12 9c0-2 1.4-3.5 3.5-3.5C15.5 7.5 14 9 12 9zM12 9C12 7 10.6 5.5 8.5 5.5 8.5 7.5 10 9 12 9zM12 14c0-2 1.4-3.5 3.5-3.5C15.5 12.5 14 14 12 14zM12 14c0-2-1.4-3.5-3.5-3.5C8.5 12.5 10 14 12 14zM12 5.5V3"/></g>
+    <g id="i-pin"><path d="M12 21.5s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11z"/><circle cx="12" cy="10.5" r="2.6"/></g>
+    <g id="i-church"><path d="M12 2.5v4M10 4.5h4M4 21V11l8-4.5 8 4.5v10M4 21h16M10 21v-5h4v5"/></g>
+    <g id="i-page"><path d="M5 3h9l5 5v13H5z"/><path d="M14 3v5h5M8.5 13h7M8.5 16.5h4.5"/></g>
+    <g id="i-shield"><path d="M12 2.5l8 3.2v6c0 4.7-3.4 8.4-8 9.8-4.6-1.4-8-5.1-8-9.8v-6z"/><path d="m8.7 12 2.3 2.3 4.3-4.3"/></g>
+    <g id="i-capsule"><rect x="3" y="8.5" width="18" height="12.5" rx="2"/><path d="M8 8.5V6a4 4 0 0 1 8 0v2.5M12 13.5v3"/></g>
+    <!-- A kandilo: hung from a chain, not standing on a foot. -->
+    <g id="i-lamp"><path d="M12 2v2.6M6.8 4.6h10.4M7.6 4.6l1.5 6.5A3.9 3.9 0 0 0 12 13.5a3.9 3.9 0 0 0 2.9-2.4l1.5-6.5"/><path d="M12 7.4c.9 1 1.3 1.7 1.3 2.3a1.3 1.3 0 0 1-2.6 0c0-.6.4-1.3 1.3-2.3z"/></g>
+    <g id="i-mail"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></g>
+    <g id="i-map"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"/></g>
+    <g id="i-close"><path d="M18.5 5.5l-13 13M5.5 5.5l13 13"/></g>
+    <g id="i-arrow"><path d="M4 12h15M13 6l6 6-6 6"/></g>
+    <g id="i-check"><path d="m4.5 12.5 5 5 10-11"/></g>
+  </defs>
+</svg>
+
 <!-- ====================== NAV ====================== -->
 <nav class="nav" id="nav">
   <a class="brand" href="#top">
@@ -42,15 +74,150 @@
   </div>
 
   <div class="nav__actions">
+    <button class="nav__explore" id="menuOpen" aria-expanded="false" aria-controls="superMenu">
+      <svg class="i" aria-hidden="true"><use href="#i-map"/></svg>
+      <span data-sr="Разгледајте">Explore</span>
+    </button>
+
     <div class="lang" role="group" aria-label="Language">
       <button type="button" data-lang="en" aria-pressed="true">EN</button>
       <button type="button" data-lang="sr" aria-pressed="false">СРП</button>
     </div>
-    <button class="nav__burger" id="burger" aria-expanded="false" aria-controls="navLinks" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
   </div>
 </nav>
+
+<!-- ====================== SUPER MENU ======================
+     The whole site on one screen. A first-time visitor should be able to open
+     this and understand what the memorial is before scrolling anywhere. -->
+<div class="sm" id="superMenu" hidden role="dialog" aria-modal="true" aria-label="Explore the memorial">
+  <button class="sm__scrim" id="menuScrim" tabindex="-1" aria-label="Close"></button>
+
+  <div class="sm__panel" id="menuPanel">
+    <div class="wrap">
+      <div class="sm__bar">
+        <p class="eyebrow" style="margin:0" data-sr="Где сте">Where you are</p>
+        <button class="sm__close" id="menuClose">
+          <span data-sr="Затвори">Close</span>
+          <svg class="i" aria-hidden="true"><use href="#i-close"/></svg>
+        </button>
+      </div>
+
+      <!-- Guided path for a first visit -->
+      <div class="sm__start">
+        <h2 data-sr="Први пут овде? Три корака.">First time here? Three steps.</h2>
+        <div class="sm__steps">
+          <a class="sm__step" href="#wall">
+            <span class="sm__num">01</span>
+            <svg class="i i--lg" aria-hidden="true"><use href="#i-arch"/></svg>
+            <span class="sm__t" data-sr="Видите кога помињемо">See who we remember</span>
+            <span class="sm__d" data-sr="Шест спомен-страница, свака у својој арки">Six Memory Pages, each in its own arch</span>
+          </a>
+          <a class="sm__step" href="#stand">
+            <span class="sm__num">02</span>
+            <svg class="i i--lg" aria-hidden="true"><use href="#i-candle"/></svg>
+            <span class="sm__t" data-sr="Упалите им свећу">Light a candle for them</span>
+            <span class="sm__d" data-sr="Одавде, или праву свећу у цркви са фотографијом">From here, or a real one in the church with a photograph</span>
+          </a>
+          <a class="sm__step" href="#saylavy">
+            <span class="sm__num">03</span>
+            <svg class="i i--lg" aria-hidden="true"><use href="#i-page"/></svg>
+            <span class="sm__t" data-sr="Видите како страница ради">See how a page works</span>
+            <span class="sm__d" data-sr="Шта Saylavy чува и зашто се не може изменити">What Saylavy keeps, and why it cannot be altered</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- The full map -->
+      <div class="sm__map">
+        <div class="sm__group">
+          <h3 data-sr="Спомен">The Memorial</h3>
+          <a class="sm__item" href="#wall">
+            <svg class="i" aria-hidden="true"><use href="#i-arch"/></svg>
+            <span><span class="sm__t" data-sr="Спомен-зид">Memorial wall</span>
+              <span class="sm__d" data-sr="Претражив по имену и години">Searchable by name and year</span></span>
+          </a>
+          <a class="sm__item" href="#stand">
+            <svg class="i" aria-hidden="true"><use href="#i-candle"/></svg>
+            <span><span class="sm__t" data-sr="Свећњак">Candle stand</span>
+              <span class="sm__d" data-sr="Упалите одавде, где год да сте">Light one from wherever you are</span></span>
+          </a>
+          <a class="sm__item" href="#proof">
+            <svg class="i" aria-hidden="true"><use href="#i-camera"/></svg>
+            <span><span class="sm__t" data-sr="Свећа са фотографијом">A candle, with a photograph</span>
+              <span class="sm__d" data-sr="Ми је упалимо и пошаљемо вам слику">We light it and send you the picture</span></span>
+          </a>
+          <a class="sm__item" href="#wall">
+            <svg class="i" aria-hidden="true"><use href="#i-mic"/></svg>
+            <span><span class="sm__t" data-sr="Гласови">The voices</span>
+              <span class="sm__d" data-sr="Снимци сачувани на страницама">Recordings kept on the pages</span></span>
+          </a>
+        </div>
+
+        <div class="sm__group">
+          <h3 data-sr="Помен">Remembrance</h3>
+          <a class="sm__item" href="#remembrance">
+            <svg class="i" aria-hidden="true"><use href="#i-calendar"/></svg>
+            <span><span class="sm__t" data-sr="Задушнице">Zadušnice</span>
+              <span class="sm__d" data-sr="Четири задушне суботе и њихово правило">The four memorial Saturdays and their rule</span></span>
+          </a>
+          <a class="sm__item" href="#remembrance">
+            <svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>
+            <span><span class="sm__t" data-sr="Рачунање дана">Reckon the days</span>
+              <span class="sm__d" data-sr="Трећи, девети, четрдесети дан">Third day, ninth, fortieth</span></span>
+          </a>
+          <a class="sm__item" href="#parastos">
+            <svg class="i" aria-hidden="true"><use href="#i-book"/></svg>
+            <span><span class="sm__t" data-sr="Парастос">Arrange a Parastos</span>
+              <span class="sm__d" data-sr="Молба стиже у канцеларију">The request reaches the office</span></span>
+          </a>
+          <a class="sm__item" href="#parastos">
+            <svg class="i" aria-hidden="true"><use href="#i-wheat"/></svg>
+            <span><span class="sm__t" data-sr="Кољиво">Koljivo</span>
+              <span class="sm__d" data-sr="Шта је и зашто се доноси">What it is and why it is brought</span></span>
+          </a>
+        </div>
+
+        <div class="sm__group">
+          <h3 data-sr="Парохија">The Parish</h3>
+          <a class="sm__item" href="#children">
+            <svg class="i" aria-hidden="true"><use href="#i-children"/></svg>
+            <span><span class="sm__t" data-sr="Деца и памћење">Children &amp; remembrance</span>
+              <span class="sm__d" data-sr="Недељна школа и Мали летописац">Sunday school and the Little Chronicler</span></span>
+          </a>
+          <a class="sm__item" href="#children">
+            <svg class="i" aria-hidden="true"><use href="#i-pencil"/></svg>
+            <span><span class="sm__t" data-sr="Азбука">The Azbuka</span>
+              <span class="sm__d" data-sr="Тридесет слова, једна реч за свако">Thirty letters, one word each</span></span>
+          </a>
+          <a class="sm__item" href="#gallery">
+            <svg class="i" aria-hidden="true"><use href="#i-photos"/></svg>
+            <span><span class="sm__t" data-sr="Наша црква">Our church</span>
+              <span class="sm__d" data-sr="Иконостас, свеће, здање">The iconostasis, the candles, the building</span></span>
+          </a>
+          <a class="sm__item" href="#visit">
+            <svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>
+            <span><span class="sm__t" data-sr="Посетите нас">Visit us</span>
+              <span class="sm__d">49 N Lake Rd, Richmond Hill</span></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Live counters, so the menu shows the memorial is in use -->
+      <div class="sm__live">
+        <div><svg class="i" aria-hidden="true"><use href="#i-arch"/></svg>
+          <b id="smSouls">—</b><span data-sr="спомен-страница">Memory Pages</span></div>
+        <div><svg class="i" aria-hidden="true"><use href="#i-flame"/></svg>
+          <b id="smCandles">—</b><span data-sr="упаљених свећа">candles lit</span></div>
+        <div><svg class="i" aria-hidden="true"><use href="#i-mic"/></svg>
+          <b id="smVoices">—</b><span data-sr="сачуваних гласова">voices preserved</span></div>
+        <a class="btn btn--gold btn--sm" href="https://arhangelgavrilotoronto.com/" target="_blank" rel="noopener">
+          <svg class="i" aria-hidden="true"><use href="#i-church"/></svg>
+          <span data-sr="Сајт парохије">Parish website</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- ====================== HERO ====================== -->
 <header class="hero" id="top">
@@ -198,6 +365,155 @@
   </div>
 </section>
 
+<!-- ====================== CANDLE WITH PHOTO PROOF ====================== -->
+<section class="section proof" id="proof">
+  <div class="wrap">
+    <div class="proof__head reveal">
+      <p class="eyebrow eyebrow--center" data-sr="Из даљине">From far away</p>
+      <h2 data-sr="Права свећа, и фотографија да је горела">A real candle, and a photograph that it burned</h2>
+      <p class="lede" data-sr="Свећа на екрану је намера. Ово је свећа од воска, на свећњаку, у Ричмонд Хилу — коју упали парохијанин на првој Литургији, фотографише на свећњаку, и пошаље вам слику. Ако сте у Београду, Ванкуверу или Мелбурну, то је најближе што можете доћи.">
+        A candle on a screen is an intention. This is a wax candle, on the stand, in Richmond Hill —
+        lit by a parishioner at the next Liturgy, photographed where it stands, and the picture sent
+        to you. If you are in Belgrade, Vancouver or Melbourne, this is the closest you can come.
+      </p>
+    </div>
+
+    <div class="proof__grid">
+      <!-- The order form -->
+      <form class="proof__form reveal" id="proofForm" novalidate>
+        <fieldset class="opts">
+          <legend data-sr="Шта да упалимо">What we light</legend>
+
+          <label class="opt">
+            <input type="radio" name="ctype" value="small" data-price="5" data-days="1" checked>
+            <span class="opt__body">
+              <svg class="i i--lg" aria-hidden="true"><use href="#i-candle"/></svg>
+              <span class="opt__txt">
+                <b data-sr="Свећа">A candle</b>
+                <small data-sr="Стандардна воштаница на свећњаку за упокојене">A standard beeswax candle on the stand for the departed</small>
+              </span>
+              <span class="opt__price">$5</span>
+            </span>
+          </label>
+
+          <label class="opt">
+            <input type="radio" name="ctype" value="large" data-price="15" data-days="1">
+            <span class="opt__body">
+              <svg class="i i--lg" aria-hidden="true"><use href="#i-flame"/></svg>
+              <span class="opt__txt">
+                <b data-sr="Велика свећа">A large candle</b>
+                <small data-sr="Гори кроз целу службу, испред иконе арханђела">Burns through the whole service, before the Archangel's icon</small>
+              </span>
+              <span class="opt__price">$15</span>
+            </span>
+          </label>
+
+          <label class="opt">
+            <input type="radio" name="ctype" value="lamp" data-price="40" data-days="40">
+            <span class="opt__body">
+              <svg class="i i--lg" aria-hidden="true"><use href="#i-lamp"/></svg>
+              <span class="opt__txt">
+                <b data-sr="Кандило, четрдесет дана">A vigil lamp, forty days</b>
+                <small data-sr="Држи се упаљено кроз четрдесетницу, са фотографијом сваке недеље">Kept burning through the forty days, photographed every week</small>
+              </span>
+              <span class="opt__price">$40</span>
+            </span>
+          </label>
+        </fieldset>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="cfFor" data-sr="За кога">For whom</label>
+            <input type="text" id="cfFor" required autocomplete="off" placeholder="A name" data-sr-ph="Име">
+          </div>
+          <div class="field">
+            <label for="cfIntent" data-sr="Намера">Intention</label>
+            <select id="cfIntent">
+              <option value="repose" data-sr="За упокојење">For the repose of</option>
+              <option value="health" data-sr="За здравље">For the health of</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="cfEmail" data-sr="Где да пошаљемо фотографију">Where to send the photograph</label>
+          <input type="email" id="cfEmail" required autocomplete="email" placeholder="you@example.com">
+        </div>
+
+        <div class="field">
+          <label for="cfNote" data-sr="Порука свештенику, ако желите">A note to the priest, if you wish</label>
+          <textarea id="cfNote" rows="2" placeholder="Optional" data-sr-ph="Није обавезно"></textarea>
+        </div>
+
+        <div class="proof__total">
+          <span data-sr="Укупно">Total</span>
+          <b id="cfTotal">$5</b>
+        </div>
+
+        <button class="btn btn--gold btn--block" type="submit">
+          <svg class="i" aria-hidden="true"><use href="#i-flame"/></svg>
+          <span data-sr="Упалите ову свећу">Light this candle</span>
+        </button>
+
+        <p class="proof__demo" data-sr="Приказ дизајна — ништа се не наплаћује и ништа се не шаље. У правој постави ово би било плаћање и налог у канцеларији парохије.">
+          Design demonstration — nothing is charged and nothing is sent. In a live installation this
+          would be a payment and a job in the parish office.
+        </p>
+        <p class="form-status" id="proofStatus" role="status"></p>
+      </form>
+
+      <!-- What you get back -->
+      <div class="proof__side reveal">
+        <h3 data-sr="Шта добијате">What comes back</h3>
+
+        <ol class="track" id="proofTrack">
+          <li class="track__i is-done">
+            <span class="track__dot"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span>
+            <span class="track__b">
+              <b data-sr="Молба примљена">Request received</b>
+              <small data-sr="Одмах, са потврдом на е-пошту">Immediately, with an email confirmation</small>
+            </span>
+          </li>
+          <li class="track__i">
+            <span class="track__dot"><svg class="i" aria-hidden="true"><use href="#i-candle"/></svg></span>
+            <span class="track__b">
+              <b data-sr="Упаљена на Литургији">Lit at the Divine Liturgy</b>
+              <small id="trackWhen" data-sr="Прве недеље">The coming Sunday</small>
+            </span>
+          </li>
+          <li class="track__i">
+            <span class="track__dot"><svg class="i" aria-hidden="true"><use href="#i-camera"/></svg></span>
+            <span class="track__b">
+              <b data-sr="Фотографисана на свећњаку">Photographed on the stand</b>
+              <small data-sr="Иста свећа, са вашим именом на списку помена">The same candle, with your name on the commemoration list</small>
+            </span>
+          </li>
+          <li class="track__i">
+            <span class="track__dot"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg></span>
+            <span class="track__b">
+              <b data-sr="Фотографија вама, и на спомен-страницу">The photograph to you, and to the Memory Page</b>
+              <small data-sr="Ако та особа има страницу, слика се додаје у њену архиву">If that person has a page, the picture joins their archive</small>
+            </span>
+          </li>
+        </ol>
+
+        <figure class="polaroid">
+          <img src="assets/church-3.webp" alt="Beeswax candles burning during a service at the parish" loading="lazy" decoding="async">
+          <figcaption>
+            <span class="polaroid__hand" data-sr="Свећа за Милицу Петровић — 8. новембра, после Литургије">A candle for Milica Petrović — 8 November, after the Liturgy</span>
+            <span class="polaroid__meta" data-sr="Пример онога што стиже на е-пошту">An example of what arrives in the email</span>
+          </figcaption>
+        </figure>
+
+        <p class="proof__note" data-sr="Свећа се увек упали, чак и ако е-пошта не стигне. Фотографија је потврда, а не услуга.">
+          The candle is always lit, even if the email fails. The photograph is the proof, not the
+          service.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ====================== REMEMBRANCE ====================== -->
 <section class="section remem" id="remembrance">
   <div class="wrap">
@@ -212,21 +528,25 @@
 
         <div class="zadusnice">
           <div class="zad">
+            <svg class="i zad__i" aria-hidden="true"><use href="#i-calendar"/></svg>
             <span class="zad__name">Месопусне задушнице
               <small data-sr="Mesopusne zadušnice">Meatfare Zadušnice</small></span>
             <span class="zad__date" data-sr="Субота пред Месопусну недељу">Saturday before Meatfare Sunday</span>
           </div>
           <div class="zad">
+            <svg class="i zad__i" aria-hidden="true"><use href="#i-calendar"/></svg>
             <span class="zad__name">Духовске задушнице
               <small data-sr="Duhovske zadušnice">Pentecost Zadušnice</small></span>
             <span class="zad__date" data-sr="Субота пред Духове">Saturday before Pentecost</span>
           </div>
           <div class="zad">
+            <svg class="i zad__i" aria-hidden="true"><use href="#i-calendar"/></svg>
             <span class="zad__name">Михољске задушнице
               <small data-sr="Miholjske zadušnice">Michaelmas Zadušnice</small></span>
             <span class="zad__date" data-sr="Субота у јесен, око Св. арханђела Михаила">Autumn, near St. Michael</span>
           </div>
           <div class="zad">
+            <svg class="i zad__i" aria-hidden="true"><use href="#i-calendar"/></svg>
             <span class="zad__name">Ђурђевске задушнице
               <small data-sr="Đurđevske zadušnice">St. George Zadušnice</small></span>
             <span class="zad__date" data-sr="Субота пред Ђурђевдан">Saturday before St. George's Day</span>
@@ -424,7 +744,7 @@
       </div>
       <div class="step">
         <h3 data-sr="Прикупља се живот">A life is gathered</h3>
-        <p data-sr="Фотографије, писма, снимци, оно чега се људи сећају. Парохија помаже старијим породицама да сакупе и снимe.">
+        <p data-sr="Фотографије, писма, снимци, оно чега се људи сећају. Парохија помаже старијим породицама да сакупе и сниме.">
           Photographs, letters, recordings, what people remember. The parish helps older families
           gather and record.
         </p>
@@ -463,7 +783,10 @@
     <!-- The three Sunday school groups -->
     <div class="classes reveal">
       <article class="klass">
-        <span class="klass__age">4 – 7</span>
+        <span class="klass__top">
+          <span class="klass__age">4 – 7</span>
+          <svg class="i i--lg klass__i" aria-hidden="true"><use href="#i-flame"/></svg>
+        </span>
         <h3 data-sr="Најмлађи">The youngest</h3>
         <p data-sr="Приче о светима, восак и филц, певање напамет. У овом узрасту се не објашњава — показује се и понавља, док не постане своје.">
           Stories of the saints, beeswax and felt, singing by heart. At this age nothing is
@@ -472,7 +795,10 @@
       </article>
 
       <article class="klass">
-        <span class="klass__age">8 – 11</span>
+        <span class="klass__top">
+          <span class="klass__age">8 – 11</span>
+          <svg class="i i--lg klass__i" aria-hidden="true"><use href="#i-pencil"/></svg>
+        </span>
         <h3 data-sr="Азбука и појање">Azbuka and chant</h3>
         <p data-sr="Ћирилица, српски као језик а не као успомена, и прво читање на служби. Ово је узраст у ком почиње Мали летописац.">
           Cyrillic, Serbian as a language rather than a memory, and a first reading at a service.
@@ -481,7 +807,10 @@
       </article>
 
       <article class="klass">
-        <span class="klass__age">12 – 15</span>
+        <span class="klass__top">
+          <span class="klass__age">12 – 15</span>
+          <svg class="i i--lg klass__i" aria-hidden="true"><use href="#i-mic"/></svg>
+        </span>
         <h3 data-sr="Чувари архиве">Keepers of the archive</h3>
         <p data-sr="Снимање, преписивање и уређивање. Старија деца воде интервјуе са најстаријим парохијанима и припремају материјал за спомен-странице.">
           Recording, transcribing and editing. The older children conduct the interviews with the
@@ -682,6 +1011,7 @@
         <ul>
           <li><a href="#wall" data-sr="Спомен-зид">Memorial wall</a></li>
           <li><a href="#stand" data-sr="Упали свећу">Light a candle</a></li>
+          <li><a href="#proof" data-sr="Свећа са фотографијом">A candle with a photograph</a></li>
           <li><a href="#remembrance" data-sr="Задушнице">Zadušnice</a></li>
           <li><a href="#parastos" data-sr="Закажи парастос">Arrange a Parastos</a></li>
           <li><a href="#children" data-sr="Мали летописац">The Little Chronicler</a></li>

@@ -136,6 +136,29 @@ p:last-child { margin-bottom: 0; }
 }
 .skip:focus { transform: translateY(0); }
 
+/* --------------------------------------------------------------------------
+   Icons
+   One sprite in the markup, referenced with <svg class="i"><use href="#i-…">.
+   Stroked rather than filled so every icon inherits colour and weight.
+   -------------------------------------------------------------------------- */
+
+.sprite { display: none; }
+
+.i {
+  width: 1.05em;
+  height: 1.05em;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vertical-align: -0.16em;
+  overflow: visible;
+}
+.i--lg { width: 1.6em; height: 1.6em; stroke-width: 1.5; }
+.i--xl { width: 2.2em; height: 2.2em; stroke-width: 1.3; }
+
 /* For labels that must exist for a screen reader but not be seen. */
 .sr-only {
   position: absolute;
@@ -317,30 +340,222 @@ p:last-child { margin-bottom: 0; }
 .nav.is-stuck .lang button { color: var(--ink-faint); }
 .lang button[aria-pressed="true"] { background: var(--gold); color: var(--ink); }
 
-.nav__burger {
-  display: none;
-  width: 42px; height: 42px;
+/* Opens the super menu. This is the only menu control at any width. */
+.nav__explore {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.46rem 1.05rem;
+  border: 1px solid var(--hair-gold-lit);
+  border-radius: 999px;
+  background: rgba(231, 175, 35, 0.08);
+  color: var(--bone);
+  font-size: 0.79rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s var(--ease);
+}
+/* em-sized off a 0.79rem label the icon lands at 13px, which reads as clutter
+   rather than an icon. */
+.nav__explore .i { width: 1.05rem; height: 1.05rem; }
+.nav__explore:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--ink);
+  box-shadow: var(--glow);
+}
+.nav.is-stuck .nav__explore {
+  border-color: var(--burgundy);
+  background: var(--burgundy);
+  color: #fff;
+}
+.nav.is-stuck .nav__explore:hover { background: var(--burgundy-lit); border-color: var(--burgundy-lit); }
+
+/* --------------------------------------------------------------------------
+   Super menu — the whole site on one screen
+   -------------------------------------------------------------------------- */
+
+.sm { position: fixed; inset: 0; z-index: 140; }
+.sm[hidden] { display: none; }
+
+.sm__scrim {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  padding: 0;
+  background: rgba(10, 3, 5, 0.6);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease);
+  cursor: zoom-out;
+}
+.sm.is-open .sm__scrim { opacity: 1; }
+
+.sm__panel {
+  position: relative;
+  max-height: 100vh;
+  max-height: 100svh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background:
+    radial-gradient(90% 70% at 20% 0%, rgba(114, 29, 46, 0.42), transparent 62%),
+    var(--night-2);
+  color: var(--bone);
+  border-bottom: 1px solid var(--hair-gold-lit);
+  box-shadow: var(--sh-lg);
+  padding-block: 1rem 2.4rem;
+  transform: translateY(-14px);
+  opacity: 0;
+  transition: transform 0.45s var(--ease), opacity 0.35s var(--ease);
+}
+.sm.is-open .sm__panel { transform: none; opacity: 1; }
+
+.sm__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1.1rem;
+  border-bottom: 1px solid var(--hair-gold);
+}
+.sm__bar .eyebrow { color: var(--gold); }
+.sm__close {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.45rem 1.25rem;
   border: 1px solid var(--hair-gold-lit);
   border-radius: 999px;
   background: none;
+  color: var(--bone-soft);
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   cursor: pointer;
+  transition: all 0.22s var(--ease);
+}
+.sm__close:hover { border-color: var(--gold); color: var(--gold); }
+
+/* The three-step first-visit path */
+.sm__start { padding-block: 1.8rem 0; }
+.sm__start h2 {
+  font-size: clamp(1.4rem, 3.2vw, 2rem);
+  color: #fff;
+  margin-bottom: 1.2rem;
+}
+.sm__steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 0.8rem;
+}
+.sm__step {
   position: relative;
+  display: grid;
+  gap: 0.3rem;
+  padding: 1.2rem 1.2rem 1.15rem;
+  border: 1px solid var(--hair-gold);
+  border-radius: var(--r-lg);
+  background: linear-gradient(150deg, rgba(231, 175, 35, 0.09), rgba(20, 6, 9, 0.35));
+  transition: all 0.3s var(--ease);
 }
-.nav.is-stuck .nav__burger { border-color: var(--line); }
-.nav__burger span {
+.sm__step:hover {
+  border-color: var(--gold);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(255, 184, 97, 0.14);
+}
+.sm__step .i { width: 1.95rem; height: 1.95rem; color: var(--gold); margin-bottom: 0.55rem; }
+.sm__num {
   position: absolute;
-  left: 50%; top: 50%;
-  width: 16px; height: 1.5px;
-  background: var(--bone);
-  transform: translate(-50%, -50%);
-  transition: transform 0.3s var(--ease), opacity 0.2s var(--ease);
+  top: 0.9rem; right: 1.1rem;
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  color: var(--gold-leaf);
+  opacity: 0.6;
+  font-variant-numeric: lining-nums;
 }
-.nav.is-stuck .nav__burger span { background: var(--ink); }
-.nav__burger span:nth-child(1) { transform: translate(-50%, calc(-50% - 4px)); }
-.nav__burger span:nth-child(3) { transform: translate(-50%, calc(-50% + 4px)); }
-.nav__burger[aria-expanded="true"] span:nth-child(1) { transform: translate(-50%, -50%) rotate(45deg); }
-.nav__burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
-.nav__burger[aria-expanded="true"] span:nth-child(3) { transform: translate(-50%, -50%) rotate(-45deg); }
+
+.sm__t {
+  display: block;
+  font-family: var(--serif);
+  font-size: 1.06rem;
+  color: #fff;
+  line-height: 1.3;
+}
+.sm__d {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--bone-faint);
+  line-height: 1.5;
+  margin-top: 0.15rem;
+}
+
+/* The map itself */
+.sm__map {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+  gap: 1.4rem 2.2rem;
+  padding-block: 2rem 0;
+  margin-top: 2rem;
+  border-top: 1px solid var(--hair-gold);
+}
+.sm__group h3 {
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.6rem;
+}
+.sm__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.6rem 0.7rem;
+  border-radius: var(--r);
+  border: 1px solid transparent;
+  transition: all 0.22s var(--ease);
+}
+.sm__item .i {
+  width: 1.32rem; height: 1.32rem;
+  color: var(--gold-leaf);
+  margin-top: 0.2rem;
+  transition: color 0.22s var(--ease);
+}
+.sm__item:hover {
+  background: rgba(231, 175, 35, 0.08);
+  border-color: var(--hair-gold);
+}
+.sm__item:hover .i { color: var(--gold); }
+.sm__item:hover .sm__t { color: var(--gold-pale); }
+.sm__item .sm__t { font-size: 0.98rem; }
+
+/* Live counters */
+.sm__live {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.9rem 2rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--hair-gold);
+}
+.sm__live > div {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.78rem;
+  color: var(--bone-faint);
+}
+.sm__live .i { width: 1.2rem; height: 1.2rem; color: var(--gold-leaf); }
+.sm__live b {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--gold);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.sm__live .btn { margin-left: auto; }
 
 /* --------------------------------------------------------------------------
    Hero
@@ -1095,6 +1310,216 @@ p:last-child { margin-bottom: 0; }
 .stand__note { font-size: 0.74rem; color: var(--bone-faint); margin-top: 1.1rem; }
 
 /* --------------------------------------------------------------------------
+   A candle with photographic proof
+   -------------------------------------------------------------------------- */
+
+.proof { background: var(--night-2); color: var(--bone); }
+.proof__head { text-align: center; max-width: 48rem; margin: 0 auto 3rem; }
+.proof__head h2 { font-size: clamp(1.9rem, 4.6vw, 2.9rem); color: #fff; }
+.proof__head .lede { margin: 1.2rem auto 0; }
+.proof h3 {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.1rem;
+}
+
+.proof__grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: clamp(1.6rem, 4vw, 3.2rem);
+  align-items: start;
+}
+
+.proof__form {
+  background: rgba(250, 247, 242, 0.05);
+  border: 1px solid var(--hair-gold);
+  border-radius: var(--r-lg);
+  padding: clamp(1.3rem, 3vw, 2rem);
+  backdrop-filter: blur(6px);
+}
+.proof__form .field label { color: rgba(240, 223, 168, 0.8); }
+.proof__form .field input,
+.proof__form .field select,
+.proof__form .field textarea {
+  background: rgba(20, 6, 9, 0.4);
+  border-color: var(--hair-gold);
+  color: var(--bone);
+}
+.proof__form .field input::placeholder,
+.proof__form .field textarea::placeholder { color: var(--bone-faint); }
+.proof__form .field input:focus,
+.proof__form .field select:focus,
+.proof__form .field textarea:focus { border-color: var(--gold); background: rgba(20, 6, 9, 0.62); }
+.proof__form .field select option { background: var(--night-2); color: var(--bone); }
+
+/* Candle options */
+.opts { border: 0; margin: 0 0 1.4rem; padding: 0; display: grid; gap: 0.55rem; }
+.opts legend {
+  padding: 0;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(240, 223, 168, 0.8);
+  margin-bottom: 0.7rem;
+}
+.opt { display: block; cursor: pointer; }
+.opt input { position: absolute; opacity: 0; width: 0; height: 0; }
+.opt__body {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--hair-gold);
+  border-radius: var(--r);
+  background: rgba(20, 6, 9, 0.32);
+  transition: all 0.25s var(--ease);
+}
+.opt:hover .opt__body { border-color: var(--hair-gold-lit); background: rgba(20, 6, 9, 0.5); }
+.opt input:checked + .opt__body {
+  border-color: var(--gold);
+  background: linear-gradient(120deg, rgba(231, 175, 35, 0.16), rgba(20, 6, 9, 0.4));
+  box-shadow: inset 0 0 0 1px rgba(231, 175, 35, 0.3);
+}
+.opt input:focus-visible + .opt__body { outline: 2px solid var(--gold); outline-offset: 2px; }
+.opt__body > .i { color: var(--gold-leaf); transition: color 0.25s var(--ease); }
+.opt input:checked + .opt__body > .i { color: var(--gold); filter: drop-shadow(0 0 10px rgba(255,184,97,0.5)); }
+.opt__txt { flex: 1; min-width: 0; }
+.opt__txt b { display: block; font-family: var(--serif); font-size: 1.04rem; font-weight: 500; color: var(--bone); }
+.opt__txt small { display: block; font-size: 0.76rem; color: var(--bone-faint); line-height: 1.5; margin-top: 0.1rem; }
+.opt__price {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  color: var(--gold);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.proof__total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.9rem 0;
+  margin: 0.4rem 0 1.2rem;
+  border-top: 1px solid var(--hair-gold);
+  border-bottom: 1px solid var(--hair-gold);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--bone-faint);
+}
+.proof__total b {
+  font-family: var(--serif);
+  font-size: 1.75rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--gold);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.proof__demo, .proof__note {
+  font-size: 0.76rem;
+  color: var(--bone-faint);
+  line-height: 1.6;
+  margin-top: 1rem;
+}
+.proof__note {
+  margin-top: 1.4rem;
+  padding-left: 0.9rem;
+  border-left: 2px solid var(--gold-leaf);
+}
+
+/* The four-step track */
+.track { list-style: none; margin: 0 0 2rem; padding: 0; display: grid; gap: 0; }
+.track__i {
+  display: flex;
+  gap: 0.95rem;
+  padding-bottom: 1.15rem;
+  position: relative;
+}
+.track__i:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  left: 15px; top: 32px; bottom: 2px;
+  width: 1px;
+  background: var(--hair-gold);
+}
+.track__dot {
+  flex: none;
+  width: 31px; height: 31px;
+  border-radius: 50%;
+  border: 1px solid var(--hair-gold);
+  background: var(--night-2);
+  display: grid;
+  place-items: center;
+  color: var(--bone-faint);
+  position: relative;
+  z-index: 1;
+  transition: all 0.35s var(--ease);
+}
+.track__i.is-done .track__dot {
+  border-color: var(--gold);
+  background: var(--gold);
+  color: var(--ink);
+}
+.track__i.is-now .track__dot {
+  border-color: var(--gold);
+  color: var(--gold);
+  box-shadow: 0 0 0 4px rgba(231, 175, 35, 0.14);
+}
+.track__b b {
+  display: block;
+  font-family: var(--serif);
+  font-size: 1.02rem;
+  font-weight: 500;
+  color: var(--bone);
+  line-height: 1.35;
+}
+.track__b small { display: block; font-size: 0.78rem; color: var(--bone-faint); margin-top: 0.15rem; line-height: 1.5; }
+.track__i.is-done .track__b b, .track__i.is-now .track__b b { color: #fff; }
+
+/* The example photograph, as it would arrive */
+.polaroid {
+  margin: 0;
+  background: #FBF7EE;
+  padding: 0.7rem 0.7rem 0.2rem;
+  border-radius: 4px;
+  box-shadow: var(--sh-lg);
+  transform: rotate(-1.4deg);
+  transition: transform 0.4s var(--ease);
+  max-width: 23rem;
+}
+.polaroid:hover { transform: rotate(0deg) scale(1.015); }
+.polaroid img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 2px;
+}
+.polaroid figcaption { padding: 0.7rem 0.35rem 0.8rem; }
+.polaroid__hand {
+  display: block;
+  font-family: var(--serif);
+  font-size: 0.94rem;
+  font-style: italic;
+  color: #3B2A18;
+  line-height: 1.4;
+}
+.polaroid__meta {
+  display: block;
+  font-size: 0.64rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #9A8A72;
+  margin-top: 0.6rem;
+}
+
+/* --------------------------------------------------------------------------
    Remembrance days — the reckoner
    -------------------------------------------------------------------------- */
 
@@ -1118,6 +1543,7 @@ p:last-child { margin-bottom: 0; }
   transition: border-color 0.25s var(--ease), transform 0.25s var(--ease);
 }
 .zad:hover { border-color: var(--gold-leaf); transform: translateX(3px); }
+.zad__i { color: var(--gold-dark); align-self: center; }
 .zad__name { font-family: var(--serif); font-size: 1.04rem; flex: 1; }
 .zad__name small {
   display: block;
@@ -1352,6 +1778,14 @@ p:last-child { margin-bottom: 0; }
   transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
 }
 .klass:hover { transform: translateY(-4px); box-shadow: var(--sh); border-color: var(--gold-leaf); }
+.klass__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  margin-bottom: 0.9rem;
+}
+.klass__i { color: var(--gold-leaf); }
 .klass__age {
   display: inline-block;
   font-family: var(--serif);
@@ -1361,7 +1795,6 @@ p:last-child { margin-bottom: 0; }
   background: var(--burgundy);
   padding: 0.2rem 0.75rem;
   border-radius: 999px;
-  margin-bottom: 0.9rem;
   /* Playfair defaults to oldstyle figures, which set the digits at odd heights. */
   font-variant-numeric: lining-nums tabular-nums;
 }
@@ -1734,54 +2167,17 @@ p:last-child { margin-bottom: 0; }
    -------------------------------------------------------------------------- */
 
 @media (max-width: 940px) {
-  .remem__grid, .parastos__grid, .visit__grid, .chron { grid-template-columns: 1fr; }
+  .remem__grid, .parastos__grid, .visit__grid, .chron, .proof__grid { grid-template-columns: 1fr; }
+  .polaroid { max-width: 100%; }
   .reckon { position: static; }
   .footer__grid { grid-template-columns: 1fr 1fr; }
   .footer__brand { grid-column: 1 / -1; }
 }
 
-@media (max-width: 780px) {
-  .nav__links {
-    position: fixed;
-    inset: 0 0 auto;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
-    padding: 5rem 1.2rem 1.6rem;
-    background: var(--night-2);
-    border-bottom: 1px solid var(--hair-gold);
-    box-shadow: var(--sh-lg);
-    transform: translateY(-102%);
-    transition: transform 0.45s var(--ease);
-    z-index: -1;
-  }
-  .nav__links.is-open { transform: none; }
-  .nav__links a {
-    padding: 0.9rem 0.4rem;
-    font-size: 1rem;
-    border-radius: 0;
-    border-bottom: 1px solid rgba(231, 175, 35, 0.14);
-    color: var(--bone-soft);
-  }
-  .nav.is-stuck .nav__links a { color: var(--bone-soft); }
-  .nav__burger { display: block; }
-
-  /* While the panel is open it hides the bar's own background, so the bar
-     goes back to reading against the dark. */
-  .nav.is-menu-open .brand__name,
-  .nav.is-stuck.is-menu-open .brand__name { color: var(--bone); }
-  .nav.is-menu-open .brand__eyebrow,
-  .nav.is-stuck.is-menu-open .brand__eyebrow { color: var(--gold); }
-  .nav.is-menu-open .nav__burger,
-  .nav.is-stuck.is-menu-open .nav__burger { border-color: var(--hair-gold-lit); }
-  .nav.is-menu-open .nav__burger span,
-  .nav.is-stuck.is-menu-open .nav__burger span { background: var(--bone); }
-  .nav.is-menu-open .lang,
-  .nav.is-stuck.is-menu-open .lang { border-color: var(--hair-gold-lit); }
-  .nav.is-menu-open .lang button,
-  .nav.is-stuck.is-menu-open .lang button { color: var(--bone-faint); }
-  .nav.is-menu-open .lang button[aria-pressed="true"],
-  .nav.is-stuck.is-menu-open .lang button[aria-pressed="true"] { color: var(--ink); }
+@media (max-width: 900px) {
+  /* Below this the inline links crowd the bar, and the super menu covers the
+     same ground better. */
+  .nav__links { display: none; }
   .mp { grid-template-columns: 0 1fr; }
   .mp__panel { border-left: 0; }
 }
@@ -1792,6 +2188,18 @@ p:last-child { margin-bottom: 0; }
   .nav .brand__eyebrow { display: none; }
   .nav .brand__name { font-size: 0.88rem; }
   .nav .brand img { width: 34px; height: 34px; }
+
+  /* Collapse Explore to its icon so the parish name still fits on one or two
+     lines. The label stays in the accessibility tree, and stays translated. */
+  .nav__explore { padding: 0.5rem; }
+  .nav__explore span {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
   .wall__grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem; }
   .card__monogram { font-size: 2rem; }
   .card__name { font-size: 1rem; }
