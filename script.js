@@ -93,6 +93,8 @@
     store.set('lang', next);
     renderWall();
     renderCandles();
+    renderQuestion(false);
+    reckon();
     if (openId) openMemoryPage(openId, true);
   }
 
@@ -532,6 +534,137 @@
     );
     parastosForm.reset();
   });
+
+  /* --------------------------------------------- The Little Chronicler deck
+     Twelve oral-history prompts a child takes to an older parishioner. Which
+     ones have been asked is kept in the browser so a child can come back to
+     the list over several weeks. */
+  const QUESTIONS = [
+    { en: 'Where were you born, and what was the house like?',
+      sr: 'Где си рођен, и каква је била кућа?' },
+    { en: 'What did your mother cook that nobody makes anymore?',
+      sr: 'Шта је твоја мајка кувала што више нико не прави?' },
+    { en: 'What did you bring with you when you came here?',
+      sr: 'Шта си донео са собом када си дошао овде?' },
+    { en: 'What is the first thing you remember about church?',
+      sr: 'Чега се прво сећаш из цркве?' },
+    { en: 'Who taught you to pray?',
+      sr: 'Ко те је научио да се молиш?' },
+    { en: 'What was your family’s Slava, and who used to come?',
+      sr: 'Која је Слава твоје породице, и ко је долазио?' },
+    { en: 'What song did your father sing?',
+      sr: 'Коју је песму твој отац певао?' },
+    { en: 'What was the hardest winter you remember?',
+      sr: 'Које је најтеже зиме било, како се сећаш?' },
+    { en: 'What did you miss most in your first year here?',
+      sr: 'Шта ти је највише недостајало прве године овде?' },
+    { en: 'Is there a Serbian word you never found in English?',
+      sr: 'Има ли српска реч коју никада ниси нашао на енглеском?' },
+    { en: 'What are you proud of that you never say out loud?',
+      sr: 'На шта си поносан, а никада то не кажеш наглас?' },
+    { en: 'What do you want me to tell my children about you?',
+      sr: 'Шта желиш да испричам својој деци о теби?' }
+  ];
+
+  const qCard  = $('#qCard');
+  const qText  = $('#qText');
+  const qBar   = $('#qBar');
+  const qMark  = $('#qMark');
+  const qBadge = $('#qBadge');
+  let qIndex = 0;
+
+  const askedSet = () => new Set(store.get('asked', []));
+
+  function renderQuestion(turning) {
+    const asked = askedSet();
+    qText.textContent = t(QUESTIONS[qIndex].en, QUESTIONS[qIndex].sr);
+    $('#qNow').textContent = qIndex + 1;
+    $('#qTotal').textContent = QUESTIONS.length;
+    $('#qAsked').textContent = asked.size;
+    qBar.style.width = (asked.size / QUESTIONS.length * 100) + '%';
+
+    const isAsked = asked.has(qIndex);
+    qMark.setAttribute('aria-pressed', String(isAsked));
+    qMark.textContent = isAsked ? t('Asked', 'Постављено') : t('I asked this', 'Питао сам ово');
+
+    $('#qPrev').disabled = qIndex === 0;
+    $('#qNext').disabled = qIndex === QUESTIONS.length - 1;
+    qBadge.hidden = asked.size < QUESTIONS.length;
+
+    if (turning && !reduced) {
+      qCard.classList.remove('is-turning');
+      void qCard.offsetWidth;              // restart the animation
+      qCard.classList.add('is-turning');
+    }
+  }
+
+  /* Marking a question advances the deck on a short delay, so a tap on Next
+     inside that window must not push the index past the end. Everything goes
+     through goTo, which clamps, and manual navigation cancels the pending
+     auto-advance. */
+  let advanceTimer;
+
+  function goTo(i) {
+    const next = Math.max(0, Math.min(i, QUESTIONS.length - 1));
+    if (next === qIndex) return;
+    qIndex = next;
+    renderQuestion(true);
+  }
+
+  $('#qPrev').addEventListener('click', () => { clearTimeout(advanceTimer); goTo(qIndex - 1); });
+  $('#qNext').addEventListener('click', () => { clearTimeout(advanceTimer); goTo(qIndex + 1); });
+
+  qMark.addEventListener('click', () => {
+    const asked = askedSet();
+    asked.has(qIndex) ? asked.delete(qIndex) : asked.add(qIndex);
+    store.set('asked', [...asked]);
+    renderQuestion(false);
+    clearTimeout(advanceTimer);
+    // Move along to the next question, the way a child working down a list would.
+    if (asked.has(qIndex)) {
+      const from = qIndex;
+      advanceTimer = setTimeout(() => goTo(from + 1), 260);
+    }
+  });
+
+  /* ----------------------------------------------------------- The azbuka
+     Thirty letters of Serbian Cyrillic. The words lean on the vocabulary a
+     child actually meets in this church. */
+  const AZBUKA = [
+    ['А', 'Анђео', 'angel'],          ['Б', 'Бака', 'grandmother'],
+    ['В', 'Восак', 'beeswax'],        ['Г', 'Гаврило', 'Gabriel'],
+    ['Д', 'Деда', 'grandfather'],     ['Ђ', 'Ђурђевдан', 'St. George’s Day'],
+    ['Е', 'Еванђеље', 'the Gospel'],  ['Ж', 'Жито', 'wheat, for koljivo'],
+    ['З', 'Звоно', 'bell'],           ['И', 'Икона', 'icon'],
+    ['Ј', 'Јагње', 'lamb'],           ['К', 'Кољиво', 'koljivo'],
+    ['Л', 'Лампада', 'vigil lamp'],   ['Љ', 'Љубав', 'love'],
+    ['М', 'Мајка', 'mother'],         ['Н', 'Небо', 'heaven, sky'],
+    ['Њ', 'Њива', 'field'],           ['О', 'Отац', 'father'],
+    ['П', 'Причест', 'communion'],    ['Р', 'Радост', 'joy'],
+    ['С', 'Свећа', 'candle'],         ['Т', 'Тамјан', 'incense'],
+    ['Ћ', 'Ћирилица', 'Cyrillic'],    ['У', 'Ускрс', 'Pascha'],
+    ['Ф', 'Фреска', 'fresco'],        ['Х', 'Храм', 'temple, church'],
+    ['Ц', 'Црква', 'church'],         ['Ч', 'Чтец', 'reader'],
+    ['Џ', 'Џем', 'jam'],              ['Ш', 'Шума', 'forest']
+  ];
+
+  const azGrid = $('#azGrid');
+  azGrid.innerHTML = AZBUKA.map(([letter], i) =>
+    `<button class="az" type="button" data-i="${i}" aria-pressed="${i === 0}"
+             aria-label="${letter} — ${AZBUKA[i][1]}">${letter}</button>`).join('');
+
+  azGrid.addEventListener('click', e => {
+    const btn = e.target.closest('.az');
+    if (!btn) return;
+    const [letter, word, gloss] = AZBUKA[+btn.dataset.i];
+    $('#azLetter').textContent = letter;
+    $('#azWord').textContent = word;
+    $('#azGloss').textContent = gloss;
+    $$('.az', azGrid).forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+  });
+
+  // Paint the deck now, so it works even if the memorial data never loads.
+  renderQuestion(false);
 
   /* -------------------------------------------------------------- Lightbox */
   const lightbox = $('#lightbox');

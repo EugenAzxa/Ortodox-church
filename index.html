@@ -36,6 +36,7 @@
     <a href="#stand" data-sr="Свећњак">Candles</a>
     <a href="#remembrance" data-sr="Задушнице">Remembrance</a>
     <a href="#parastos" data-sr="Парастос">Parastos</a>
+    <a href="#children" data-sr="Деца">Children</a>
     <a href="#saylavy" data-sr="Како ради">How it works</a>
     <a href="#visit" data-sr="Посетите нас">Visit</a>
   </div>
@@ -446,6 +447,129 @@
   </div>
 </section>
 
+<!-- ====================== CHILDREN ====================== -->
+<section class="section kids" id="children">
+  <div class="wrap">
+    <div class="kids__head reveal">
+      <p class="eyebrow eyebrow--center" data-sr="Деца и памћење">Children &amp; Remembrance</p>
+      <h2 data-sr="Архива је и учионица">The archive is also a classroom</h2>
+      <p class="lede" data-sr="Дете које са осам година сними бакину причу неће морати да је се сећа — имаће је. Ту се спомен-зид и веронаука сусрећу: оно што деца прикупе постаје архива парохије, а оно што је у архиви постаје оно што деца уче.">
+        A child who records their grandmother's story at eight will not have to remember it — they
+        will have it. This is where the memorial wall and the Sunday school meet: what the children
+        gather becomes the parish archive, and what is in the archive becomes what the children learn.
+      </p>
+    </div>
+
+    <!-- The three Sunday school groups -->
+    <div class="classes reveal">
+      <article class="klass">
+        <span class="klass__age">4 – 7</span>
+        <h3 data-sr="Најмлађи">The youngest</h3>
+        <p data-sr="Приче о светима, восак и филц, певање напамет. У овом узрасту се не објашњава — показује се и понавља, док не постане своје.">
+          Stories of the saints, beeswax and felt, singing by heart. At this age nothing is
+          explained — it is shown and repeated until it becomes theirs.
+        </p>
+      </article>
+
+      <article class="klass">
+        <span class="klass__age">8 – 11</span>
+        <h3 data-sr="Азбука и појање">Azbuka and chant</h3>
+        <p data-sr="Ћирилица, српски као језик а не као успомена, и прво читање на служби. Ово је узраст у ком почиње Мали летописац.">
+          Cyrillic, Serbian as a language rather than a memory, and a first reading at a service.
+          This is the age at which the Little Chronicler begins.
+        </p>
+      </article>
+
+      <article class="klass">
+        <span class="klass__age">12 – 15</span>
+        <h3 data-sr="Чувари архиве">Keepers of the archive</h3>
+        <p data-sr="Снимање, преписивање и уређивање. Старија деца воде интервјуе са најстаријим парохијанима и припремају материјал за спомен-странице.">
+          Recording, transcribing and editing. The older children conduct the interviews with the
+          oldest parishioners and prepare the material for the Memory Pages.
+        </p>
+      </article>
+    </div>
+
+    <div class="cross-rule" aria-hidden="true">☦</div>
+
+    <!-- The Little Chronicler -->
+    <div class="chron reveal">
+      <div class="chron__intro">
+        <p class="eyebrow" data-sr="Пројекат">The project</p>
+        <h3 data-sr="Мали летописац">The Little Chronicler</h3>
+        <p data-sr="Дете добије списак питања и једног старијег парохијанина. Пита, снима, и донесе назад. Одговори — са дозволом породице — улазе у спомен-страницу те особе, а дете се потписује као летописац.">
+          A child is given a list of questions and one older parishioner. They ask, they record, and
+          they bring it back. The answers — with the family's permission — go into that person's
+          Memory Page, and the child is credited as its chronicler.
+        </p>
+        <p data-sr="Војислав Костић је ово радио сам, педесет година пре него што је постојала реч за то. Његова архива од тридесет једног снимка је разлог што и данас знамо како је звучао торонтски српски његовог оца.">
+          Vojislav Kostić did this on his own, fifty years before there was a word for it. His
+          archive of thirty-one recordings is the reason we still know what his father's Toronto
+          Serbian sounded like.
+        </p>
+
+        <p class="chron__consent" data-sr="Снимци остају власништво породице која их је дала. Парохија их чува само уз дозволу, а дете и родитељ увек одлучују шта се објављује.">
+          Recordings remain the property of the family who gave them. The parish holds them only by
+          permission, and the child and their parent always decide what is published.
+        </p>
+      </div>
+
+      <!-- The question deck -->
+      <div class="deck">
+        <div class="deck__top">
+          <!-- data-sr must sit on a text-only element: the language pass rewrites
+               innerHTML, which would replace the counter nodes below. -->
+          <span class="deck__count"><span data-sr="Питање">Question</span>
+            <b><span id="qNow">1</span> / <span id="qTotal">12</span></b></span>
+          <span class="deck__asked"><b id="qAsked">0</b>
+            <span data-sr="постављено">asked</span></span>
+        </div>
+
+        <div class="deck__bar" aria-hidden="true"><i id="qBar" style="width:0%"></i></div>
+
+        <div class="deck__card" id="qCard">
+          <span class="deck__label" data-sr="Питај">Ask</span>
+          <p class="deck__q" id="qText" aria-live="polite">—</p>
+        </div>
+
+        <div class="deck__nav">
+          <button class="btn btn--outline btn--sm" type="button" id="qPrev" data-sr="Претходно">Previous</button>
+          <!-- label is managed by script.js, so no data-sr here -->
+          <button class="btn btn--gold btn--sm" type="button" id="qMark">I asked this</button>
+          <button class="btn btn--outline btn--sm" type="button" id="qNext" data-sr="Следеће">Next</button>
+        </div>
+
+        <p class="deck__badge" id="qBadge" hidden data-sr="Све дванаест питања су постављена. Ти си летописац.">
+          All twelve questions asked. You are a chronicler.
+        </p>
+      </div>
+    </div>
+
+    <div class="cross-rule" aria-hidden="true">☦</div>
+
+    <!-- Azbuka -->
+    <div class="azbuka reveal">
+      <div class="azbuka__head">
+        <p class="eyebrow" data-sr="Учионица">Classroom</p>
+        <h3 data-sr="Азбука">The Azbuka</h3>
+        <p data-sr="Тридесет слова српске ћирилице — једно слово, једно слово. Додирните било које.">
+          Thirty letters of Serbian Cyrillic, and one word for each. Tap any of them.
+        </p>
+      </div>
+
+      <div class="azbuka__show" id="azShow" aria-live="polite">
+        <span class="azbuka__letter" id="azLetter">А</span>
+        <div>
+          <div class="azbuka__word" id="azWord">Анђео</div>
+          <div class="azbuka__gloss" id="azGloss">angel</div>
+        </div>
+      </div>
+
+      <div class="azbuka__grid" id="azGrid" role="group" aria-label="Serbian Cyrillic alphabet"></div>
+    </div>
+  </div>
+</section>
+
 <!-- ====================== GALLERY ====================== -->
 <section class="section gallery" id="gallery">
   <div class="wrap">
@@ -560,6 +684,7 @@
           <li><a href="#stand" data-sr="Упали свећу">Light a candle</a></li>
           <li><a href="#remembrance" data-sr="Задушнице">Zadušnice</a></li>
           <li><a href="#parastos" data-sr="Закажи парастос">Arrange a Parastos</a></li>
+          <li><a href="#children" data-sr="Мали летописац">The Little Chronicler</a></li>
         </ul>
       </div>
 

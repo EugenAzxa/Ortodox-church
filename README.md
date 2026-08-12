@@ -50,8 +50,23 @@ next upcoming memorial is marked.
 kitchen should prepare the koljivo, and whether the family wants a Memory Page opened. Opening a
 Memory Page and clicking *Request a Parastos* carries the name and date into the form.
 
+**Children and remembrance.** The part of the memorial that faces forward. Three Sunday school
+groups by age, and then the two things a diaspora parish actually has to teach:
+
+- **The Little Chronicler** — a child is given twelve oral-history questions and one older
+  parishioner. They ask, they record, they bring it back, and the answers go into that person's
+  Memory Page with the child credited as its chronicler. The deck tracks which questions have been
+  asked, in the browser, so a child can work down the list over several weeks. Vojislav Kostić on
+  the memorial wall did exactly this on his own, which is where the idea comes from.
+- **The Azbuka** — all thirty letters of Serbian Cyrillic, one word each, drawn from the vocabulary
+  a child actually meets in this church: Икона, Кољиво, Тамјан, Свећа, Бака.
+
+Recordings stay the property of the family who gave them, and the page says so where a parent
+would look for it.
+
 **Bilingual.** A working EN / СРП toggle across the whole page, including the memorial entries,
-the reckoner output and the date formatting. The choice is remembered.
+the Little Chronicler questions, the reckoner output and the date formatting. The choice is
+remembered.
 
 ## Structure
 
@@ -83,6 +98,12 @@ A few deliberate choices worth naming:
   around 17px, and the priest's name has two of them.
 - Keyboard accessible throughout, focus is trapped in the open Memory Page, `Escape` closes
   whatever is open, and `prefers-reduced-motion` is respected.
+- Playfair's default **oldstyle figures** set digits at uneven heights, which looks like a bug in
+  age ranges and counters, so those carry `lining-nums`.
+
+One trap worth knowing if you extend this: the language pass rewrites `innerHTML` on every element
+carrying `data-sr`. Put `data-sr` on **text-only** elements. If it wraps a node the script holds a
+reference to, that reference is silently replaced and writes go to a detached element.
 
 ## Demonstration data
 
