@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Вечан спомен · Eternal Memory | St. Archangel Gabriel Serbian Orthodox Parish</title>
+<meta name="description" content="A digital memorial for the departed of St. Archangel Gabriel Serbian Orthodox Parish, Richmond Hill — Memory Pages, voices and time capsules preserved with Saylavy. Design demonstration.">
+<meta name="robots" content="noindex, nofollow">
+
+<meta property="og:title" content="Вечан спомен · Eternal Memory">
+<meta property="og:description" content="A parish memorial where every departed soul has a Memory Page — story, voice, photographs, and a candle that anyone may light.">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="assets/angel.webp" type="image/webp">
+</head>
+<body>
+
+<a class="skip" href="#wall">Skip to the memorial wall</a>
+
+<!-- ====================== NAV ====================== -->
+<nav class="nav" id="nav">
+  <a class="brand" href="#top">
+    <img src="assets/angel.webp" alt="" width="40" height="40">
+    <span class="brand__txt">
+      <span class="brand__eyebrow">Serbian Orthodox Parish</span>
+      <span class="brand__name">of St. Archangel Gabriel</span>
+    </span>
+  </a>
+
+  <div class="nav__links" id="navLinks">
+    <a href="#wall" data-sr="Спомен">Memorial</a>
+    <a href="#stand" data-sr="Свећњак">Candles</a>
+    <a href="#remembrance" data-sr="Задушнице">Remembrance</a>
+    <a href="#parastos" data-sr="Парастос">Parastos</a>
+    <a href="#saylavy" data-sr="Како ради">How it works</a>
+    <a href="#visit" data-sr="Посетите нас">Visit</a>
+  </div>
+
+  <div class="nav__actions">
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" data-lang="en" aria-pressed="true">EN</button>
+      <button type="button" data-lang="sr" aria-pressed="false">СРП</button>
+    </div>
+    <button class="nav__burger" id="burger" aria-expanded="false" aria-controls="navLinks" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ====================== HERO ====================== -->
+<header class="hero" id="top">
+  <div class="hero__bg" id="heroBg" aria-hidden="true"></div>
+  <div class="hero__veil" aria-hidden="true"></div>
+
+  <div class="hero__inner">
+    <img class="hero__angel" src="assets/angel.webp" alt="The parish emblem of St. Archangel Gabriel" width="116" height="116">
+
+    <p class="hero__kicker" data-sr="Спомен парохије">The Parish Memorial</p>
+
+    <h1>
+      Вечан спомен
+      <span class="in-latin" data-sr="Vječan spomen">Eternal Memory</span>
+    </h1>
+
+    <p class="hero__lede" data-sr="Место где парохија чува своје упокојене — њихове приче, њихове гласове, њихове фотографије и свећу коју свако може да упали, са било ког места на свету.">
+      A place where the parish keeps its departed — their stories, their voices, their
+      photographs, and a candle anyone may light from anywhere in the world.
+    </p>
+
+    <div class="hero__cta">
+      <a class="btn btn--gold" href="#wall" data-sr="Уђите у спомен">Enter the memorial</a>
+      <a class="btn btn--ghost" href="#stand" data-sr="Упалите свећу">Light a candle</a>
+    </div>
+
+    <div class="hero__meta">
+      <div><b id="statSouls">—</b><span data-sr="Спомен-страница">Memory Pages</span></div>
+      <div><b id="statCandles">—</b><span data-sr="Упаљених свећа">Candles lit</span></div>
+      <div><b id="statVoices">—</b><span data-sr="Сачуваних гласова">Voices preserved</span></div>
+    </div>
+  </div>
+
+  <span class="hero__scroll" aria-hidden="true" data-sr="Клизни">Scroll</span>
+</header>
+
+<!-- ====================== KONTAKION ====================== -->
+<section class="section kontakion">
+  <div class="wrap wrap--narrow">
+    <blockquote data-sr="Са светима покој, Христе, душама слуга Твојих, где нема болести, ни туге, ни уздисања, него живот бесконачни.">
+      With the saints give rest, O Christ, to the souls of Thy servants, where there is
+      neither sickness, nor sorrow, nor sighing, but life everlasting.
+    </blockquote>
+    <cite data-sr="Кондак заупокојене службе">Kontakion of the memorial service</cite>
+  </div>
+</section>
+
+<!-- ====================== MEMORIAL WALL ====================== -->
+<section class="section wall" id="wall">
+  <div class="wrap">
+    <div class="wall__head reveal">
+      <div>
+        <p class="eyebrow" data-sr="Спомен-зид">The Memorial Wall</p>
+        <h2 data-sr="Оне које носимо на светој Литургији">Those we carry to the Holy Liturgy</h2>
+      </div>
+      <p class="lede" data-sr="Свака арка испод отвара спомен-страницу Saylavy — животопис, снимљен глас, фотографије и, где је породица тако одредила, временска капсула која се отвара на одређени дан. Стално, непроменљиво, и никада наплаћивано по месецу.">
+        Each arch below opens a Saylavy Memory Page — a life written down, a recorded voice,
+        photographs, and where a family has chosen it, a time capsule that opens on a set day.
+        Permanent, unalterable, and never charged by the month.
+      </p>
+
+      <div class="notice">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/>
+        </svg>
+        <p data-sr="<strong>Ово је приказ дизајна.</strong> Свих шест људи испод су измишљени — имена, датуми и животописи су написани само зато да покажу како спомен-страница изгледа. Ниједан стварни парохијанин овде није представљен.">
+          <strong>This is a design demonstration.</strong> All six people below are fictional —
+          the names, dates and life stories were written only to show how a Memory Page looks.
+          No real parishioner is represented here.
+        </p>
+      </div>
+    </div>
+
+    <div class="wall__tools reveal">
+      <div class="filters" role="group" aria-label="Filter the memorial wall">
+        <button type="button" data-filter="all" aria-pressed="true" data-sr="Сви">All</button>
+        <button type="button" data-filter="zadusnice" aria-pressed="false" data-sr="Ове задушнице">This Zadušnice</button>
+        <button type="button" data-filter="founders" aria-pressed="false" data-sr="Оснивачи">Founders</button>
+        <button type="button" data-filter="recent" aria-pressed="false" data-sr="Недавно додати">Recently added</button>
+      </div>
+
+      <div class="search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"/><path d="m20 20-4.3-4.3"/>
+        </svg>
+        <label class="sr-only" for="wallSearch">Search the memorial</label>
+        <input type="search" id="wallSearch" placeholder="Search by name or year…" data-sr-ph="Тражи по имену или години…">
+      </div>
+    </div>
+
+    <div class="wall__grid" id="wallGrid"></div>
+    <p class="wall__empty" id="wallEmpty" data-sr="Нема резултата за ту претрагу.">No one matches that search.</p>
+
+    <div class="wall__foot reveal">
+      <p data-sr="Породице парохије могу да поднесу спомен-страницу у канцеларији или преко Saylavy. Парохија чува архиву; породица чува власништво.">
+        Parish families may submit a Memory Page through the church office or directly with
+        Saylavy. The parish keeps the archive; the family keeps ownership.
+      </p>
+      <a class="btn btn--gold" href="#saylavy" data-sr="Како се додаје страница">How a page is added</a>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== MEMORY PAGE PANEL ====================== -->
+<div class="mp" id="mp" hidden role="dialog" aria-modal="true" aria-labelledby="mpName">
+  <button class="mp__scrim" id="mpScrim" tabindex="-1" aria-label="Close"></button>
+  <div class="mp__panel" id="mpPanel">
+    <button class="mp__close" id="mpClose">
+      <span data-sr="Затвори">Close</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M18 6 6 18M6 6l12 12"/>
+      </svg>
+    </button>
+    <div id="mpContent"></div>
+  </div>
+</div>
+
+<!-- ====================== CANDLE STAND ====================== -->
+<section class="section stand" id="stand">
+  <div class="wrap">
+    <p class="eyebrow eyebrow--center" data-sr="Свећњак">The Candle Stand</p>
+    <h2 data-sr="Упалите свећу за упокојене">Light a candle for the departed</h2>
+    <p class="lede" style="margin:1.2rem auto 0;text-align:center" data-sr="Свећа стоји овде на четрдесет дана. Ако сте далеко од Ричмонд Хила — а многи јесу — ово је исти чин, забележен и изнесен на Литургију.">
+      A candle stands here for forty days. If you are far from Richmond Hill — and many are —
+      this is the same act, recorded and carried to the Liturgy.
+    </p>
+
+    <div class="stand__box reveal">
+      <div class="candles" id="candleRow">
+        <p class="candles__empty" data-sr="Још нема упаљених свећа. Нека ваша буде прва.">No candles are lit yet. Let yours be the first.</p>
+      </div>
+
+      <form class="stand__form" id="candleForm">
+        <label class="sr-only" for="candleFor">Name of the departed</label>
+        <input type="text" id="candleFor" placeholder="For whom? (a name)" required maxlength="40" data-sr-ph="За кога? (име)">
+        <label class="sr-only" for="candleFrom">Your name</label>
+        <input type="text" id="candleFrom" placeholder="From whom? (your name)" maxlength="40" data-sr-ph="Од кога? (ваше име)">
+        <button class="btn btn--gold" type="submit" data-sr="Упали">Light it</button>
+      </form>
+      <p class="stand__note" data-sr="У овом приказу свеће се чувају само у вашем прегледачу. У правој постави, свећа стиже у канцеларију парохије и на диптих који свештеник помиње.">
+        In this demonstration candles are kept in your browser only. In a live installation the
+        candle reaches the parish office and the diptych the priest reads from.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== REMEMBRANCE ====================== -->
+<section class="section remem" id="remembrance">
+  <div class="wrap">
+    <div class="remem__grid">
+      <div class="reveal">
+        <p class="eyebrow" data-sr="Задушнице">Days of Remembrance</p>
+        <h2 data-sr="Суботе на које се цела парохија моли за упокојене">The Saturdays when the whole parish prays for the departed</h2>
+        <p class="lede" style="margin-top:1.2rem" data-sr="Задушнице су покретне — везане су за Васкрс и за календар, не за дан у месецу. Обележја су испод; тачне датуме потврђује парохија сваке године.">
+          Zadušnice are movable — they follow Pascha and the calendar rather than a fixed day of
+          the month. The reckoning is below; the exact dates are confirmed by the parish each year.
+        </p>
+
+        <div class="zadusnice">
+          <div class="zad">
+            <span class="zad__name">Месопусне задушнице
+              <small data-sr="Mesopusne zadušnice">Meatfare Zadušnice</small></span>
+            <span class="zad__date" data-sr="Субота пред Месопусну недељу">Saturday before Meatfare Sunday</span>
+          </div>
+          <div class="zad">
+            <span class="zad__name">Духовске задушнице
+              <small data-sr="Duhovske zadušnice">Pentecost Zadušnice</small></span>
+            <span class="zad__date" data-sr="Субота пред Духове">Saturday before Pentecost</span>
+          </div>
+          <div class="zad">
+            <span class="zad__name">Михољске задушнице
+              <small data-sr="Miholjske zadušnice">Michaelmas Zadušnice</small></span>
+            <span class="zad__date" data-sr="Субота у јесен, око Св. арханђела Михаила">Autumn, near St. Michael</span>
+          </div>
+          <div class="zad">
+            <span class="zad__name">Ђурђевске задушнице
+              <small data-sr="Đurđevske zadušnice">St. George Zadušnice</small></span>
+            <span class="zad__date" data-sr="Субота пред Ђурђевдан">Saturday before St. George's Day</span>
+          </div>
+        </div>
+
+        <p style="margin-top:1.6rem;font-size:0.86rem;color:var(--ink-soft)" data-sr="На задушнице се доноси кољиво, свеће и списак имена. Спомен-зид се тог дана сам поставља на филтер „ове задушнице“, тако да свештеник и хор имају списак пред собом.">
+          On Zadušnice the faithful bring koljivo, candles and a list of names. On those days the
+          memorial wall sets itself to the <em>This Zadušnice</em> filter, so that the priest and
+          choir have the list in front of them.
+        </p>
+      </div>
+
+      <!-- Reckoner -->
+      <div class="reckon reveal">
+        <h3 data-sr="Рачунање помена">Reckoning the memorials</h3>
+        <p class="hint" data-sr="Унесите дан упокојења и добићете дане помена по православном рачунању, где се сам дан упокојења рачуна као први дан.">
+          Enter the day of repose and this returns the memorial days by Orthodox reckoning, in
+          which the day of repose itself counts as the first day.
+        </p>
+
+        <div class="field">
+          <label for="reposeDate" data-sr="Дан упокојења">Day of repose</label>
+          <input type="date" id="reposeDate">
+        </div>
+
+        <div class="reckon__out" id="reckonOut" aria-live="polite"></div>
+
+        <p class="hint" style="margin-top:1.2rem" data-sr="Датуми су израчунати по грегоријанском календару. Ако породица држи јулијански, потврдите у канцеларији.">
+          Dates are computed on the Gregorian calendar. If a family keeps the Julian reckoning,
+          confirm with the parish office.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== PARASTOS ====================== -->
+<section class="section parastos" id="parastos">
+  <div class="wrap">
+    <div class="parastos__grid">
+      <div class="reveal">
+        <p class="eyebrow" data-sr="Захтев">Request</p>
+        <h2 data-sr="Закажите парастос">Arrange a Parastos</h2>
+        <p class="lede" style="margin-top:1.2rem" data-sr="Свештеник служи парастос за упокојене на молбу породице — на четрдесети дан, на годишњицу, на задушнице, или кад год породица затражи.">
+          The priest serves a Parastos for the departed at a family's request — on the fortieth
+          day, on an anniversary, on Zadušnice, or whenever a family asks.
+        </p>
+
+        <div class="koljivo">
+          <p><b data-sr="О кољиву.">On koljivo.</b>
+            <span data-sr="Кувано жито, заслађено и посуто, стоји пред иконом током службе. Зрно које падне у земљу не остаје само зрно — то је оно што кољиво говори, и зато се доноси. Ако вам је потребно да га припреми парохијска кухиња, обележите то испод.">
+            Boiled wheat, sweetened and dressed, stands before the icon during the service. A grain
+            that falls into the earth does not remain only a grain — that is what the koljivo says,
+            and why it is brought. If you would like the parish kitchen to prepare it, mark the box below.</span>
+          </p>
+        </div>
+
+        <p style="margin-top:1.6rem;font-size:0.86rem;color:rgba(246,239,230,0.62)" data-sr="Ово је демонстрација — образац не шаље ништа. У правој постави он долази у канцеларију парохије и на календар свештеника.">
+          This is a demonstration — the form sends nothing. In a live installation it arrives at
+          the parish office and on the priest's calendar.
+        </p>
+      </div>
+
+      <form class="form-card reveal" id="parastosForm" novalidate>
+        <div class="field">
+          <label for="pName" data-sr="Име упокојеног">Name of the departed</label>
+          <input type="text" id="pName" required autocomplete="off">
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="pRepose" data-sr="Дан упокојења">Day of repose</label>
+            <input type="date" id="pRepose">
+          </div>
+          <div class="field">
+            <label for="pOccasion" data-sr="Повод">Occasion</label>
+            <select id="pOccasion">
+              <option data-sr="Четрдесети дан">Fortieth day</option>
+              <option data-sr="Шест месеци">Six months</option>
+              <option data-sr="Годишњица">Anniversary</option>
+              <option data-sr="Задушнице">Zadušnice</option>
+              <option data-sr="Друго">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="pYou" data-sr="Ваше име">Your name</label>
+            <input type="text" id="pYou" required autocomplete="name">
+          </div>
+          <div class="field">
+            <label for="pContact" data-sr="Телефон или е-пошта">Phone or email</label>
+            <input type="text" id="pContact" required autocomplete="email">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="pNames" data-sr="Остала имена за помен">Other names to be commemorated</label>
+          <textarea id="pNames" placeholder="One name per line" data-sr-ph="Једно име у сваком реду"></textarea>
+        </div>
+
+        <label class="check">
+          <input type="checkbox" id="pKoljivo">
+          <span data-sr="Молим да парохијска кухиња припреми кољиво">Please have the parish kitchen prepare the koljivo</span>
+        </label>
+
+        <label class="check">
+          <input type="checkbox" id="pPage">
+          <span data-sr="Желимо да отворимо спомен-страницу Saylavy за ову особу">We would like to open a Saylavy Memory Page for this person</span>
+        </label>
+
+        <button class="btn btn--gold btn--block" type="submit" style="margin-top:1.6rem" data-sr="Пошаљи молбу">Send the request</button>
+        <p class="form-status" id="parastosStatus" role="status"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== SAYLAVY ====================== -->
+<section class="section saylavy" id="saylavy">
+  <div class="wrap">
+    <div class="saylavy__head reveal">
+      <p class="eyebrow eyebrow--center"><span class="saylavy-mark">Saylavy</span></p>
+      <h2 data-sr="Шта чини спомен-страницу">What makes a Memory Page</h2>
+      <p class="lede" data-sr="Saylavy је апликација за оставштину: једно место где човек за живота остави своју причу, свој глас и своје жеље — а онда, у своје време, то стигне онима које је волео. Парохија је природно место где то стоји.">
+        Saylavy is a digital legacy app: one place where a person, while living, sets down their
+        story, their voice and their wishes — and then, in its own time, it reaches the people they
+        loved. A parish is the natural place for it to stand.
+      </p>
+    </div>
+
+    <div class="feats reveal">
+      <article class="feat">
+        <div class="feat__icon" aria-hidden="true">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+            <path d="M4 4h11l5 5v11H4z"/><path d="M15 4v5h5M8 13h8M8 17h5"/>
+          </svg>
+        </div>
+        <h3 data-sr="Спомен-страница">Memory Pages</h3>
+        <p data-sr="Стални помен за човека — фотографије, снимци, глас и написана прича, на једном месту које се не губи када неко откаже претплату или када платформа затвори врата.">
+          A permanent tribute for one person — photographs, recordings, voice and a written life,
+          in one place that does not vanish when a subscription lapses or a platform closes.
+        </p>
+      </article>
+
+      <article class="feat">
+        <div class="feat__icon" aria-hidden="true">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+            <path d="M12 3l7 4v6c0 4-3 7-7 8-4-1-7-4-7-8V7z"/><path d="m9 12 2 2 4-4"/>
+          </svg>
+        </div>
+        <h3 data-sr="Непроменљив запис">An unalterable record</h3>
+        <p data-sr="Свака страница је усидрена у ланац блокова, тако да се не може изменити, подметнути ни лажирати. Плаћа се једном. Нема месечне претплате.">
+          Each page is anchored to the blockchain, so it cannot be altered, tampered with or faked.
+          It is bought once. There is no monthly subscription.
+        </p>
+      </article>
+
+      <article class="feat">
+        <div class="feat__icon" aria-hidden="true">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+            <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/>
+          </svg>
+        </div>
+        <h3 data-sr="Проба живота">Proof of Life</h3>
+        <p data-sr="Страница остаје приватна док се човек одазива на тиху проверу. Када престане да се одазива, обавештавају се они које је сам одредио. Тихо по замисли — активно кад је потребно.">
+          A page stays private while a person answers a quiet check-in. When they stop answering,
+          the people they chose are notified. Quiet by design, active when it matters.
+        </p>
+      </article>
+
+      <article class="feat">
+        <div class="feat__icon" aria-hidden="true">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+            <rect x="3" y="7" width="18" height="13" rx="2"/><path d="M3 11h18M12 7V4M8 4h8"/>
+          </svg>
+        </div>
+        <h3 data-sr="Временске капсуле">Time Capsules</h3>
+        <p data-sr="Порука или снимак који се отвара на одређени датум — осамнаести рођендан, венчање, годишњица. Стоји запечаћено док не дође дан.">
+          A message or recording that opens on a chosen date — an eighteenth birthday, a wedding,
+          an anniversary. It stays sealed until the day comes.
+        </p>
+      </article>
+    </div>
+
+    <div class="steps reveal">
+      <div class="step">
+        <h3 data-sr="Породица се обрати">A family asks</h3>
+        <p data-sr="У канцеларији парохије, или обележавањем поља у молби за парастос. Не треба ништа техничко.">
+          At the church office, or by ticking the box on the Parastos request. Nothing technical
+          is required of anyone.
+        </p>
+      </div>
+      <div class="step">
+        <h3 data-sr="Прикупља се живот">A life is gathered</h3>
+        <p data-sr="Фотографије, писма, снимци, оно чега се људи сећају. Парохија помаже старијим породицама да сакупе и снимe.">
+          Photographs, letters, recordings, what people remember. The parish helps older families
+          gather and record.
+        </p>
+      </div>
+      <div class="step">
+        <h3 data-sr="Страница се усидрава">The page is anchored</h3>
+        <p data-sr="Saylavy је запечати и усидри. Породица држи власништво и одлучује шта је јавно, а шта остаје у кругу породице.">
+          Saylavy seals and anchors it. The family holds ownership and decides what is public and
+          what stays within the family.
+        </p>
+      </div>
+      <div class="step">
+        <h3 data-sr="Спомен стоји">It stands in the memorial</h3>
+        <p data-sr="Арка се појави на овом зиду, свеће се могу упалити, а име улази на списак за задушнице.">
+          An arch appears on this wall, candles can be lit, and the name enters the list read on
+          Zadušnice.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== GALLERY ====================== -->
+<section class="section gallery" id="gallery">
+  <div class="wrap">
+    <p class="eyebrow" data-sr="Наша црква">Our Church</p>
+    <h2 data-sr="Место где се имена читају наглас">The place where the names are read aloud</h2>
+
+    <div class="gallery__grid reveal">
+      <figure class="shot" tabindex="0" role="button" data-full="assets/church-7.webp"
+              data-cap="The iconostasis at St. Archangel Gabriel, Richmond Hill.">
+        <img src="assets/church-7.webp" alt="The iconostasis of the parish, with icons of the Theotokos and Christ in gilded arches" loading="lazy" decoding="async">
+        <figcaption data-sr="Иконостас у Ричмонд Хилу">The iconostasis</figcaption>
+      </figure>
+
+      <figure class="shot" tabindex="0" role="button" data-full="assets/church-3.webp"
+              data-cap="Candles held during a service at the parish.">
+        <img src="assets/church-3.webp" alt="Clergy and faithful holding lit beeswax candles during a service" loading="lazy" decoding="async">
+        <figcaption data-sr="Свеће током службе">Candles during a service</figcaption>
+      </figure>
+
+      <figure class="shot" tabindex="0" role="button" data-full="assets/church-exterior.webp"
+              data-cap="The parish church at 49 N Lake Road, Richmond Hill.">
+        <img src="assets/church-exterior.webp" alt="The exterior of the parish church, an arcaded building among trees" loading="lazy" decoding="async">
+        <figcaption data-sr="Црква, 49 N Lake Road">The church, 49 N Lake Road</figcaption>
+      </figure>
+    </div>
+
+    <p style="margin-top:1.6rem;font-size:0.8rem;color:var(--bone-faint)" data-sr="Фотографије су парохијске, преузете са arhangelgavrilotoronto.com и коришћене овде само за приказ дизајна.">
+      Photographs belong to the parish, taken from arhangelgavrilotoronto.com and used here only
+      for the purpose of this design demonstration.
+    </p>
+  </div>
+</section>
+
+<!-- ====================== LIGHTBOX ====================== -->
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Photograph">
+  <button class="lightbox__close" id="lbClose" aria-label="Close">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <path d="M18 6 6 18M6 6l12 12"/>
+    </svg>
+  </button>
+  <figure style="margin:0">
+    <img id="lbImg" src="" alt="">
+    <figcaption id="lbCap"></figcaption>
+  </figure>
+</div>
+
+<!-- ====================== VISIT ====================== -->
+<section class="section visit" id="visit">
+  <div class="wrap">
+    <div class="visit__grid">
+      <div class="reveal">
+        <p class="eyebrow" data-sr="Посетите нас">Find Us</p>
+        <h2 data-sr="Сви су добродошли">All are welcome</h2>
+        <p class="lede" style="margin-top:1.2rem" data-sr="Спомен-зид не замењује долазак. Имена се читају наглас, у цркви, пред иконом арханђела Гаврила.">
+          The memorial wall does not replace coming. The names are read aloud, in the church,
+          before the icon of the Archangel Gabriel.
+        </p>
+
+        <dl class="details">
+          <div class="detail">
+            <dt data-sr="Црква">Church</dt>
+            <dd>St. Archangel Gabriel Serbian Orthodox Parish
+              <small>49 N Lake Rd, Richmond Hill, ON L4E 2Z8, Canada</small></dd>
+          </div>
+          <div class="detail">
+            <dt data-sr="Парох">Parish Priest</dt>
+            <dd>Father Đurađ Kojić</dd>
+          </div>
+          <div class="detail">
+            <dt data-sr="Канцеларија">Office</dt>
+            <dd><a href="mailto:info@arhangelgavrilotoronto.com">info@arhangelgavrilotoronto.com</a>
+              <small data-sr="За распоред служби и помене, обратите се канцеларији.">For service times and commemorations, contact the office.</small></dd>
+          </div>
+        </dl>
+
+        <div class="visit__cta">
+          <a class="btn btn--burgundy" href="https://maps.google.com/?q=49+N+Lake+Rd,+Richmond+Hill,+ON+L4E+2Z8" target="_blank" rel="noopener" data-sr="Упутства за пут">Get directions</a>
+          <a class="btn btn--outline" href="https://arhangelgavrilotoronto.com/" target="_blank" rel="noopener" data-sr="Званични сајт парохије">Parish website</a>
+        </div>
+      </div>
+
+      <figure class="visit__photo reveal" style="margin:0">
+        <img src="assets/church-exterior.webp" alt="The parish church of St. Archangel Gabriel in Richmond Hill, Ontario" loading="lazy" decoding="async">
+        <figcaption data-sr="Парохија Светог арханђела Гаврила, Ричмонд Хил, Онтарио">St. Archangel Gabriel Parish, Richmond Hill, Ontario</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== FOOTER ====================== -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <div class="brand">
+          <img src="assets/angel.webp" alt="" width="40" height="40">
+          <span class="brand__txt">
+            <span class="brand__eyebrow">Serbian Orthodox Parish</span>
+            <span class="brand__name">of St. Archangel Gabriel</span>
+          </span>
+        </div>
+        <p class="footer__blurb" data-sr="Вечан спомен — спомен парохије, покренут са Saylavy. Приказ дизајна, направљен као предлог парохији.">
+          Вечан спомен — the parish memorial, powered by Saylavy. A design demonstration, made as
+          a proposal to the parish.
+        </p>
+      </div>
+
+      <div>
+        <h4 data-sr="Спомен">Memorial</h4>
+        <ul>
+          <li><a href="#wall" data-sr="Спомен-зид">Memorial wall</a></li>
+          <li><a href="#stand" data-sr="Упали свећу">Light a candle</a></li>
+          <li><a href="#remembrance" data-sr="Задушнице">Zadušnice</a></li>
+          <li><a href="#parastos" data-sr="Закажи парастос">Arrange a Parastos</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 data-sr="Парохија">Parish</h4>
+        <ul>
+          <li><a href="https://arhangelgavrilotoronto.com/" target="_blank" rel="noopener" data-sr="Званични сајт">Official website</a></li>
+          <li><a href="mailto:info@arhangelgavrilotoronto.com" data-sr="Пишите нам">Email the office</a></li>
+          <li><a href="#visit" data-sr="Посетите нас">Visit</a></li>
+          <li><a href="https://saylavy.com/" target="_blank" rel="noopener">Saylavy</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="footer__disclaimer" data-sr="Приказ дизајна. Ово није званични сајт парохије Светог арханђела Гаврила и парохија га није одобрила. Сви људи на спомен-зиду су измишљени. Фотографије и амблем припадају парохији и приказани су само ради предлога; уклањају се на први захтев.">
+      Design demonstration. This is not the official website of St. Archangel Gabriel Serbian
+      Orthodox Parish and has not been endorsed by the parish. Everyone shown on the memorial wall
+      is fictional. The photographs and emblem belong to the parish and appear here only to
+      illustrate the proposal; they will be removed on request.
+    </p>
+
+    <div class="footer__bar">
+      <span>© <span id="year">2026</span> · <span data-sr="Приказ дизајна, направљен са Saylavy">Design demonstration, built with Saylavy</span></span>
+      <span class="saylavy-mark">Saylavy</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
