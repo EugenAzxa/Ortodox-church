@@ -754,6 +754,21 @@ p:last-child { margin-bottom: 0; }
 .notice svg { flex: none; margin-top: 0.15rem; color: var(--gold); }
 .notice strong { color: var(--gold-pale); font-weight: 600; }
 
+/* "Hosted and anchored by Saylavy" — stated where the pages are, not only in
+   the section that explains them. */
+.powered {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--bone-faint);
+}
+.powered .i { width: 1.1rem; height: 1.1rem; color: var(--gold-leaf); }
+.powered .saylavy-mark { font-size: 1rem; }
+.powered .saylavy-mark:hover { color: var(--gold-pale); text-decoration: underline; text-underline-offset: 4px; }
+
 /* Toolbar */
 .wall__tools {
   display: flex;
@@ -1169,26 +1184,94 @@ p:last-child { margin-bottom: 0; }
   font-variant-numeric: tabular-nums;
 }
 
-/* Blockchain anchor */
-.anchor {
+/* The Saylavy card — what actually holds this page up */
+.sy {
+  border: 1px solid var(--hair-gold-lit);
+  border-radius: var(--r);
+  background: linear-gradient(160deg, rgba(114, 29, 46, 0.26), rgba(20, 6, 9, 0.42));
+  padding: 1.1rem 1.2rem 1.2rem;
+}
+.sy__top {
   display: flex;
   align-items: center;
-  gap: 0.7rem;
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--hair-gold);
-  border-radius: 999px;
-  font-size: 0.76rem;
-  color: var(--bone-soft);
-  background: rgba(246, 239, 230, 0.03);
-  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.9rem;
+  margin-bottom: 0.9rem;
+  border-bottom: 1px solid var(--hair-gold);
 }
-.anchor code {
+.sy__mark {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  transition: color 0.22s var(--ease);
+}
+.sy__mark:hover { color: var(--gold-pale); text-decoration: underline; text-underline-offset: 4px; }
+.sy__state {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.24rem 0.8rem;
+  border: 1px solid var(--hair-gold-lit);
+  border-radius: 999px;
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-pale);
+  background: rgba(231, 175, 35, 0.10);
+}
+.sy__state .i { width: 0.9rem; height: 0.9rem; color: var(--gold); }
+
+.sy__rows { margin: 0; display: grid; gap: 0.45rem; }
+.sy__rows > div {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  justify-content: space-between;
+}
+.sy__rows dt {
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--bone-faint);
+  flex: none;
+}
+.sy__rows dd {
+  margin: 0;
+  font-size: 0.84rem;
+  color: var(--bone);
+  text-align: right;
+}
+.sy__rows code {
   font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  font-size: 0.74rem;
+  font-size: 0.78rem;
   color: var(--gold-pale);
   letter-spacing: 0.02em;
 }
-.anchor svg { flex: none; color: var(--gold); }
+
+.sy__note {
+  margin: 1rem 0 0;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--hair-gold);
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--bone-faint);
+}
+.sy__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.9rem;
+  font-size: 0.8rem;
+  color: var(--gold);
+  transition: gap 0.22s var(--ease);
+}
+.sy__link:hover { gap: 0.8rem; color: var(--gold-pale); }
+.sy__link .i { width: 1rem; height: 1rem; }
 
 .mp__actions {
   display: grid;
@@ -1199,18 +1282,6 @@ p:last-child { margin-bottom: 0; }
   border-top: 1px solid var(--hair-gold);
 }
 
-.mp__saylavy {
-  margin-top: 1.6rem;
-  padding-top: 1.3rem;
-  border-top: 1px solid var(--hair-gold);
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.35rem 0.6rem;
-  font-size: 0.72rem;
-  color: var(--bone-faint);
-  letter-spacing: 0.06em;
-}
 .saylavy-mark {
   font-family: var(--serif);
   font-size: 0.92rem;
@@ -1552,12 +1623,15 @@ p:last-child { margin-bottom: 0; }
   color: var(--ink-faint);
   margin-top: 0.1rem;
 }
+/* No nowrap here. A 1fr grid column cannot shrink below its min-content, so an
+   unbreakable rule like "Saturday before Meatfare Sunday" — plus the icon added
+   beside it — pushed the whole page wider than a 390px screen. */
 .zad__date {
   font-size: 0.8rem;
   font-weight: 500;
   color: var(--burgundy);
   font-variant-numeric: tabular-nums;
-  white-space: nowrap;
+  text-align: right;
 }
 
 /* Reckoner card */
@@ -1981,6 +2055,51 @@ p:last-child { margin-bottom: 0; }
   color: #fff;
 }
 
+/* Who holds what */
+.holds {
+  margin-top: 3.4rem;
+  padding-top: 3rem;
+  border-top: 1px solid var(--line);
+}
+.holds > h3 {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  text-align: center;
+  margin-bottom: 1.6rem;
+}
+.holds__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.1rem;
+}
+.hold {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 1.4rem 1.3rem;
+}
+.hold .i { color: var(--burgundy); margin-bottom: 0.85rem; }
+.hold b {
+  display: block;
+  font-family: var(--serif);
+  font-size: 1.16rem;
+  font-weight: 500;
+  margin-bottom: 0.45rem;
+}
+.hold p { font-size: 0.86rem; color: var(--ink-soft); line-height: 1.68; }
+
+.holds__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  justify-content: center;
+  margin-top: 1.8rem;
+}
+
 /* --------------------------------------------------------------------------
    Gallery
    -------------------------------------------------------------------------- */
@@ -2147,6 +2266,9 @@ p:last-child { margin-bottom: 0; }
   font-size: 0.75rem;
   color: rgba(250, 250, 250, 0.6);
 }
+.footer__powered { display: inline-flex; align-items: center; gap: 0.5rem; }
+.footer__powered .saylavy-mark { color: var(--gold); }
+.footer__powered .saylavy-mark:hover { text-decoration: underline; text-underline-offset: 4px; }
 .footer__disclaimer {
   margin-top: 1.2rem;
   font-size: 0.74rem;
@@ -2209,6 +2331,11 @@ p:last-child { margin-bottom: 0; }
   .footer__grid { grid-template-columns: 1fr; }
   .search { flex: 1 1 100%; }
   .step::after { display: none; }
+  /* Give the rule its own line rather than squeezing it beside the name. */
+  .zad { flex-wrap: wrap; row-gap: 0.3rem; }
+  .zad__name { flex: 1 1 60%; }
+  .zad__date { flex: 1 1 100%; text-align: left; }
+
   .deck__nav { grid-template-columns: 1fr 1fr; }
   .deck__nav .btn--gold { grid-column: 1 / -1; order: -1; }
   .azbuka__grid { grid-template-columns: repeat(auto-fit, minmax(42px, 1fr)); }

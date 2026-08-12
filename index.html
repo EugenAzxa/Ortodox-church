@@ -279,6 +279,12 @@
         Permanent, unalterable, and never charged by the month.
       </p>
 
+      <p class="powered">
+        <svg class="i" aria-hidden="true"><use href="#i-shield"/></svg>
+        <span data-sr="Сваку страницу на овом зиду чува и усидрава">Every page on this wall is hosted and anchored by</span>
+        <a class="saylavy-mark" href="https://saylavy.com/" target="_blank" rel="noopener">Saylavy</a>
+      </p>
+
       <div class="notice">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/>
@@ -671,7 +677,9 @@
 <section class="section saylavy" id="saylavy">
   <div class="wrap">
     <div class="saylavy__head reveal">
-      <p class="eyebrow eyebrow--center"><span class="saylavy-mark">Saylavy</span></p>
+      <p class="eyebrow eyebrow--center">
+        <a class="saylavy-mark" href="https://saylavy.com/" target="_blank" rel="noopener">Saylavy</a>
+      </p>
       <h2 data-sr="Шта чини спомен-страницу">What makes a Memory Page</h2>
       <p class="lede" data-sr="Saylavy је апликација за оставштину: једно место где човек за живота остави своју причу, свој глас и своје жеље — а онда, у своје време, то стигне онима које је волео. Парохија је природно место где то стоји.">
         Saylavy is a digital legacy app: one place where a person, while living, sets down their
@@ -762,6 +770,48 @@
           An arch appears on this wall, candles can be lit, and the name enters the list read on
           Zadušnice.
         </p>
+      </div>
+    </div>
+
+    <!-- Who holds what. The question every family asks second. -->
+    <div class="holds reveal">
+      <h3 data-sr="Ко шта држи">Who holds what</h3>
+      <div class="holds__grid">
+        <div class="hold">
+          <svg class="i i--lg" aria-hidden="true"><use href="#i-children"/></svg>
+          <b data-sr="Породица је власник">The family owns it</b>
+          <p data-sr="Породица одлучује шта улази, шта је јавно, а шта остаје у кругу породице. Могу је преузети или затворити у било ком тренутку.">
+            The family decides what goes in, what is public, and what stays within the family. They
+            can export it or close it at any time.
+          </p>
+        </div>
+        <div class="hold">
+          <svg class="i i--lg" aria-hidden="true"><use href="#i-shield"/></svg>
+          <b><span data-sr="Saylavy је чува">Saylavy holds it</span></b>
+          <p data-sr="Хостовање, усидравање у ланац блокова, Проба живота и временске капсуле. Плаћа се једном, без месечне претплате која може да истекне.">
+            Hosting, the blockchain anchor, Proof of Life and the time capsules. Bought once, with no
+            monthly subscription that can lapse.
+          </p>
+        </div>
+        <div class="hold">
+          <svg class="i i--lg" aria-hidden="true"><use href="#i-church"/></svg>
+          <b data-sr="Парохија је помиње">The parish commemorates</b>
+          <p data-sr="Арка на зиду, свеће, име на списку за задушнице и парастос. Парохија не држи податке — она држи помен.">
+            The arch on the wall, the candles, and the name on the list read at Zadušnice and the
+            Parastos. The parish does not hold the data — it holds the remembrance.
+          </p>
+        </div>
+      </div>
+
+      <div class="holds__cta">
+        <a class="btn btn--burgundy" href="https://saylavy.com/" target="_blank" rel="noopener">
+          <svg class="i" aria-hidden="true"><use href="#i-page"/></svg>
+          <span data-sr="Отворите спомен-страницу на Saylavy">Open a Memory Page on Saylavy</span>
+        </a>
+        <a class="btn btn--outline" href="#parastos">
+          <svg class="i" aria-hidden="true"><use href="#i-church"/></svg>
+          <span data-sr="Или питајте у канцеларији парохије">Or ask at the parish office</span>
+        </a>
       </div>
     </div>
   </div>
@@ -1038,7 +1088,10 @@
 
     <div class="footer__bar">
       <span>© <span id="year">2026</span> · <span data-sr="Приказ дизајна, направљен са Saylavy">Design demonstration, built with Saylavy</span></span>
-      <span class="saylavy-mark">Saylavy</span>
+      <span class="footer__powered">
+        <span data-sr="Спомен-странице чува">Memory Pages by</span>
+        <a class="saylavy-mark" href="https://saylavy.com/" target="_blank" rel="noopener">Saylavy</a>
+      </span>
     </div>
   </div>
 </footer>

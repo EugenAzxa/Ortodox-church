@@ -33,9 +33,21 @@ iconostasis — filterable by Zadušnice list, founders, or recently added, and 
 year. Press `/` to jump to the search.
 
 **Saylavy Memory Pages.** Opening an arch slides in the full page: the written life, the recorded
-voice with a transcript, the photograph count, a sealed time capsule where the family set one, and
-the blockchain anchor that makes the record unalterable. One-time purchase, no subscription — the
-Saylavy model, which is the whole reason it suits a memorial rather than a social feed.
+voice with a transcript, the photograph count, and a sealed time capsule where the family set one.
+One-time purchase, no subscription — the Saylavy model, which is the whole reason it suits a
+memorial rather than a social feed.
+
+Each page closes with a **This page on Saylavy** card, because the memorial is only as durable as
+whatever holds it up. The card names the thing doing that: the page's Saylavy reference, its
+blockchain anchor, which family holds it, the terms, and a link out to
+[saylavy.com](https://saylavy.com/). The same statement sits at the top of the wall — *every page
+on this wall is hosted and anchored by Saylavy* — so a visitor learns it where the pages are, not
+only in the section that explains them.
+
+**Who holds what.** The question every family asks second, answered in three cards: the **family**
+owns the page and decides what is public, **Saylavy** hosts and anchors it and runs Proof of Life
+and the time capsules, and the **parish** holds the remembrance — the arch, the candles, the name on
+the Zadušnice list. The parish never holds the data.
 
 **The super menu.** The whole site on one screen, opened from *Explore*. It leads with a three-step
 path for a first visit — see who we remember, light a candle, see how a page works — then lays out
@@ -130,6 +142,13 @@ reference to, that reference is silently replaced and writes go to a detached el
 All six people on the memorial wall are **fictional**. Their names, dates, life stories, voice
 transcripts and time capsules were written for this demonstration to show how a Memory Page reads
 when it is full. No real parishioner is represented anywhere in this repository.
+
+The Saylavy page references (`SAY-4821-0093`) and blockchain anchors are **invented**, like the
+people they belong to. Every outbound link therefore goes to `saylavy.com` itself rather than to a
+per-person URL — a link reading "open Milica's page" that resolved to a 404, or worse to a real
+stranger's page, would be a lie dressed as a feature. The product it describes is real: Memory
+Pages, Proof of Life, Time Capsules, blockchain anchoring and one-time purchase are Saylavy's, and
+wiring the per-page links up is a matter of substituting real page URLs for these references.
 
 The candle-with-proof flow **takes no payment and sends no email**. The prices are illustrative, the
 confirmation is written on the page and nowhere else, and the "example of what arrives" is one of the

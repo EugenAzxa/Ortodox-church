@@ -28,6 +28,9 @@
         "label": "A letter to her grandchildren, sealed until the twelfth year",
         "labelSr": "Писмо унуцима, запечаћено до дванаесте године"
       },
+      "saylavyId": "SAY-4821-0093",
+      "heldBy": "The Petrović family",
+      "heldBySr": "Породица Петровић",
       "anchor": "0x7f3a…c04e",
       "candles": 214,
       "photos": 46,
@@ -56,6 +59,9 @@
         "transcript": "The mortar would not set in that cold. So we lit a fire beside it and took turns watching through the night, like shepherds."
       },
       "capsule": null,
+      "saylavyId": "SAY-4903-0118",
+      "heldBy": "The Jovanović family",
+      "heldBySr": "Породица Јовановић",
       "anchor": "0x21bd…9a17",
       "candles": 168,
       "photos": 12,
@@ -88,6 +94,9 @@
         "label": "Rehearsal notes and the full cassette archive, opening on the fifth year",
         "labelSr": "Белешке са проба и цела архива касета, отвара се пете године"
       },
+      "saylavyId": "SAY-4770-0041",
+      "heldBy": "The Marković family",
+      "heldBySr": "Породица Марковић",
       "anchor": "0x9c40…f7b2",
       "candles": 301,
       "photos": 88,
@@ -116,6 +125,9 @@
         "transcript": "Brethren, I beseech you — recorded on a Sunday in 2011, from the third row, on somebody's telephone."
       },
       "capsule": null,
+      "saylavyId": "SAY-5102-0207",
+      "heldBy": "The Ristić family",
+      "heldBySr": "Породица Ристић",
       "anchor": "0x4e18…20da",
       "candles": 97,
       "photos": 9,
@@ -148,6 +160,9 @@
         "label": "A message for the class beginning in 2029",
         "labelSr": "Порука разреду који почиње 2029."
       },
+      "saylavyId": "SAY-5288-0016",
+      "heldBy": "The Vuković family",
+      "heldBySr": "Породица Вуковић",
       "anchor": "0xba77…3e51",
       "candles": 142,
       "photos": 460,
@@ -180,6 +195,9 @@
         "label": "The full oral-history archive, released to the parish on the tenth year",
         "labelSr": "Цела архива усмене историје, предаје се парохији десете године"
       },
+      "saylavyId": "SAY-5341-0072",
+      "heldBy": "The Kostić family",
+      "heldBySr": "Породица Костић",
       "anchor": "0x6d2c…81af",
       "candles": 76,
       "photos": 31,

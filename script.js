@@ -347,13 +347,33 @@
         ${voice}
         ${capsule}
 
-        <h3>${t('Integrity', 'Интегритет')}</h3>
-        <div class="anchor">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-            <rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>
-          </svg>
-          <span>${t('Anchored to the blockchain', 'Усидрено у ланац блокова')}</span>
-          <code>${esc(e.anchor)}</code>
+        <h3>${t('This page on Saylavy', 'Ова страница на Saylavy')}</h3>
+        <div class="sy">
+          <div class="sy__top">
+            <a class="sy__mark" href="https://saylavy.com/" target="_blank" rel="noopener">Saylavy</a>
+            <span class="sy__state">
+              <svg class="i" aria-hidden="true"><use href="#i-shield"/></svg>
+              ${t('Anchored', 'Усидрено')}
+            </span>
+          </div>
+
+          <dl class="sy__rows">
+            <div><dt>${t('Page', 'Страница')}</dt><dd><code>${esc(e.saylavyId)}</code></dd></div>
+            <div><dt>${t('Anchor', 'Сидро')}</dt><dd><code>${esc(e.anchor)}</code></dd></div>
+            <div><dt>${t('Held by', 'Држи је')}</dt><dd>${esc(t(e.heldBy, e.heldBySr))}</dd></div>
+            <div><dt>${t('Terms', 'Услови')}</dt>
+              <dd>${t('Bought once · no subscription', 'Плаћено једном · без претплате')}</dd></div>
+          </dl>
+
+          <p class="sy__note">${t(
+            'The family owns this page. Saylavy hosts and anchors it, so it cannot be altered. The parish keeps it on the wall and reads the name aloud.',
+            'Породица је власник ове странице. Saylavy је чува и усидрава, тако да се не може изменити. Парохија је држи на зиду и чита име наглас.')}</p>
+
+          <a class="sy__link" href="https://saylavy.com/" target="_blank" rel="noopener">
+            <span>${t('How Memory Pages work on saylavy.com',
+                      'Како спомен-странице раде на saylavy.com')}</span>
+            <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </a>
         </div>
 
         <div class="mp__actions">
@@ -363,12 +383,6 @@
           <a class="btn btn--ghost" href="#parastos" id="mpParastos">
             ${t('Request a Parastos', 'Затражи парастос')}
           </a>
-        </div>
-
-        <div class="mp__saylavy">
-          <span class="saylavy-mark">Saylavy</span>
-          <span>${t('Memory Page · one-time purchase · no subscription',
-                    'Спомен-страница · једнократно · без претплате')}</span>
         </div>
       </div>`;
   }
