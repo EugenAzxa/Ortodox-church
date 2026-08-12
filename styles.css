@@ -47,12 +47,18 @@
   --maxw-n: 760px;
   --gutter: clamp(1.15rem, 4vw, 3.5rem);
 
-  --r-sm: 6px;
-  --r:    12px;
-  --r-lg: 20px;
+  /* Architectural rather than app-like. The arch is the only strongly curved
+     form in the design; everything else is nearly square. */
+  --r-sm: 3px;
+  --r:    7px;
+  --r-lg: 10px;
 
   --serif: "Playfair Display", Georgia, "Times New Roman", serif;
   --sans:  "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  /* A third voice for labels, dates and references. Small caps set in mono
+     reads as art direction; the same words in the body sans read as a
+     template. */
+  --mono:  "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
   --sh-sm: 0 2px 10px rgba(20, 6, 9, 0.10);
   --sh:    0 14px 38px rgba(20, 6, 9, 0.16);
@@ -101,6 +107,69 @@ p { margin: 0 0 1em; }
 p:last-child { margin-bottom: 0; }
 
 ::selection { background: var(--gold); color: var(--ink); }
+
+/* --------------------------------------------------------------------------
+   Editorial layer
+   The things that stop this reading as a component library: a mono voice for
+   labels, roman numerals hanging beside the section marks, drop caps, and a
+   film grain over the whole page.
+   -------------------------------------------------------------------------- */
+
+/* Roman numerals, set in the margin like a printed office book. */
+.eyebrow[data-n]::before {
+  content: attr(data-n);
+  font-family: var(--serif);
+  font-size: 1.5em;
+  line-height: 1;
+  letter-spacing: 0;
+  opacity: 0.8;
+  margin-right: 0.1rem;
+}
+.eyebrow--center[data-n] { justify-content: center; }
+
+/* Print-style opening letter on the passages that carry a section. */
+.dropcap::first-letter {
+  float: left;
+  font-family: var(--serif);
+  font-size: 3.3em;
+  line-height: 0.82;
+  padding: 0.06em 0.14em 0 0;
+  color: var(--gold-dark);
+}
+.section--dark .dropcap::first-letter,
+.wall .dropcap::first-letter,
+.proof .dropcap::first-letter,
+.prayers .dropcap::first-letter { color: var(--gold); }
+
+/* Film grain. Cheap, fixed, and the single strongest cue that a person chose
+   how this should feel. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  pointer-events: none;
+  opacity: 0.038;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* An asymmetric section head: title on the left, standfirst dropped into the
+   right-hand columns. Used where a centred head would be the third in a row. */
+.head--split {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 0 clamp(1.5rem, 3vw, 2.5rem);
+  align-items: start;
+  margin-bottom: clamp(2.4rem, 5vw, 3.4rem);
+}
+.head--split .eyebrow { grid-column: 1 / -1; }
+.head--split h2 { grid-column: 1 / span 6; }
+.head--split .lede { grid-column: 8 / -1; }
+
+@media (max-width: 860px) {
+  .head--split h2, .head--split .lede { grid-column: 1 / -1; }
+  .head--split .lede { margin-top: 1.1rem; }
+}
 
 :focus-visible {
   outline: 2px solid var(--gold);
@@ -1591,6 +1660,201 @@ p:last-child { margin-bottom: 0; }
 }
 
 /* --------------------------------------------------------------------------
+   Voices: prayers and speaking icons
+   Hairline-separated rows rather than boxes, so it reads like an order of
+   service instead of a card grid.
+   -------------------------------------------------------------------------- */
+
+.prayers { background: var(--night); color: var(--bone); }
+.prayers h2 { font-size: clamp(1.9rem, 4.6vw, 2.9rem); color: #fff; }
+.prayers .lede { color: var(--bone-soft); }
+
+.pr__notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  margin: 0 0 1.6rem;
+  max-width: 78ch;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  line-height: 1.6;
+  color: var(--bone-faint);
+}
+.pr__notice .i { width: 1rem; height: 1rem; color: var(--gold-leaf); margin-top: 0.15rem; }
+
+.pr__list { border-top: 1px solid var(--hair-gold); }
+.pr { border-bottom: 1px solid var(--hair-gold); }
+
+/* A row is a toggle plus a listen control, side by side. Two separate buttons
+   rather than one nested inside the other, which would not be valid. */
+.pr__row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 0.2rem;
+}
+.pr__toggle {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 2.4rem 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.65rem 0;
+  background: none;
+  border: 0;
+  text-align: left;
+  color: inherit;
+  cursor: pointer;
+}
+.pr__toggle:hover .pr__title { color: var(--gold-pale); }
+.pr__n {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--gold-leaf);
+}
+.pr__title {
+  font-family: var(--serif);
+  font-size: clamp(1.14rem, 2.4vw, 1.5rem);
+  line-height: 1.25;
+  color: #fff;
+  transition: color 0.25s var(--ease);
+}
+.pr__title em {
+  display: block;
+  font-family: var(--sans);
+  font-style: normal;
+  font-size: 0.78rem;
+  color: var(--bone-faint);
+  margin-top: 0.2rem;
+  letter-spacing: 0.01em;
+}
+.pr__tools { display: flex; align-items: center; gap: 0.5rem; }
+
+/* Listen control */
+.listen {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.42rem 0.9rem;
+  border: 1px solid var(--hair-gold-lit);
+  border-radius: 999px;
+  background: rgba(231, 175, 35, 0.07);
+  color: var(--gold-pale);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: all 0.25s var(--ease);
+  white-space: nowrap;
+}
+.listen:hover:not([disabled]) { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+.listen[disabled] { opacity: 0.4; cursor: not-allowed; }
+.listen .i { width: 0.95rem; height: 0.95rem; }
+.listen.is-speaking { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+
+/* Three bars that move only while something is actually being spoken. */
+.eq { display: inline-flex; align-items: flex-end; gap: 2px; height: 0.72rem; }
+.eq i { width: 2px; height: 40%; background: currentColor; border-radius: 1px; }
+.listen.is-speaking .eq i { animation: eq 0.9s var(--ease) infinite alternate; }
+.listen.is-speaking .eq i:nth-child(2) { animation-delay: 0.15s; }
+.listen.is-speaking .eq i:nth-child(3) { animation-delay: 0.3s; }
+@keyframes eq { from { height: 30%; } to { height: 100%; } }
+
+.pr__chev { color: var(--bone-faint); transition: transform 0.35s var(--ease); display: grid; }
+.pr__chev .i { width: 1.05rem; height: 1.05rem; }
+.pr.is-open .pr__chev { transform: rotate(90deg); color: var(--gold); }
+.pr__body[hidden] { display: none; }
+
+/* The text, in three registers */
+.pr__body {
+  display: grid;
+  gap: 1.3rem;
+  padding: 0 0.2rem 1.6rem 3.4rem;
+  max-width: 62ch;
+}
+.pr__use {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold-leaf);
+}
+.pr__cyr {
+  font-family: var(--serif);
+  font-size: clamp(1.05rem, 2.2vw, 1.28rem);
+  line-height: 1.72;
+  color: var(--gold-pale);
+}
+.pr__lat, .pr__en { font-size: 0.92rem; line-height: 1.72; color: var(--bone-soft); }
+.pr__lat { font-style: italic; }
+.pr__en {
+  padding-top: 1rem;
+  border-top: 1px solid var(--hair-gold);
+  color: var(--bone-faint);
+}
+.pr__label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--bone-faint);
+  margin-bottom: 0.35rem;
+}
+
+/* Speaking icons — alternating sides, so the page stops marching */
+.ic__list { display: grid; gap: clamp(2.2rem, 5vw, 3.4rem); }
+.ic {
+  display: grid;
+  grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: center;
+}
+.ic:nth-child(even) { grid-template-columns: minmax(0, 1fr) minmax(0, 300px); }
+.ic:nth-child(even) .ic__frame { order: 2; }
+
+.ic__frame {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  border-radius: var(--arch);
+  overflow: hidden;
+  border: 1px solid var(--hair-gold-lit);
+  box-shadow: inset 0 0 0 4px rgba(20, 6, 9, 0.55), 0 24px 60px rgba(0, 0, 0, 0.5);
+  background: var(--night-3);
+}
+.ic__frame img { width: 100%; height: 100%; object-fit: cover; }
+.ic__frame--emblem { display: grid; place-items: center; padding: 16%; }
+.ic__frame--emblem img { object-fit: contain; filter: drop-shadow(0 4px 20px rgba(255, 184, 97, 0.35)); }
+
+.ic__name { font-family: var(--serif); font-size: clamp(1.5rem, 3.4vw, 2.1rem); color: #fff; }
+.ic__name span {
+  display: block;
+  font-family: var(--sans);
+  font-size: 0.84rem;
+  color: var(--bone-faint);
+  margin-top: 0.3rem;
+}
+.ic__feast {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold-leaf);
+  margin: 0.9rem 0 1rem;
+}
+.ic__read { font-size: 0.95rem; line-height: 1.78; color: var(--bone-soft); }
+.ic__read b { color: var(--gold-pale); font-weight: 500; }
+.ic__tools { margin-top: 1.2rem; }
+
+@media (max-width: 760px) {
+  .ic, .ic:nth-child(even) { grid-template-columns: 1fr; }
+  .ic:nth-child(even) .ic__frame { order: 0; }
+  .ic__frame { max-width: 240px; }
+  .pr__body { padding-left: 0.2rem; }
+  .pr__row { grid-template-columns: 1.6rem 1fr auto; gap: 0.7rem; }
+}
+
+/* --------------------------------------------------------------------------
    Remembrance days — the reckoner
    -------------------------------------------------------------------------- */
 
@@ -2363,3 +2627,29 @@ p:last-child { margin-bottom: 0; }
   body { background: #fff; color: #000; }
   .section--dark, .wall, .gallery, .stand, .parastos, .kontakion { background: #fff !important; color: #000 !important; }
 }
+
+/* --------------------------------------------------------------------------
+   The mono voice, last
+   These selectors collide with component rules at equal specificity, so they
+   have to come after them in source order to win. Keeping them together at the
+   end also makes the label system readable in one place.
+   -------------------------------------------------------------------------- */
+
+.eyebrow, .hero__kicker, .hero__scroll, .hero__meta span, .brand__eyebrow,
+.kontakion cite, .card__years, .card__ph, .card__candles,
+.mp h3, .mp__years, .mp__stat span, .capsule__date, .voice__dur,
+.sy__rows dt, .sy__rows code, .sy__state,
+.proof h3, .proof__total, .opt__price, .opts legend, .polaroid__meta,
+.field label, .deck__top, .deck__label, .rk__tag, .zad__date, .klass__age,
+.sm__group h3, .detail dt, .holds > h3, .footer h4, .footer__bar,
+.pr__use, .ic__feast {
+  font-family: var(--mono);
+}
+
+/* Mono sets wider than Inter, so the tracking tuned for Inter comes back in. */
+.eyebrow, .opts legend, .field label, .deck__label,
+.sm__group h3, .detail dt, .holds > h3, .proof h3, .mp h3 {
+  letter-spacing: 0.13em;
+}
+.hero__kicker { letter-spacing: 0.2em; }
+.klass__age, .opt__price, .proof__total { letter-spacing: 0.02em; }

@@ -2,11 +2,11 @@
 
 A design demonstration of a **digital parish memorial** for
 [St. Archangel Gabriel Serbian Orthodox Parish](https://arhangelgavrilotoronto.com/)
-in Richmond Hill, Ontario — built around **Saylavy Memory Pages**.
+in Richmond Hill, Ontario – built around **Saylavy Memory Pages**.
 
 The idea: a parish already keeps its departed. It reads their names aloud on Zadušnice, serves a
 Parastos on the fortieth day, and lights candles for them. This gives that practice a permanent
-digital place — one where the story, the recorded voice and the photographs survive the family
+digital place – one where the story, the recorded voice and the photographs survive the family
 albums, and where somebody in Belgrade or Vancouver can light a candle at 3am and have it reach
 the diptych the priest reads from.
 
@@ -23,34 +23,34 @@ npx serve -l 4321        # then open http://localhost:4321
 python3 -m http.server 4321
 ```
 
-Serve it rather than opening `index.html` from disk — the memorial wall fetches
+Serve it rather than opening `index.html` from disk – the memorial wall fetches
 `data/memorials.json`, which `file://` blocks. The page tells you so if that happens.
 
 ## What is in it
 
-**The memorial wall.** Each departed person is an arch — a portrait niche borrowed from the
-iconostasis — filterable by Zadušnice list, founders, or recently added, and searchable by name or
+**The memorial wall.** Each departed person is an arch – a portrait niche borrowed from the
+iconostasis – filterable by Zadušnice list, founders, or recently added, and searchable by name or
 year. Press `/` to jump to the search.
 
 **Saylavy Memory Pages.** Opening an arch slides in the full page: the written life, the recorded
 voice with a transcript, the photograph count, and a sealed time capsule where the family set one.
-One-time purchase, no subscription — the Saylavy model, which is the whole reason it suits a
+One-time purchase, no subscription – the Saylavy model, which is the whole reason it suits a
 memorial rather than a social feed.
 
 Each page closes with a **This page on Saylavy** card, because the memorial is only as durable as
 whatever holds it up. The card names the thing doing that: the page's Saylavy reference, its
 blockchain anchor, which family holds it, the terms, and a link out to
-[saylavy.com](https://saylavy.com/). The same statement sits at the top of the wall — *every page
-on this wall is hosted and anchored by Saylavy* — so a visitor learns it where the pages are, not
+[saylavy.com](https://saylavy.com/). The same statement sits at the top of the wall – *every page
+on this wall is hosted and anchored by Saylavy* – so a visitor learns it where the pages are, not
 only in the section that explains them.
 
 **Who holds what.** The question every family asks second, answered in three cards: the **family**
 owns the page and decides what is public, **Saylavy** hosts and anchors it and runs Proof of Life
-and the time capsules, and the **parish** holds the remembrance — the arch, the candles, the name on
+and the time capsules, and the **parish** holds the remembrance – the arch, the candles, the name on
 the Zadušnice list. The parish never holds the data.
 
 **The super menu.** The whole site on one screen, opened from *Explore*. It leads with a three-step
-path for a first visit — see who we remember, light a candle, see how a page works — then lays out
+path for a first visit – see who we remember, light a candle, see how a page works – then lays out
 every destination in three groups with an icon and a line of explanation, and closes with the live
 counts. It is the only menu control at any width; below 900px the inline nav links give way to it
 entirely. A visitor should be able to open this and understand the memorial before scrolling
@@ -61,13 +61,29 @@ demo they persist in your browser only.
 
 **A candle with photographic proof.** The one that matters if you are not in Ontario. A candle on a
 screen is an intention; this orders a wax candle on the actual stand in Richmond Hill, lit by a
-parishioner at the next Liturgy, photographed where it stands, and the picture sent back to you —
+parishioner at the next Liturgy, photographed where it stands, and the picture sent back to you –
 and onto the Memory Page of the person it was lit for, if they have one. Three options (a candle, a
 large candle, a vigil lamp kept burning through the forty days), and a four-step track showing what
 comes back. The Liturgy date is computed as the coming Sunday rather than written down. Nothing is
-charged and nothing is sent — see [Demonstration data](#demonstration-data).
+charged and nothing is sent – see [Demonstration data](#demonstration-data).
 
-**Days of remembrance.** The four Serbian Zadušnice with their reckoning rules — they follow Pascha
+**Voices: prayers read aloud.** Six prayers the parish knows by heart, each in Cyrillic, in Latin
+letters, and in English. The Latin column is there for the diaspora children who speak Serbian but
+cannot read the alphabet. Оче наш, Трисвето, Царе небески, Богородице Дјево, Са светима покој, and
+Вечан спомен, which is the acclamation this whole memorial is named after.
+
+There are **no audio files**. The reading is done by the browser's own speech synthesis, which means
+it works offline, costs nothing, and is unmistakably synthetic. The page says so rather than
+implying a choir. If no Serbian voice is installed the buttons read the **English** instead and say
+that too, because a Serbian text read by an English voice is worse than useless.
+
+**Voices: the icons speak.** An icon is a record, not a picture. Three of the icons in the parish's
+own iconostasis, cropped from their photograph, with what to actually look for: the **ΜΡ ΘΥ** beside
+the Mother of God and the three stars on her veil; the cruciform halo on Christ carrying **Ο Ω Ν**,
+*He Who Is*, written on no one else; and the Archangel Gabriel, who among all the angels is the one
+sent to speak. Each can be read aloud as well.
+
+**Days of remembrance.** The four Serbian Zadušnice with their reckoning rules – they follow Pascha
 and the calendar, not a fixed date, so the page states the rule rather than inventing a date. Next
 to it, a reckoner: enter a day of repose and it returns the third day, ninth day, fortieth day, six
 months and one year, counted the Orthodox way, where the day of repose itself is the first day. The
@@ -80,12 +96,12 @@ Memory Page and clicking *Request a Parastos* carries the name and date into the
 **Children and remembrance.** The part of the memorial that faces forward. Three Sunday school
 groups by age, and then the two things a diaspora parish actually has to teach:
 
-- **The Little Chronicler** — a child is given twelve oral-history questions and one older
+- **The Little Chronicler** – a child is given twelve oral-history questions and one older
   parishioner. They ask, they record, they bring it back, and the answers go into that person's
   Memory Page with the child credited as its chronicler. The deck tracks which questions have been
   asked, in the browser, so a child can work down the list over several weeks. Vojislav Kostić on
   the memorial wall did exactly this on his own, which is where the idea comes from.
-- **The Azbuka** — all thirty letters of Serbian Cyrillic, one word each, drawn from the vocabulary
+- **The Azbuka** – all thirty letters of Serbian Cyrillic, one word each, drawn from the vocabulary
   a child actually meets in this church: Икона, Кољиво, Тамјан, Свећа, Бака.
 
 Recordings stay the property of the family who gave them, and the page says so where a parent
@@ -107,8 +123,8 @@ assets/               Parish photographs and emblem, converted to webp
 
 ## Design
 
-The palette is sampled from the parish's own site — burgundy `#721D2E`, gold `#E7AF23`, cream, and
-Playfair Display over Inter — then carried into a candle-lit near-black for the memorial itself, so
+The palette is sampled from the parish's own site – burgundy `#721D2E`, gold `#E7AF23`, cream, and
+Playfair Display over Inter – then carried into a candle-lit near-black for the memorial itself, so
 that entering the wall feels like stepping from the daylight into the narthex and back out again.
 
 Motifs come from the iconostasis in the parish photographs: the round arch as a portrait frame, the
@@ -117,7 +133,30 @@ gold hairline, the beeswax flame, the ☦ between sections.
 Icons are one inline sprite of 24 stroked symbols, referenced as
 `<svg class="i"><use href="#i-candle"/></svg>`, so every icon inherits its colour and line weight
 from context. Sizing them in `em` off a small label lands them around 13px, which reads as clutter
-rather than an icon — the small-label cases carry an absolute size instead.
+rather than an icon – the small-label cases carry an absolute size instead.
+
+### Art direction
+
+The first pass looked like software. Symmetric card grids, a centred eyebrow over a centred heading
+in every section, one border radius everywhere, and em dashes in every other sentence. Those are the
+tells. What replaced them:
+
+- **A third typeface.** Every label, date, price, reference and feast line is set in **JetBrains
+  Mono**. Small caps in mono reads as art direction; the same words in the body sans read as a
+  template. It is the single cheapest way out of the generic look.
+- **Roman numerals** hanging beside each section mark, I to X, as in a printed office book. Set with
+  `attr(data-n)` in CSS so the language pass cannot disturb them.
+- **Drop caps** on the passages that carry a section, via `::first-letter`.
+- **Film grain** over the whole page, one inline `feTurbulence` at 3.8% opacity.
+- **Asymmetric heads** in the Voices section: title in the left six columns, standfirst dropped into
+  the right five, against the centred heads elsewhere. Variety between sections is itself the point.
+- **Tighter radii** (3 / 7 / 10px). The arch is now the only strongly curved shape in the design.
+- **En dashes, not em dashes.** All 90 replaced.
+
+Style direction came from the `ui-ux-pro-max` **Editorial Grid / Magazine** pattern. Its
+`--design-system` query matched this brief to *Brutalism* with an Inter/slate/red palette, which
+would have destroyed a palette taken from the parish's own site; that recommendation was not used.
+The typography it returned independently matched what was already here, Playfair Display over Inter.
 
 A few deliberate choices worth naming:
 
@@ -145,7 +184,7 @@ when it is full. No real parishioner is represented anywhere in this repository.
 
 The Saylavy page references (`SAY-4821-0093`) and blockchain anchors are **invented**, like the
 people they belong to. Every outbound link therefore goes to `saylavy.com` itself rather than to a
-per-person URL — a link reading "open Milica's page" that resolved to a 404, or worse to a real
+per-person URL – a link reading "open Milica's page" that resolved to a 404, or worse to a real
 stranger's page, would be a lie dressed as a feature. The product it describes is real: Memory
 Pages, Proof of Life, Time Capsules, blockchain anchoring and one-time purchase are Saylavy's, and
 wiring the per-page links up is a matter of substituting real page URLs for these references.
@@ -155,15 +194,21 @@ confirmation is written on the page and nowhere else, and the "example of what a
 parish's own service photographs standing in for a photo that would be taken for you.
 
 Congregation photographs from the parish site were deliberately **not** used for memorial
-portraits — those show living, identifiable people, and placing them in a memorial would imply
+portraits – those show living, identifiable people, and placing them in a memorial would imply
 something untrue about them. The three photographs used (the iconostasis, candles at a service, and
 the church exterior) are the parish's own, taken from `arhangelgavrilotoronto.com` and included
-only to illustrate this proposal. The angel emblem is likewise the parish's. Both will be removed
-on request.
+only to illustrate this proposal. The two icon images in the Voices section are crops of that same
+iconostasis photograph. The angel emblem is likewise the parish's. All of it will be removed on
+request.
+
+The prayer texts are the standard Serbian Orthodox ones and are **not** invented, and the notes on
+the icons describe what is genuinely visible in the parish's own photograph. The one date carrying a
+hedge is the Archangel's feast: the page tells you to confirm it with the office rather than
+asserting how this parish keeps its patronal day.
 
 ## Credits
 
-Built with [Saylavy](https://saylavy.com/) Memory Pages in mind — Memory Pages, Proof of Life and
+Built with [Saylavy](https://saylavy.com/) Memory Pages in mind – Memory Pages, Proof of Life and
 Time Capsules are Saylavy's. Parish details, address, emblem and photographs belong to St. Archangel
 Gabriel Serbian Orthodox Parish, Richmond Hill, Ontario.
 

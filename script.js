@@ -118,6 +118,10 @@
     renderQuestion(false);
     renderProof();
     reckon();
+    stopSpeaking();          // a half-read prayer in the old language makes no sense
+    renderPrayers();
+    renderIcons();
+    speechReady();
     if (openId) openMemoryPage(openId, true);
   }
 
@@ -143,7 +147,7 @@
       : `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
   };
 
-  const years = entry => `${parseDate(entry.born).getFullYear()} — ${parseDate(entry.died).getFullYear()}`;
+  const years = entry => `${parseDate(entry.born).getFullYear()} – ${parseDate(entry.died).getFullYear()}`;
 
   const esc = str => String(str).replace(/[&<>"']/g, c =>
     ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
@@ -168,7 +172,7 @@
       $('#wallGrid').innerHTML =
         `<p style="color:var(--bone-faint);grid-column:1/-1">
            The memorial could not be loaded. If you opened this file directly, serve the folder
-           over HTTP instead — <code>npx serve</code> — so that data/memorials.json can be read.
+           over HTTP instead – <code>npx serve</code> – so that data/memorials.json can be read.
          </p>`;
     });
 
@@ -222,7 +226,7 @@
 
     grid.innerHTML = visible.map(e => `
       <button class="card" type="button" data-id="${e.id}"
-              aria-label="${esc(t(e.name, e.nameSr))}, ${esc(years(e))} — open the Memory Page">
+              aria-label="${esc(t(e.name, e.nameSr))}, ${esc(years(e))} – open the Memory Page">
         <span class="card__frame">
           <span class="card__halo" aria-hidden="true"></span>
           <span class="card__monogram" aria-hidden="true">${esc(e.monogram)}</span>
@@ -577,6 +581,286 @@
     parastosForm.reset();
   });
 
+  /* ============================================================ Voices
+     Prayers the parish knows by heart, and the three icons on the iconostasis.
+
+     There are no audio files. The reading is done by the browser's own speech
+     synthesis, which means it works offline and costs nothing, and it means the
+     voice is synthetic. The page says so rather than implying a choir. When a
+     Serbian voice is not installed we read the English instead, because a
+     Serbian text read by an English voice is worse than useless.
+     ============================================================ */
+
+  const PRAYERS = [
+    {
+      title: 'Оче наш', en: 'The Lord’s Prayer',
+      use: 'At every service, and at every table',
+      useSr: 'На свакој служби, и пред сваким оброком',
+      cyr: 'Оче наш, који си на небесима, да се свети име Твоје; да дође царство Твоје; да буде воља Твоја и на земљи као на небу. Хлеб наш потребни дај нам данас; и опрости нам дугове наше као што и ми опраштамо дужницима својим; и не уведи нас у искушење, но избави нас од злога.',
+      lat: 'Oče naš, koji si na nebesima, da se sveti ime Tvoje; da dođe carstvo Tvoje; da bude volja Tvoja i na zemlji kao na nebu. Hleb naš potrebni daj nam danas; i oprosti nam dugove naše kao što i mi opraštamo dužnicima svojim; i ne uvedi nas u iskušenje, no izbavi nas od zloga.',
+      eng: 'Our Father, who art in heaven, hallowed be Thy name. Thy kingdom come, Thy will be done, on earth as it is in heaven. Give us this day our daily bread, and forgive us our debts as we forgive our debtors, and lead us not into temptation, but deliver us from the evil one.'
+    },
+    {
+      title: 'Трисвето', en: 'The Trisagion',
+      use: 'Sung three times. Usually the first thing a child learns',
+      useSr: 'Пева се три пута. Обично прво што дете научи',
+      cyr: 'Свети Боже, Свети Крепки, Свети Бесмртни, помилуј нас.',
+      lat: 'Sveti Bože, Sveti Krepki, Sveti Besmrtni, pomiluj nas.',
+      eng: 'Holy God, Holy Mighty, Holy Immortal, have mercy on us.'
+    },
+    {
+      title: 'Царе небески', en: 'O Heavenly King',
+      use: 'The prayer that opens almost everything',
+      useSr: 'Молитва којом почиње готово све',
+      cyr: 'Царе небески, Утешитељу, Духе истине, који си свуда и све испуњаваш, Источниче добара и Даваоче живота, дођи и усели се у нас, и очисти нас од сваке нечистоте, и спаси, Благи, душе наше.',
+      lat: 'Care nebeski, Utešitelju, Duše istine, koji si svuda i sve ispunjavaš, Istočniče dobara i Davaoče života, dođi i useli se u nas, i očisti nas od svake nečistote, i spasi, Blagi, duše naše.',
+      eng: 'O Heavenly King, Comforter, Spirit of Truth, who art everywhere present and fillest all things, Treasury of good things and Giver of life: come and dwell in us, cleanse us from every impurity, and save our souls, O Good One.'
+    },
+    {
+      title: 'Богородице Дјево', en: 'Rejoice, O Virgin Theotokos',
+      use: 'Said before the icon of the Mother of God',
+      useSr: 'Чита се пред иконом Пресвете Богородице',
+      cyr: 'Богородице Дјево, радуј се, благодатна Маријо, Господ је с тобом. Благословена си ти међу женама и благословен је плод утробе твоје, јер си родила Христа, Спаса и Избавитеља душа наших.',
+      lat: 'Bogorodice Djevo, raduj se, blagodatna Marijo, Gospod je s tobom. Blagoslovena si ti među ženama i blagosloven je plod utrobe tvoje, jer si rodila Hrista, Spasa i Izbavitelja duša naših.',
+      eng: 'Rejoice, O Virgin Theotokos, Mary full of grace, the Lord is with thee. Blessed art thou among women, and blessed is the fruit of thy womb, for thou hast borne Christ, the Saviour and Deliverer of our souls.'
+    },
+    {
+      title: 'Са светима покој', en: 'With the saints give rest',
+      use: 'The heart of the memorial service. This is the one that is sung for the departed',
+      useSr: 'Срце заупокојене службе. Ово је оно што се пева за упокојене',
+      cyr: 'Са светима покој, Христе, душама слуга Твојих, где нема болести, ни туге, ни уздисања, него живот бесконачни.',
+      lat: 'Sa svetima pokoj, Hriste, dušama sluga Tvojih, gde nema bolesti, ni tuge, ni uzdisanja, nego život beskonačni.',
+      eng: 'With the saints give rest, O Christ, to the souls of Thy servants, where there is neither sickness, nor sorrow, nor sighing, but life everlasting.'
+    },
+    {
+      title: 'Вечан спомен', en: 'Memory eternal',
+      use: 'Sung three times, standing, at the very end of a Parastos. The parish is named for this',
+      useSr: 'Пева се три пута, стојећи, на самом крају парастоса. По овоме је и овај спомен назван',
+      cyr: 'Вечан спомен. Вечан спомен. Вечан спомен.',
+      lat: 'Večan spomen. Večan spomen. Večan spomen.',
+      eng: 'Memory eternal. Memory eternal. Memory eternal.'
+    }
+  ];
+
+  const ICONS = [
+    {
+      img: 'assets/icon-theotokos.webp',
+      alt: 'The icon of the Mother of God enthroned with the Christ Child, painted on a gold ground',
+      name: 'Богородица',
+      en: 'The Mother of God',
+      feast: 'Dormition, 28 August',
+      feastSr: 'Успење Пресвете Богородице, 28. август',
+      read: 'Look beside her head for the letters <b>МР ΘΥ</b>. It is Greek, shortened, for Mother of God, and it is painted on every icon of her anywhere in the world. There are three stars on her veil, at the forehead and on both shoulders. Her right hand is not raised to draw attention to herself. It points at the Child.',
+      readSr: 'Погледајте поред њене главе слова <b>МР ΘΥ</b>. То је грчки, скраћено, за Мајку Божју, и то се пише на свакој њеној икони на свету. На њеном покривалу су три звезде – на челу и на оба рамена. Њена десна рука не показује на себе. Показује на Дете.'
+    },
+    {
+      img: 'assets/icon-christ.webp',
+      alt: 'The icon of Christ, blessing with his right hand and holding the Gospel book in his left',
+      name: 'Господ Исус Христос',
+      en: 'Christ, holding the Gospel',
+      feast: 'Every Liturgy',
+      feastSr: 'Свака Литургија',
+      read: 'His halo has a cross inside it, and in the three arms you can see the letters <b>Ο Ω Ν</b> – <b>He Who Is</b>, the name God gave Moses out of the burning bush. It is written on no one else. The right hand blesses; the left holds the Gospel, bound in red. <b>ІС ХС</b> is simply Jesus Christ, the first and last letter of each word.',
+      readSr: 'У његовом нимбу је крст, а у три његова крака виде се слова <b>Ο Ω Ν</b> – <b>Онај који јесте</b>, име које је Бог дао Мојсију из горућег грма. Ни на коме другом се то не пише. Десница благосиља, а левица држи Еванђеље, укоричено у црвено. <b>ІС ХС</b> је само Исус Христос, прво и последње слово сваке речи.'
+    },
+    {
+      img: 'assets/angel.webp',
+      emblem: true,
+      alt: 'The parish emblem of St. Archangel Gabriel, a winged figure drawn in gold line',
+      name: 'Свети арханђел Гаврило',
+      en: 'St. Archangel Gabriel, the patron of this parish',
+      feast: 'Synaxis of the Archangel Gabriel, 26 July – confirm the parish feast with the office',
+      feastSr: 'Сабор светог арханђела Гаврила, 26. јул – потврдите датум славе у канцеларији',
+      read: 'The parish carries his name. Of all the angels he is the one who is sent to <b>speak</b>: to Zechariah standing in the temple, and to a girl in Nazareth. That is why he is given a staff, and wings – not because angels need them, but because a messenger has somewhere to be.',
+      readSr: 'Парохија носи његово име. Од свих анђела он је онај који је послат да <b>говори</b>: Захарији у храму, и девојци у Назарету. Зато му дају жезло и крила – не зато што су анђелима потребна, него зато што весник има куда да иде.'
+    }
+  ];
+
+  /* ---------------------------------------------------------- Speech engine */
+  const synth = window.speechSynthesis;
+  let speechVoice = null;   // a Serbian or near-Serbian voice, if one exists
+  let speakingBtn = null;
+
+  function pickVoice() {
+    if (!synth) return null;
+    const voices = synth.getVoices() || [];
+    // Serbian first, then the languages whose phonetics are close enough to be
+    // worth hearing, and never an English voice reading Cyrillic.
+    for (const code of ['sr', 'hr', 'bs', 'mk', 'sl', 'ru', 'bg', 'uk']) {
+      const v = voices.find(x => (x.lang || '').toLowerCase().replace('_', '-').startsWith(code));
+      if (v) return v;
+    }
+    return null;
+  }
+
+  function speechReady() {
+    speechVoice = pickVoice();
+    const notice = $('#speechNotice');
+    if (!notice) return;
+
+    const icon = '<svg class="i" aria-hidden="true"><use href="#i-mic"/></svg>';
+    if (!synth) {
+      notice.innerHTML = icon + '<span>' + t(
+        'This browser cannot read the prayers aloud. The texts are all below.',
+        'Овај прегледач не може да чита молитве наглас. Сви текстови су испод.') + '</span>';
+    } else if (speechVoice) {
+      notice.innerHTML = icon + '<span>' + t(
+        `Read aloud by a synthesised voice (${speechVoice.name}), not by the parish choir. Recordings from the choir replace it when they are made.`,
+        `Чита синтетички глас (${speechVoice.name}), не парохијски хор. Снимци хора ће га заменити када буду направљени.`) + '</span>';
+    } else {
+      notice.innerHTML = icon + '<span>' + t(
+        'No Serbian voice is installed on this device, so the listen buttons read the English translation. The Serbian text is still below, in both alphabets.',
+        'На овом уређају нема српског гласа, па дугмад читају енглески превод. Српски текст је и даље испод, у оба писма.') + '</span>';
+    }
+    // Reflect the language the buttons will actually speak.
+    $$('.listen').forEach(b => { if (b.dataset.kind === 'prayer') labelListen(b); });
+  }
+
+  if (synth) {
+    synth.addEventListener?.('voiceschanged', speechReady);
+    if ('onvoiceschanged' in synth) synth.onvoiceschanged = speechReady;
+  }
+
+  function stopSpeaking() {
+    if (synth) synth.cancel();
+    if (speakingBtn) {
+      speakingBtn.classList.remove('is-speaking');
+      labelListen(speakingBtn);
+      speakingBtn = null;
+    }
+  }
+
+  function labelListen(btn) {
+    const stop = btn.classList.contains('is-speaking');
+    const eq = '<span class="eq" aria-hidden="true"><i></i><i></i><i></i></span>';
+    const mic = '<svg class="i" aria-hidden="true"><use href="#i-mic"/></svg>';
+    let word;
+    if (stop) word = t('Stop', 'Стани');
+    else if (btn.dataset.kind === 'prayer' && !speechVoice) word = t('In English', 'На енглеском');
+    else word = t('Listen', 'Слушај');
+    btn.innerHTML = (stop ? eq : mic) + '<span>' + word + '</span>';
+  }
+
+  function speak(text, btn, forceLang) {
+    if (!synth) return;
+    const wasSame = speakingBtn === btn;
+    stopSpeaking();
+    if (wasSame) return;                 // pressing it again just stops
+
+    const u = new SpeechSynthesisUtterance(text);
+    if (forceLang === 'en' || !speechVoice) {
+      u.lang = 'en-GB';
+    } else {
+      u.voice = speechVoice;
+      u.lang = speechVoice.lang;
+    }
+    u.rate = 0.82;                       // prayers are not read at speaking pace
+    u.pitch = 0.95;
+
+    speakingBtn = btn;
+    btn.classList.add('is-speaking');
+    labelListen(btn);
+
+    u.onend = u.onerror = () => {
+      if (speakingBtn === btn) {
+        btn.classList.remove('is-speaking');
+        labelListen(btn);
+        speakingBtn = null;
+      }
+    };
+    synth.speak(u);
+  }
+
+  // Stop the voice if the reader leaves or navigates away mid-prayer.
+  addEventListener('pagehide', stopSpeaking);
+  document.addEventListener('visibilitychange', () => { if (document.hidden) stopSpeaking(); });
+
+  /* ------------------------------------------------------------ Rendering */
+  function renderPrayers() {
+    const list = $('#prayerList');
+    if (!list) return;
+    const open = new Set($$('.pr.is-open', list).map(el => el.dataset.i));
+
+    list.innerHTML = PRAYERS.map((p, i) => `
+      <div class="pr${open.has(String(i)) ? ' is-open' : ''}" data-i="${i}">
+        <div class="pr__row">
+          <button class="pr__toggle" type="button" aria-expanded="${open.has(String(i))}"
+                  aria-controls="pr-body-${i}">
+            <span class="pr__n">${String(i + 1).padStart(2, '0')}</span>
+            <span class="pr__title">${esc(p.title)}<em>${esc(p.en)}</em></span>
+            <span class="pr__chev"><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+          </button>
+          <button class="listen" type="button" data-kind="prayer" data-i="${i}"
+                  aria-label="${t('Read aloud', 'Прочитај наглас')}: ${esc(p.title)}"></button>
+        </div>
+        <div class="pr__body" id="pr-body-${i}" ${open.has(String(i)) ? '' : 'hidden'}>
+          <div class="pr__use">${esc(t(p.use, p.useSr))}</div>
+          <div class="pr__cyr">${esc(p.cyr)}</div>
+          <div>
+            <span class="pr__label">${t('In Latin letters', 'Латиницом')}</span>
+            <div class="pr__lat">${esc(p.lat)}</div>
+          </div>
+          <div>
+            <span class="pr__label">${t('In English', 'На енглеском')}</span>
+            <div class="pr__en">${esc(p.eng)}</div>
+          </div>
+        </div>
+      </div>`).join('');
+
+    $$('.listen', list).forEach(labelListen);
+  }
+
+  function renderIcons() {
+    const list = $('#iconList');
+    if (!list) return;
+    list.innerHTML = ICONS.map((ic, i) => `
+      <article class="ic reveal is-in">
+        <figure class="ic__frame${ic.emblem ? ' ic__frame--emblem' : ''}" style="margin:0">
+          <img src="${ic.img}" alt="${esc(ic.alt)}" loading="lazy" decoding="async">
+        </figure>
+        <div>
+          <h3 class="ic__name">${esc(ic.name)}<span>${esc(ic.en)}</span></h3>
+          <p class="ic__feast">${esc(t(ic.feast, ic.feastSr))}</p>
+          <p class="ic__read">${t(ic.read, ic.readSr)}</p>
+          <div class="ic__tools">
+            <button class="listen" type="button" data-kind="icon" data-i="${i}"
+                    aria-label="${t('Read aloud', 'Прочитај наглас')}: ${esc(ic.name)}"></button>
+          </div>
+        </div>
+      </article>`).join('');
+
+    $$('.listen', list).forEach(labelListen);
+  }
+
+  // One delegated listener covers both lists, including re-rendered markup.
+  document.addEventListener('click', e => {
+    const toggle = e.target.closest('.pr__toggle');
+    if (toggle) {
+      const pr = toggle.closest('.pr');
+      const body = $('#' + toggle.getAttribute('aria-controls'));
+      const nowOpen = !pr.classList.contains('is-open');
+      pr.classList.toggle('is-open', nowOpen);
+      toggle.setAttribute('aria-expanded', String(nowOpen));
+      body.hidden = !nowOpen;
+      return;
+    }
+
+    const btn = e.target.closest('.listen');
+    if (!btn) return;
+    const i = +btn.dataset.i;
+    if (btn.dataset.kind === 'prayer') {
+      const p = PRAYERS[i];
+      // With a Serbian voice, read the Serbian. Without one, read the English.
+      speechVoice ? speak(p.cyr, btn) : speak(p.eng, btn, 'en');
+    } else {
+      const ic = ICONS[i];
+      // The icon notes are prose about the icon, so they follow the page language.
+      const text = t(ic.read, ic.readSr).replace(/<[^>]+>/g, '');
+      const useSerbian = lang === 'sr' && speechVoice;
+      speak(text, btn, useSerbian ? null : 'en');
+    }
+  });
+
   /* ------------------------------------------- A candle with photographic proof
      Choose what gets lit, and the track shows what comes back. The Liturgy date
      is the coming Sunday, computed rather than written down. */
@@ -771,7 +1055,7 @@
   const azGrid = $('#azGrid');
   azGrid.innerHTML = AZBUKA.map(([letter], i) =>
     `<button class="az" type="button" data-i="${i}" aria-pressed="${i === 0}"
-             aria-label="${letter} — ${AZBUKA[i][1]}">${letter}</button>`).join('');
+             aria-label="${letter} – ${AZBUKA[i][1]}">${letter}</button>`).join('');
 
   azGrid.addEventListener('click', e => {
     const btn = e.target.closest('.az');
@@ -783,8 +1067,11 @@
     $$('.az', azGrid).forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
   });
 
-  // Paint the deck now, so it works even if the memorial data never loads.
+  // Paint these now, so they work even if the memorial data never loads.
   renderQuestion(false);
+  renderPrayers();
+  renderIcons();
+  speechReady();
 
   /* -------------------------------------------------------------- Lightbox */
   const lightbox = $('#lightbox');
