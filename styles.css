@@ -4,7 +4,7 @@
    powered by Saylavy Memory Pages
 
    Design system: parish burgundy and gold, carried into a candle-lit dark
-   ground for the memorial itself. Motifs are drawn from the iconostasis —
+   ground for the memorial itself. Motifs are drawn from the iconostasis –
    the round arch, the gold hairline, the beeswax flame.
    ========================================================================== */
 
@@ -239,7 +239,7 @@ body::after {
   border: 0;
 }
 
-/* Eyebrow — small gold caps label, as on the parish site */
+/* Eyebrow – small gold caps label, as on the parish site */
 .eyebrow {
   font-family: var(--sans);
   font-size: 0.7rem;
@@ -441,7 +441,7 @@ body::after {
 .nav.is-stuck .nav__explore:hover { background: var(--burgundy-lit); border-color: var(--burgundy-lit); }
 
 /* --------------------------------------------------------------------------
-   Super menu — the whole site on one screen
+   Super menu – the whole site on one screen
    -------------------------------------------------------------------------- */
 
 .sm { position: fixed; inset: 0; z-index: 140; }
@@ -762,7 +762,7 @@ body::after {
 }
 
 /* --------------------------------------------------------------------------
-   Kontakion — the liturgical opening
+   Kontakion – the liturgical opening
    -------------------------------------------------------------------------- */
 
 .kontakion { background: var(--night-2); color: var(--bone); text-align: center; }
@@ -823,7 +823,7 @@ body::after {
 .notice svg { flex: none; margin-top: 0.15rem; color: var(--gold); }
 .notice strong { color: var(--gold-pale); font-weight: 600; }
 
-/* "Hosted and anchored by Saylavy" — stated where the pages are, not only in
+/* "Hosted and anchored by Saylavy" – stated where the pages are, not only in
    the section that explains them. */
 .powered {
   display: flex;
@@ -935,8 +935,51 @@ body::after {
   box-shadow: inset 0 0 0 4px rgba(20, 6, 9, 0.6), inset 0 0 40px rgba(0,0,0,0.5), 0 18px 46px rgba(255, 184, 97, 0.16);
 }
 
-/* Gold monogram standing in for a portrait — this is demo data, and a
-   placeholder is more honest than a stock face. */
+/* --- Portraits ---------------------------------------------------------
+   Family photographs arrive as a century of mismatched snapshots: a 1950s
+   studio print, a scanned passport photo, someone's phone. Left alone they
+   make the wall look like a noticeboard. One shared treatment, pulled toward
+   grey and warmed slightly and darkened at the edges, makes thirty of them
+   read as one wall, and lets the face come back to colour on hover.
+   ---------------------------------------------------------------------- */
+
+.card__portrait {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 22%;            /* faces sit high in a 3:4 crop */
+  filter: grayscale(0.7) sepia(0.2) contrast(1.06) brightness(0.9);
+  transition: filter 0.7s var(--ease), transform 0.9s var(--ease);
+}
+.card:hover .card__portrait,
+.card:focus-visible .card__portrait {
+  filter: grayscale(0.12) sepia(0.05) contrast(1.02) brightness(1);
+  transform: scale(1.035);
+}
+
+/* Sets the face into the arch instead of letting it sit flat against it. */
+.card__vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(78% 62% at 50% 34%, transparent 40%, rgba(20, 6, 9, 0.5) 100%),
+    linear-gradient(180deg, transparent 52%, rgba(20, 6, 9, 0.78) 100%);
+}
+
+/* With a portrait in place, the monogram and its halo step aside. */
+.card__frame.has-portrait .card__monogram,
+.card__frame.has-portrait .card__halo,
+.card__frame.has-portrait .card__ph,
+.mp__frame.has-portrait .card__monogram,
+.mp__frame.has-portrait .card__halo { display: none; }
+
+/* On the Memory Page the portrait is the subject, so it starts far less muted. */
+.mp__frame .card__portrait { filter: grayscale(0.25) sepia(0.1) contrast(1.04); }
+
+/* Gold monogram, for a family that has no usable photograph. */
 .card__monogram {
   font-family: var(--serif);
   font-size: clamp(2.4rem, 5vw, 3.2rem);
@@ -1025,7 +1068,7 @@ body::after {
 .wall__foot p { font-size: 0.85rem; color: var(--bone-faint); max-width: 46ch; }
 
 /* --------------------------------------------------------------------------
-   Memory Page — the Saylavy panel
+   Memory Page – the Saylavy panel
    -------------------------------------------------------------------------- */
 
 .mp {
@@ -1253,7 +1296,7 @@ body::after {
   font-variant-numeric: tabular-nums;
 }
 
-/* The Saylavy card — what actually holds this page up */
+/* The Saylavy card – what actually holds this page up */
 .sy {
   border: 1px solid var(--hair-gold-lit);
   border-radius: var(--r);
@@ -1803,7 +1846,7 @@ body::after {
   margin-bottom: 0.35rem;
 }
 
-/* Speaking icons — alternating sides, so the page stops marching */
+/* Speaking icons – alternating sides, so the page stops marching */
 .ic__list { display: grid; gap: clamp(2.2rem, 5vw, 3.4rem); }
 .ic {
   display: grid;
@@ -1855,7 +1898,7 @@ body::after {
 }
 
 /* --------------------------------------------------------------------------
-   Remembrance days — the reckoner
+   Remembrance days – the reckoner
    -------------------------------------------------------------------------- */
 
 .remem { background: var(--cream); }
@@ -1888,8 +1931,8 @@ body::after {
   margin-top: 0.1rem;
 }
 /* No nowrap here. A 1fr grid column cannot shrink below its min-content, so an
-   unbreakable rule like "Saturday before Meatfare Sunday" — plus the icon added
-   beside it — pushed the whole page wider than a 390px screen. */
+   unbreakable rule like "Saturday before Meatfare Sunday" – plus the icon added
+   beside it – pushed the whole page wider than a 390px screen. */
 .zad__date {
   font-size: 0.8rem;
   font-weight: 500;
@@ -2091,7 +2134,7 @@ body::after {
 
 /* --------------------------------------------------------------------------
    Children & Remembrance
-   Daylight after the candle-lit sections — this is the part of the memorial
+   Daylight after the candle-lit sections – this is the part of the memorial
    that faces forward rather than back.
    -------------------------------------------------------------------------- */
 

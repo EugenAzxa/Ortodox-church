@@ -227,7 +227,12 @@
     grid.innerHTML = visible.map(e => `
       <button class="card" type="button" data-id="${e.id}"
               aria-label="${esc(t(e.name, e.nameSr))}, ${esc(years(e))} – open the Memory Page">
-        <span class="card__frame">
+        <span class="card__frame${e.portrait ? ' has-portrait' : ''}">
+          ${e.portrait ? `
+            <img class="card__portrait" src="${esc(e.portrait)}" alt="${esc(t(e.name, e.nameSr))}"
+                 loading="lazy" decoding="async"
+                 onerror="this.closest('.card__frame').classList.remove('has-portrait');this.remove()">
+            <span class="card__vignette" aria-hidden="true"></span>` : ''}
           <span class="card__halo" aria-hidden="true"></span>
           <span class="card__monogram" aria-hidden="true">${esc(e.monogram)}</span>
           <span class="card__ph">${t('Portrait pending', 'Портрет у припреми')}</span>
@@ -318,7 +323,11 @@
 
     return `
       <div class="mp__hero">
-        <div class="mp__frame">
+        <div class="mp__frame${e.portrait ? ' has-portrait' : ''}">
+          ${e.portrait ? `
+            <img class="card__portrait" src="${esc(e.portrait)}" alt="${esc(name)}"
+                 onerror="this.closest('.mp__frame').classList.remove('has-portrait');this.remove()">
+            <span class="card__vignette" aria-hidden="true"></span>` : ''}
           <span class="card__halo" aria-hidden="true"></span>
           <span class="card__monogram" aria-hidden="true">${esc(e.monogram)}</span>
         </div>

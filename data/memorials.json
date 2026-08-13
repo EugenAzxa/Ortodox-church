@@ -13,7 +13,10 @@
       "roleSr": "Оснивач парохијске кухиње",
       "epitaph": "She fed everyone who came through the door, and never once asked whose child you were.",
       "epitaphSr": "Хранила је свакога ко би прошао кроз врата, и никада није питала чије си дете.",
-      "tags": ["founders", "zadusnice"],
+      "tags": [
+        "founders",
+        "zadusnice"
+      ],
       "monogram": "МП",
       "story": "Milica arrived in Toronto in 1968 with one suitcase and her mother's copper pot, which is still used in the parish hall on Slava. For thirty-one years she ran the kitchen after every Liturgy. She kept a notebook of who was ill, who had lost work, and who was newly arrived and did not yet know anyone, and she cooked accordingly. Her sarma was the reason people came early.",
       "storySr": "Милица је стигла у Торонто 1968. године са једним кофером и мајчиним бакарним лонцем, који се и данас користи у парохијској сали на Славу. Тридесет једну годину водила је кухињу после сваке Литургије. Водила је бележницу о томе ко је болестан, ко је остао без посла и ко је нов и још никога не познаје, и према томе је кувала.",
@@ -28,6 +31,7 @@
         "label": "A letter to her grandchildren, sealed until the twelfth year",
         "labelSr": "Писмо унуцима, запечаћено до дванаесте године"
       },
+      "portrait": null,
       "saylavyId": "SAY-4821-0093",
       "heldBy": "The Petrović family",
       "heldBySr": "Породица Петровић",
@@ -48,7 +52,9 @@
       "roleSr": "Зидар, изградио степенице парохијске сале",
       "epitaph": "He measured twice and spoke once.",
       "epitaphSr": "Мерио је двапут, а говорио једном.",
-      "tags": ["founders"],
+      "tags": [
+        "founders"
+      ],
       "monogram": "ДЈ",
       "story": "A bricklayer by trade and by temperament. When the parish could not afford a contractor for the hall entrance in 1979, Dragoljub arrived on a Saturday with two nephews and a borrowed mixer and did not leave until Monday. He refused payment and accepted a plate of food. The stairs have not shifted in forty-six years.",
       "storySr": "Зидар по занату и по природи. Када парохија 1979. није могла да плати извођача за улаз у салу, Драгољуб је дошао у суботу са два нећака и позајмљеном мешалицом и није отишао до понедељка. Одбио је плату и примио тањир хране.",
@@ -59,6 +65,7 @@
         "transcript": "The mortar would not set in that cold. So we lit a fire beside it and took turns watching through the night, like shepherds."
       },
       "capsule": null,
+      "portrait": null,
       "saylavyId": "SAY-4903-0118",
       "heldBy": "The Jovanović family",
       "heldBySr": "Породица Јовановић",
@@ -79,7 +86,9 @@
       "roleSr": "Диригент хора, тридесет четири године",
       "epitaph": "She taught three generations to sing the Trisagion without looking at the page.",
       "epitaphSr": "Научила је три генерације да певају Трисвето без гледања у књигу.",
-      "tags": ["zadusnice"],
+      "tags": [
+        "zadusnice"
+      ],
       "monogram": "ЈМ",
       "story": "Jelena directed the choir from 1988 until the spring before she reposed. She held rehearsal on Thursdays whether four people came or twenty. She was uninterested in beautiful voices and deeply interested in people who showed up. Recordings of the parish choir under her direction, made on a cassette deck in the balcony, are preserved on her Memory Page.",
       "storySr": "Јелена је водила хор од 1988. до пролећа пре свог упокојења. Држала је пробе четвртком, било да су дошла четири човека или двадесет. Нису је занимали лепи гласови, него људи који долазе.",
@@ -94,6 +103,7 @@
         "label": "Rehearsal notes and the full cassette archive, opening on the fifth year",
         "labelSr": "Белешке са проба и цела архива касета, отвара се пете године"
       },
+      "portrait": null,
       "saylavyId": "SAY-4770-0041",
       "heldBy": "The Marković family",
       "heldBySr": "Породица Марковић",
@@ -125,6 +135,7 @@
         "transcript": "Brethren, I beseech you – recorded on a Sunday in 2011, from the third row, on somebody's telephone."
       },
       "capsule": null,
+      "portrait": null,
       "saylavyId": "SAY-5102-0207",
       "heldBy": "The Ristić family",
       "heldBySr": "Породица Ристић",
@@ -145,7 +156,10 @@
       "roleSr": "Учитељица веронауке",
       "epitaph": "She kept every drawing any child ever gave her.",
       "epitaphSr": "Сачувала је сваки цртеж који јој је неко дете дало.",
-      "tags": ["recent", "zadusnice"],
+      "tags": [
+        "recent",
+        "zadusnice"
+      ],
       "monogram": "РВ",
       "story": "Radmila taught the youngest class for nineteen years, on the theory that a child who is bored in church at six will not return at twenty-six. She taught with felt, beeswax and a great deal of patience. Four hundred and sixty of the drawings she saved were photographed by her family and are held on her Memory Page.",
       "storySr": "Радмила је девetнаест година предавала најмлађима, верујући да дете којем је досадно у цркви са шест година неће се вратити са двадесет шест.",
@@ -160,6 +174,7 @@
         "label": "A message for the class beginning in 2029",
         "labelSr": "Порука разреду који почиње 2029."
       },
+      "portrait": null,
       "saylavyId": "SAY-5288-0016",
       "heldBy": "The Vuković family",
       "heldBySr": "Породица Вуковић",
@@ -180,7 +195,9 @@
       "roleSr": "Благајник парохије",
       "epitaph": "First of his family born here, and the one who kept the language.",
       "epitaphSr": "Први у својој породици рођен овде, и онај који је сачувао језик.",
-      "tags": ["recent"],
+      "tags": [
+        "recent"
+      ],
       "monogram": "ВК",
       "story": "Born in Toronto to parents who arrived in 1959, Vojislav grew up translating for the adults around him and never stopped. He kept the parish books for twenty-two years, to the cent. He also kept a private archive of recordings of the older parishioners speaking, because he understood before anyone else that the accents were going.",
       "storySr": "Рођен у Торонту од родитеља који су дошли 1959, Војислав је одрастао преводећи одраслима око себе и никада није престао. Водио је парохијске књиге двадесет две године, до последњег цента.",
@@ -195,6 +212,7 @@
         "label": "The full oral-history archive, released to the parish on the tenth year",
         "labelSr": "Цела архива усмене историје, предаје се парохији десете године"
       },
+      "portrait": null,
       "saylavyId": "SAY-5341-0072",
       "heldBy": "The Kostić family",
       "heldBySr": "Породица Костић",

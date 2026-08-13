@@ -116,9 +116,11 @@ remembered.
 ```
 index.html            The page, all copy, both languages
 styles.css            Design system and every component
-script.js             Wall, Memory Pages, candles, reckoner, forms, lightbox
+script.js             Wall, Memory Pages, candles, prayers, reckoner, forms, lightbox
 data/memorials.json   The six demonstration entries
 assets/               Parish photographs and emblem, converted to webp
+assets/portraits/     Empty. Drop family photographs here (see Portraits)
+tools/portraits.mjs   Crops, converts and wires those photographs in
 ```
 
 ## Design
@@ -160,9 +162,11 @@ The typography it returned independently matched what was already here, Playfair
 
 A few deliberate choices worth naming:
 
-- **No stock faces.** Memory Pages for fictional people show a gold monogram in the arch and the
-  words *portrait pending*. A placeholder is more honest than inventing a face for a person who
-  does not exist.
+- **Portraits are wired but unpopulated.** The arches take real photographs; see
+  [Portraits](#portraits). Until a family supplies one, the arch shows a gold monogram and the words
+  *portrait pending*, which is also the honest state for a family that has no usable photograph.
+  Nothing on the wall is a stock face or a face borrowed from the parish's own congregation
+  photographs.
 - **Gold is darkened on light backgrounds** (`--gold-dark`) because the parish gold reads at about
   2.6:1 on cream, which fails AA for small text.
 - **Contact details are set in the sans face.** Playfair's hairline crossbar on `Đ`/`đ` disappears
@@ -175,6 +179,30 @@ A few deliberate choices worth naming:
 One trap worth knowing if you extend this: the language pass rewrites `innerHTML` on every element
 carrying `data-sr`. Put `data-sr` on **text-only** elements. If it wraps a node the script holds a
 reference to, that reference is silently replaced and writes go to a detached element.
+
+## Portraits
+
+The wall is built for faces. Drop one photograph per person into `assets/portraits/`, named after
+that person's `id` in `data/memorials.json`, and run:
+
+```bash
+node tools/portraits.mjs
+```
+
+Each file is cropped to the 3:4 the arches use, **anchored 30% from the top** because faces sit high
+in a portrait crop, converted to webp, and written into that person's `portrait` field. Nudge one
+person's crop with `--top=milica-p:15`. Anyone without a file keeps the monogram, so the wall works
+at every stage of being filled in.
+
+Family photographs arrive as a century of mismatched snapshots: a 1950s studio print, a scanned
+passport photo, someone's phone. Left alone they make the wall look like a noticeboard. So every
+portrait gets **one shared treatment** — pulled toward grey, warmed slightly, darkened at the edges,
+and vignetted into the arch — which makes thirty of them read as one wall. The face returns to full
+colour when you hover it, and the Memory Page shows it nearly unmuted, because there the portrait is
+the subject rather than one of a set.
+
+Use only photographs the family has given you for this purpose. That is not a legal footnote; it is
+the whole basis on which a parish can hold this material at all.
 
 ## Demonstration data
 
