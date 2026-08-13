@@ -13,6 +13,10 @@ Desktop.ini
 node_modules/
 package-lock.json
 
+# API keys. tools/generate-portraits.py reads a key from here.
+.env
+.env.*
+
 # Local screenshots taken while reviewing
 shot-*.png
 m-*.png

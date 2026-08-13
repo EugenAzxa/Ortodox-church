@@ -119,8 +119,9 @@ styles.css            Design system and every component
 script.js             Wall, Memory Pages, candles, prayers, reckoner, forms, lightbox
 data/memorials.json   The six demonstration entries
 assets/               Parish photographs and emblem, converted to webp
-assets/portraits/     Empty. Drop family photographs here (see Portraits)
-tools/portraits.mjs   Crops, converts and wires those photographs in
+assets/portraits/     Empty. Faces go here (see Portraits)
+tools/generate-portraits.py  Generates six synthetic faces via Gemini
+tools/portraits.mjs   Crops, converts and wires portraits into the data
 ```
 
 ## Design
@@ -182,8 +183,31 @@ reference to, that reference is silently replaced and writes go to a detached el
 
 ## Portraits
 
-The wall is built for faces. Drop one photograph per person into `assets/portraits/`, named after
-that person's `id` in `data/memorials.json`, and run:
+The wall is built for faces. There are two ways to fill it.
+
+### Generated faces, for the demonstration
+
+The six people are fictional, so their portraits have to be too. These are synthetic faces of people
+who do not exist, which is the point: nobody real is shown as deceased.
+
+```bash
+pip install google-genai                       # already installed here
+# put GEMINI_API_KEY=... in .env (gitignored) or ~/.claude/.env
+python tools/generate-portraits.py --dry-run   # read the prompts first, costs nothing
+python tools/generate-portraits.py --pro       # generate all six
+node tools/portraits.mjs                       # crop, convert, wire in
+```
+
+Each prompt is built from that person's own entry: their age at repose, and one detail from the life
+written for them, so the choir director looks like a choir director. All six share a single art
+direction — one light, one backdrop, one lens — because six separately generated faces otherwise
+look like six stock photos. A key is needed because generating images bills it, so the script never
+assumes one.
+
+### Real photographs, for a live parish
+
+Drop one photograph per person into `assets/portraits/`, named after that person's `id` in
+`data/memorials.json`, and run:
 
 ```bash
 node tools/portraits.mjs
