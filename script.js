@@ -150,6 +150,8 @@
     });
   }, { rootMargin: '0px 0px -8% 0px', threshold: 0.06 });
   $$('.reveal').forEach(el => io.observe(el));
+  // The cross rules draw their lines outward when they come into view.
+  $$('.cross-rule').forEach(el => io.observe(el));
 
   /* ------------------------------------------------------ Language toggle
      Every translatable node carries data-sr. The English original is
@@ -325,8 +327,8 @@
     if (!entries.length) return;
     const visible = entries.filter(matches);
 
-    grid.innerHTML = visible.map(e => `
-      <button class="card" type="button" data-id="${e.id}"
+    grid.innerHTML = visible.map((e, i) => `
+      <button class="card" type="button" data-id="${e.id}" style="--d:${i * 70}ms"
               aria-label="${esc(t(e.name, e.nameSr))}, ${esc(years(e))} – open the Memory Page">
         <span class="card__frame${e.portrait ? ' has-portrait' : ''}">
           ${e.portrait ? `
@@ -1289,7 +1291,7 @@
     const open = new Set($$('.pr.is-open', list).map(el => el.dataset.i));
 
     list.innerHTML = PRAYERS.map((p, i) => `
-      <div class="pr${open.has(String(i)) ? ' is-open' : ''}" data-i="${i}">
+      <div class="pr${open.has(String(i)) ? ' is-open' : ''}" data-i="${i}" style="--d:${i * 45}ms">
         <div class="pr__row">
           <button class="pr__toggle" type="button" aria-expanded="${open.has(String(i))}"
                   aria-controls="pr-body-${i}">
@@ -1300,16 +1302,18 @@
           <button class="listen" type="button" data-kind="prayer" data-i="${i}"
                   aria-label="${t('Read aloud', 'Прочитај наглас')}: ${esc(p.title)}"></button>
         </div>
-        <div class="pr__body" id="pr-body-${i}" ${open.has(String(i)) ? '' : 'hidden'}>
-          <div class="pr__use">${esc(t(p.use, p.useSr))}</div>
-          <div class="pr__cyr">${esc(p.cyr)}</div>
-          <div>
-            <span class="pr__label">${t('In Latin letters', 'Латиницом')}</span>
-            <div class="pr__lat">${esc(p.lat)}</div>
-          </div>
-          <div>
-            <span class="pr__label">${t('In English', 'На енглеском')}</span>
-            <div class="pr__en">${esc(p.eng)}</div>
+        <div class="pr__body" id="pr-body-${i}">
+          <div class="pr__inner">
+            <div class="pr__use">${esc(t(p.use, p.useSr))}</div>
+            <div class="pr__cyr">${esc(p.cyr)}</div>
+            <div>
+              <span class="pr__label">${t('In Latin letters', 'Латиницом')}</span>
+              <div class="pr__lat">${esc(p.lat)}</div>
+            </div>
+            <div>
+              <span class="pr__label">${t('In English', 'На енглеском')}</span>
+              <div class="pr__en">${esc(p.eng)}</div>
+            </div>
           </div>
         </div>
       </div>`).join('');
@@ -1348,7 +1352,7 @@
       const nowOpen = !pr.classList.contains('is-open');
       pr.classList.toggle('is-open', nowOpen);
       toggle.setAttribute('aria-expanded', String(nowOpen));
-      body.hidden = !nowOpen;
+      setPanelHeight(body, nowOpen);
       return;
     }
 
@@ -1501,6 +1505,27 @@
     { en: 'What do you want me to tell my children about you?',
       sr: 'Шта желиш да испричам својој деци о теби?' }
   ];
+
+  /* Open to the measured height, then release the cap so the panel can reflow
+     if the window is resized or the language changes underneath it. */
+  function setPanelHeight(body, open) {
+    if (!body) return;
+    if (open) {
+      body.style.maxHeight = body.scrollHeight + 'px';
+      const release = e => {
+        if (e.propertyName !== 'max-height') return;
+        body.style.maxHeight = 'none';
+        body.removeEventListener('transitionend', release);
+      };
+      body.addEventListener('transitionend', release);
+    } else {
+      // Give it a concrete height to animate away from, then collapse.
+      body.style.maxHeight = body.scrollHeight + 'px';
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        body.style.maxHeight = '0px';
+      }));
+    }
+  }
 
   const qCard  = $('#qCard');
   const qText  = $('#qText');

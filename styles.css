@@ -291,8 +291,16 @@ body::after {
   height: 1px;
   width: min(28vw, 13rem);
   background: linear-gradient(90deg, transparent, var(--hair-gold-lit));
+  /* The rules draw outward from the cross as the section arrives. */
+  transform: scaleX(0);
+  transition: transform 1.1s var(--ease) 0.15s;
 }
-.cross-rule::after { background: linear-gradient(90deg, var(--hair-gold-lit), transparent); }
+.cross-rule::before { transform-origin: right center; }
+.cross-rule::after {
+  background: linear-gradient(90deg, var(--hair-gold-lit), transparent);
+  transform-origin: left center;
+}
+.cross-rule.is-in::before, .cross-rule.is-in::after { transform: scaleX(1); }
 
 /* --------------------------------------------------------------------------
    Buttons
@@ -1086,6 +1094,32 @@ body.intro-on .hero { transform: scale(1.16); }
 }
 .card:hover { transform: translateY(-6px); }
 .card.is-hidden { display: none; }
+
+/* The arches arrive one after another, the way a wall fills up. --d is set
+   per card when the grid renders. */
+.wall__grid .card,
+.wall__grid .card--add {
+  animation: archIn 0.75s var(--ease) both;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes archIn {
+  from { opacity: 0; transform: translateY(26px) scale(0.97); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* A slow sheen crossing the gilding, as a lamp would move over it. */
+.card__frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(105deg,
+    transparent 35%, rgba(255, 231, 176, 0.16) 48%, transparent 62%);
+  transform: translateX(-130%);
+  transition: transform 0.9s var(--ease);
+}
+.card:hover .card__frame::after,
+.card:focus-visible .card__frame::after { transform: translateX(130%); }
 
 /* Arched portrait, framed in gold like an icon on the iconostasis */
 .card__frame {
@@ -2168,7 +2202,15 @@ body.intro-on .hero { transform: scale(1.16); }
 .pr__notice .i { width: 1rem; height: 1rem; color: var(--gold-leaf); margin-top: 0.15rem; }
 
 .pr__list { border-top: 1px solid var(--hair-gold); }
-.pr { border-bottom: 1px solid var(--hair-gold); }
+.pr {
+  border-bottom: 1px solid var(--hair-gold);
+  animation: prIn 0.6s var(--ease) both;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes prIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
 
 /* A row is a toggle plus a listen control, side by side. Two separate buttons
    rather than one nested inside the other, which would not be valid. */
@@ -2251,13 +2293,30 @@ body.intro-on .hero { transform: scale(1.16); }
 .pr.is-open .pr__chev { transform: rotate(90deg); color: var(--gold); }
 .pr__body[hidden] { display: none; }
 
-/* The text, in three registers */
+/* The text, in three registers.
+   The height is animated from a measured pixel value set by script. The
+   grid 0fr-to-1fr trick is tidier but does not resolve to a content height in
+   every engine, and a panel that will not open is worse than a line of JS. */
 .pr__body {
+  overflow: hidden;
+  max-height: 0;
+  visibility: hidden;
+  transition: max-height 0.5s var(--ease), visibility 0s linear 0.5s;
+}
+.pr.is-open .pr__body {
+  visibility: visible;
+  transition: max-height 0.5s var(--ease), visibility 0s;
+}
+.pr__inner {
   display: grid;
   gap: 1.3rem;
   padding: 0 0.2rem 1.6rem 3.4rem;
   max-width: 62ch;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 0.4s var(--ease) 0.08s, transform 0.45s var(--ease) 0.08s;
 }
+.pr.is-open .pr__inner { opacity: 1; transform: none; }
 .pr__use {
   font-family: var(--mono);
   font-size: 0.7rem;
