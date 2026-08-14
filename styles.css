@@ -803,14 +803,43 @@ body.intro-on .hero { transform: scale(1.16); }
   transform: scale(1.06);
   will-change: transform;
 }
+/* Lifted from the parish's own hero so the two sites read as one place:
+   burgundy at 75 / 65 / 85 percent over the photograph, and their cross
+   pattern tiled over the top at five percent. */
 .hero__veil {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background:
-    radial-gradient(120% 85% at 50% 8%, rgba(114, 29, 46, 0.42), transparent 62%),
-    radial-gradient(70% 50% at 50% 100%, rgba(255, 184, 97, 0.16), transparent 70%),
-    linear-gradient(180deg, rgba(20, 6, 9, 0.80) 0%, rgba(20, 6, 9, 0.62) 40%, rgba(20, 6, 9, 0.94) 100%);
+  background: linear-gradient(180deg,
+    rgba(114, 29, 46, 0.75) 0%,
+    rgba(114, 29, 46, 0.65) 50%,
+    rgba(114, 29, 46, 0.85) 100%);
+}
+.hero__veil::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M30 28v-6h-2v6h-6v2h6v6h2v-6h6v-2h-6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* The gold rule and cross they set under "All Are Welcome!" */
+.hero__rule {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  margin-top: 1.5rem;
+  color: var(--gold);
+  font-size: 1.05rem;
+  animation: rise 1.3s 0.28s var(--ease) both;
+}
+.hero__rule::before, .hero__rule::after {
+  content: "";
+  height: 1px;
+  width: clamp(2.5rem, 7vw, 5rem);
+  background: var(--gold);
+  opacity: 0.65;
 }
 
 .hero__inner { max-width: 46rem; position: relative; }
