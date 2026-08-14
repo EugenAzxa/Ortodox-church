@@ -72,11 +72,10 @@ about the church rather than about telling. Serbian keywords are stemmed, so р�
 mattered, repose, and the day the family opened the page, which closes the timeline in gold.
 
 Each page closes with a **This page on Saylavy** card, because the memorial is only as durable as
-whatever holds it up. The card names the thing doing that: the page's Saylavy reference, its
-blockchain anchor, which family holds it, the terms, and a link out to
-[saylavy.com](https://saylavy.com/). The same statement sits at the top of the wall – *every page
-on this wall is hosted and anchored by Saylavy* – so a visitor learns it where the pages are, not
-only in the section that explains them.
+whatever holds it up. The card names the thing doing that: the page's Saylavy reference, when it was
+published, which family holds it, the terms, and a link out to [saylavy.com](https://saylavy.com/).
+The same statement sits at the top of the wall – *every page on this wall is kept by Saylavy* – so a
+visitor learns it where the pages are, not only in the section that explains them.
 
 **QR codes, which are the bridge back to the building.** A printed card stands by the candle stand:
 scan it and the whole memorial opens on your phone. There is one code per person too, for a
@@ -93,9 +92,28 @@ link to their own grandmother. Back closes the panel instead of leaving the site
 address again, and each page has a *Copy link* button. Without this the Memory Page idea does not
 really hold — a tribute you cannot send anybody is a private diary.
 
-**The parish's own ask.** Their site leads with Donate, so this carries it too: in the visit
-section, the super menu and the footer, pointing at their existing donation page. This is a proposal
-to a parish, not only a shopfront for Saylavy.
+**The parish's own ask, with Stripe.** Their site leads with Donate, so this carries it too. The
+visit section has a **Support the parish** card with preset amounts, and the candle-with-proof form
+becomes a real checkout once a link is configured.
+
+Payments go through **Stripe Payment Links** — hosted checkout URLs that need no backend. Paste one
+into `STRIPE` at the top of `script.js` and that button starts taking money:
+
+```js
+const STRIPE = {
+  candle:  { small: 'https://buy.stripe.com/…', large: '…', lamp: '…' },
+  support: { 20: '…', 50: '…', 100: '…' }
+};
+```
+
+Leave any of them empty and that path stops at a written confirmation saying plainly that nothing
+was charged. The candle button relabels itself to *Continue to payment · $5* only when its link
+exists, so it never promises a checkout it cannot deliver. The submitted email is passed through as
+`prefilled_email`.
+
+**This page never asks anyone for a card number.** Card details are only ever entered on Stripe's
+own hosted checkout, which is what Payment Links are for. Test with a test-mode link first —
+`4242 4242 4242 4242`.
 
 **The way into Saylavy.** The last tile on the wall is not a person. It is a dashed empty arch, the
 space for one, reading *Add someone to this wall*, and it goes to
@@ -109,8 +127,8 @@ you glance at. Change the two places listed under [Structure](#structure) to mak
 tab instead.
 
 **Who holds what.** The question every family asks second, answered in three cards: the **family**
-owns the page and decides what is public, **Saylavy** hosts and anchors it and runs Proof of Life
-and the time capsules, and the **parish** holds the remembrance – the arch, the candles, the name on
+owns the page and decides what is public, **Saylavy** keeps it and runs Proof of Life and the time
+capsules, and the **parish** holds the remembrance – the arch, the candles, the name on
 the Zadušnice list. The parish never holds the data.
 
 **The super menu.** The whole site on one screen, opened from *Explore*. It leads with a three-step
@@ -309,11 +327,11 @@ All six people on the memorial wall are **fictional**. Their names, dates, life 
 transcripts and time capsules were written for this demonstration to show how a Memory Page reads
 when it is full. No real parishioner is represented anywhere in this repository.
 
-The Saylavy page references (`SAY-4821-0093`) and blockchain anchors are **invented**, like the
+The Saylavy page references (`SAY-4821-0093`) are **invented**, like the
 people they belong to. Every outbound link therefore goes to `saylavy.com` itself rather than to a
 per-person URL – a link reading "open Milica's page" that resolved to a 404, or worse to a real
 stranger's page, would be a lie dressed as a feature. The product it describes is real: Memory
-Pages, Proof of Life, Time Capsules, blockchain anchoring and one-time purchase are Saylavy's, and
+Pages, Proof of Life, Time Capsules and one-time purchase are Saylavy's, and
 wiring the per-page links up is a matter of substituting real page URLs for these references.
 
 The candle-with-proof flow **takes no payment and sends no email**. The prices are illustrative, the

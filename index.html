@@ -16,7 +16,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <!-- Bump v= when styles.css or script.js changes, so browsers do not serve a
      stale copy from cache. -->
-<link rel="stylesheet" href="styles.css?v=9">
+<link rel="stylesheet" href="styles.css?v=10">
 <link rel="icon" href="assets/angel.webp" type="image/webp">
 </head>
 <body>
@@ -150,7 +150,7 @@
             <span class="sm__num">03</span>
             <svg class="i i--lg" aria-hidden="true"><use href="#i-page"/></svg>
             <span class="sm__t" data-sr="Видите како страница ради">See how a page works</span>
-            <span class="sm__d" data-sr="Шта Saylavy чува и зашто се не може изменити">What Saylavy keeps, and why it cannot be altered</span>
+            <span class="sm__d" data-sr="Шта Saylavy чува и колико дуго">What Saylavy keeps, and for how long</span>
           </a>
         </div>
       </div>
@@ -321,15 +321,15 @@
         <p data-n="I" class="eyebrow" data-sr="Спомен-зид">The Memorial Wall</p>
         <h2 data-sr="Оне које носимо на светој Литургији">Those we carry to the Holy Liturgy</h2>
       </div>
-      <p class="lede" data-sr="Свака арка испод отвара спомен-страницу Saylavy – животопис, снимљен глас, фотографије и, где је породица тако одредила, временска капсула која се отвара на одређени дан. Стално, непроменљиво, и никада наплаћивано по месецу.">
+      <p class="lede" data-sr="Свака арка испод отвара спомен-страницу Saylavy – животопис, снимљен глас, фотографије и, где је породица тако одредила, временска капсула која се отвара на одређени дан. Трајно, и никада наплаћивано по месецу.">
         Each arch below opens a Saylavy Memory Page – a life written down, a recorded voice,
         photographs, and where a family has chosen it, a time capsule that opens on a set day.
-        Permanent, unalterable, and never charged by the month.
+        Kept for good, and never charged by the month.
       </p>
 
       <p class="powered">
         <svg class="i" aria-hidden="true"><use href="#i-shield"/></svg>
-        <span data-sr="Сваку страницу на овом зиду чува и усидрава">Every page on this wall is hosted and anchored by</span>
+        <span data-sr="Сваку страницу на овом зиду чува">Every page on this wall is kept by</span>
         <a class="saylavy-mark" href="https://saylavy.com/" target="_blank" rel="noopener">Saylavy</a>
       </p>
 
@@ -541,7 +541,8 @@
 
         <button class="btn btn--gold btn--block" type="submit">
           <svg class="i" aria-hidden="true"><use href="#i-flame"/></svg>
-          <span data-sr="Упалите ову свећу">Light this candle</span>
+          <!-- label is managed by script.js: it changes once Stripe is wired -->
+          <span id="proofSubmitLabel">Light this candle</span>
         </button>
 
         <p class="proof__demo" data-sr="Приказ дизајна – ништа се не наплаћује и ништа се не шаље. У правој постави ово би било плаћање и налог у канцеларији парохије.">
@@ -823,10 +824,10 @@
             <path d="M12 3l7 4v6c0 4-3 7-7 8-4-1-7-4-7-8V7z"/><path d="m9 12 2 2 4-4"/>
           </svg>
         </div>
-        <h3 data-sr="Непроменљив запис">An unalterable record</h3>
-        <p data-sr="Свака страница је усидрена у ланац блокова, тако да се не може изменити, подметнути ни лажирати. Плаћа се једном. Нема месечне претплате.">
-          Each page is anchored to the blockchain, so it cannot be altered, tampered with or faked.
-          It is bought once. There is no monthly subscription.
+        <h3 data-sr="Чува се, не изнајмљује">Kept, not rented</h3>
+        <p data-sr="Плаћа се једном. Нема месечне претплате која може да истекне, ни обнове које неко мора да се сети за двадесет година, кад оних који су страницу отворили више не буде.">
+          It is bought once. There is no monthly subscription to lapse, and no renewal somebody has
+          to remember in twenty years, when the people who opened the page are themselves gone.
         </p>
       </article>
 
@@ -873,10 +874,10 @@
         </p>
       </div>
       <div class="step">
-        <h3 data-sr="Страница се усидрава">The page is anchored</h3>
-        <p data-sr="Saylavy је запечати и усидри. Породица држи власништво и одлучује шта је јавно, а шта остаје у кругу породице.">
-          Saylavy seals and anchors it. The family holds ownership and decides what is public and
-          what stays within the family.
+        <h3 data-sr="Страница се објављује">The page is published</h3>
+        <p data-sr="Saylavy је чува. Породица држи власништво и одлучује шта је јавно, а шта остаје у кругу породице.">
+          Saylavy keeps it. The family holds ownership and decides what is public and what stays
+          within the family.
         </p>
       </div>
       <div class="step">
@@ -903,9 +904,9 @@
         <div class="hold">
           <svg class="i i--lg" aria-hidden="true"><use href="#i-shield"/></svg>
           <b><span data-sr="Saylavy је чува">Saylavy holds it</span></b>
-          <p data-sr="Хостовање, усидравање у ланац блокова, Проба живота и временске капсуле. Плаћа се једном, без месечне претплате која може да истекне.">
-            Hosting, the blockchain anchor, Proof of Life and the time capsules. Bought once, with no
-            monthly subscription that can lapse.
+          <p data-sr="Чување странице, Проба живота и временске капсуле. Плаћа се једном, без месечне претплате која може да истекне.">
+            Keeping the page, Proof of Life and the time capsules. Bought once, with no monthly
+            subscription that can lapse.
           </p>
         </div>
         <div class="hold">
@@ -1139,12 +1140,26 @@
           </div>
         </dl>
 
+        <!-- Support, with Stripe where it is configured -->
+        <div class="support" id="support">
+          <p class="eyebrow" style="margin-bottom:0.7rem" data-sr="Приложите">Give</p>
+          <h3 data-sr="Приложите парохији">Support the parish</h3>
+          <p class="support__note" data-sr="Свећe, кољиво, грејање зими, и веронаука коју нико не наплаћује. Прилог иде парохији, не нама.">
+            Candles, koljivo, the heating through the winter, and a Sunday school nobody charges
+            for. A gift here goes to the parish, not to us.
+          </p>
+
+          <div class="support__amounts" id="supportAmounts">
+            <button class="btn btn--outline btn--sm" type="button" data-amount="20">$20</button>
+            <button class="btn btn--outline btn--sm" type="button" data-amount="50">$50</button>
+            <button class="btn btn--outline btn--sm" type="button" data-amount="100">$100</button>
+            <a class="btn btn--outline btn--sm" href="https://arhangelgavrilotoronto.com/donate" target="_blank" rel="noopener" data-sr="Други износ">Other amount</a>
+          </div>
+          <p class="support__status" id="supportStatus" role="status"></p>
+        </div>
+
         <div class="visit__cta">
           <a class="btn btn--burgundy" href="https://maps.google.com/?q=49+N+Lake+Rd,+Richmond+Hill,+ON+L4E+2Z8" target="_blank" rel="noopener" data-sr="Упутства за пут">Get directions</a>
-          <a class="btn btn--gold" href="https://arhangelgavrilotoronto.com/donate" target="_blank" rel="noopener">
-            <svg class="i" aria-hidden="true"><use href="#i-church"/></svg>
-            <span data-sr="Приложите парохији">Support the parish</span>
-          </a>
           <a class="btn btn--outline" href="https://arhangelgavrilotoronto.com/" target="_blank" rel="noopener" data-sr="Званични сајт парохије">Parish website</a>
         </div>
       </div>
@@ -1217,6 +1232,6 @@
   </div>
 </footer>
 
-<script src="script.js?v=9"></script>
+<script src="script.js?v=10"></script>
 </body>
 </html>

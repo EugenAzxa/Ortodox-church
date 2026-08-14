@@ -218,6 +218,37 @@
      both are listed in the README. */
   const SAYLAVY_SIGNIN = 'https://saylavy.com/auth/sign-in?redirect=/app';
 
+  /* ------------------------------------------------------------- Payments
+     Stripe Payment Links. Paste a link from the Stripe dashboard and that
+     button starts taking real money; leave it empty and the flow stops at a
+     written confirmation, which is what this demonstration does today.
+
+     Payment Links are used rather than a card form on this page, because the
+     card details then only ever touch Stripe's own hosted checkout. Nothing
+     here should ever ask anyone for a card number.
+
+     Test with a Stripe test-mode link first. Test cards: 4242 4242 4242 4242. */
+  const STRIPE = {
+    candle: {
+      small: '',      // e.g. https://buy.stripe.com/test_xxx  ($5)
+      large: '',      //                                       ($15)
+      lamp:  ''       //                                       ($40)
+    },
+    support: {
+      20: '', 50: '', 100: ''
+    }
+  };
+
+  const stripeLive = Object.values(STRIPE.candle).concat(Object.values(STRIPE.support))
+    .some(Boolean);
+
+  /* Stripe prefills the email field on its checkout when handed this param. */
+  function stripeUrl(link, email) {
+    if (!link) return null;
+    const sep = link.includes('?') ? '&' : '?';
+    return email ? link + sep + 'prefilled_email=' + encodeURIComponent(email) : link;
+  }
+
   /* ------------------------------------------------------------ Memorial data */
   let entries = [];
   let filter = 'all';
@@ -488,22 +519,22 @@
           <div class="sy__top">
             <a class="sy__mark" href="https://saylavy.com/" target="_blank" rel="noopener">Saylavy</a>
             <span class="sy__state">
-              <svg class="i" aria-hidden="true"><use href="#i-shield"/></svg>
-              ${t('Anchored', 'Усидрено')}
+              <svg class="i" aria-hidden="true"><use href="#i-check"/></svg>
+              ${t('Published', 'Објављено')}
             </span>
           </div>
 
           <dl class="sy__rows">
             <div><dt>${t('Page', 'Страница')}</dt><dd><code>${esc(e.saylavyId)}</code></dd></div>
-            <div><dt>${t('Anchor', 'Сидро')}</dt><dd><code>${esc(e.anchor)}</code></dd></div>
+            <div><dt>${t('Published', 'Објављено')}</dt><dd>${longDate(parseDate(e.added))}</dd></div>
             <div><dt>${t('Held by', 'Држи је')}</dt><dd>${esc(t(e.heldBy, e.heldBySr))}</dd></div>
             <div><dt>${t('Terms', 'Услови')}</dt>
               <dd>${t('Bought once · no subscription', 'Плаћено једном · без претплате')}</dd></div>
           </dl>
 
           <p class="sy__note">${t(
-            'The family owns this page. Saylavy hosts and anchors it, so it cannot be altered. The parish keeps it on the wall and reads the name aloud.',
-            'Породица је власник ове странице. Saylavy је чува и усидрава, тако да се не може изменити. Парохија је држи на зиду и чита име наглас.')}</p>
+            'The family owns this page. Saylavy keeps it. The parish keeps it on the wall and reads the name aloud.',
+            'Породица је власник ове странице. Saylavy је чува. Парохија је држи на зиду и чита име наглас.')}</p>
 
           <a class="btn btn--gold btn--block sy__cta" href="${SAYLAVY_SIGNIN}">
             <svg class="i" aria-hidden="true"><use href="#i-page"/></svg>
@@ -1311,6 +1342,14 @@
       ? t(`From ${longDate(sunday)}, for forty days`,
           `Од ${longDate(sunday)}, четрдесет дана`)
       : longDate(sunday);
+
+    // The button says what actually happens next.
+    const label = $('#proofSubmitLabel');
+    if (label) {
+      label.textContent = STRIPE.candle[pick.value]
+        ? t(`Continue to payment · $${price}`, `Настави на плаћање · $${price}`)
+        : t('Light this candle', 'Упалите ову свећу');
+    }
   }
 
   $$('input[name="ctype"]', proofForm).forEach(r => r.addEventListener('change', renderProof));
@@ -1331,6 +1370,15 @@
       status.textContent = t('Please add an address the photograph can go to.',
                              'Молимо унесите адресу на коју да пошаљемо фотографију.');
       $('#cfEmail').focus();
+      return;
+    }
+
+    // With a Payment Link configured, the candle is paid for on Stripe's own
+    // checkout and the rest of this flow happens on their return.
+    const link = stripeUrl(STRIPE.candle[chosenCandle().value], email);
+    if (link) {
+      status.textContent = t('Taking you to Stripe…', 'Водимо вас на Stripe…');
+      location.href = link;
       return;
     }
 
@@ -1493,6 +1541,26 @@
   renderPrayers();
   renderIcons();
   speechReady();
+
+  /* --------------------------------------------------------------- Support
+     Each amount is its own Stripe Payment Link. Where one is missing the
+     button says so plainly rather than pretending to take a payment. */
+  $('#supportAmounts')?.addEventListener('click', e => {
+    const btn = e.target.closest('button[data-amount]');
+    if (!btn) return;
+    const amount = btn.dataset.amount;
+    const link = stripeUrl(STRIPE.support[amount]);
+    const status = $('#supportStatus');
+
+    if (link) {
+      status.textContent = t('Taking you to Stripe…', 'Водимо вас на Stripe…');
+      location.href = link;
+      return;
+    }
+    status.textContent = t(
+      `Demonstration: $${amount} would go to Stripe checkout. No Payment Link is configured, so nothing is charged. Use "Other amount" for the parish's own donation page.`,
+      `Приказ: $${amount} би отишло на Stripe. Веза за плаћање није подешена, па се ништа не наплаћује. За стварни прилог користите „Други износ”.`);
+  });
 
   /* -------------------------------------------------------------- Lightbox */
   const lightbox = $('#lightbox');

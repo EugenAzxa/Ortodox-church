@@ -977,7 +977,7 @@ body.intro-on .hero { transform: scale(1.16); }
 .notice svg { flex: none; margin-top: 0.15rem; color: var(--gold); }
 .notice strong { color: var(--gold-pale); font-weight: 600; }
 
-/* "Hosted and anchored by Saylavy" – stated where the pages are, not only in
+/* "Kept by Saylavy" – stated where the pages are, not only in
    the section that explains them. */
 .powered {
   display: flex;
@@ -2993,6 +2993,28 @@ body.intro-on .hero { transform: scale(1.16); }
 .detail dd a { border-bottom: 1px solid var(--line); transition: border-color 0.2s var(--ease); }
 .detail dd a:hover { border-color: var(--burgundy); color: var(--burgundy); }
 .detail small { display: block; font-family: var(--sans); font-size: 0.82rem; color: var(--ink-soft); margin-top: 0.15rem; }
+
+/* Support: amounts go to Stripe's hosted checkout, never a card form here. */
+.support {
+  margin-top: 2.2rem;
+  padding: 1.4rem 1.5rem 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: #fff;
+  box-shadow: var(--sh-sm);
+}
+.support h3 { font-family: var(--serif); font-size: 1.3rem; font-weight: 500; margin-bottom: 0.5rem; }
+.support__note { font-size: 0.88rem; color: var(--ink-soft); line-height: 1.68; max-width: 46ch; }
+.support__amounts { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.2rem; }
+.support__amounts .btn { font-variant-numeric: lining-nums tabular-nums; }
+.support__status {
+  margin: 0.9rem 0 0;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  line-height: 1.65;
+  color: var(--ink-faint);
+  min-height: 1rem;
+}
 
 .visit__cta { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 2.2rem; }
 
