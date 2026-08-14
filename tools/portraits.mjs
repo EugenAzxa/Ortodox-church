@@ -46,13 +46,23 @@ function loadSharp() {
   return null;
 }
 
-const tops = new Map(
-  process.argv.slice(2)
-    .filter(a => a.startsWith('--top='))
-    .map(a => a.slice(6).split(':'))
-    .filter(p => p.length === 2)
-    .map(([id, pct]) => [id, Math.max(0, Math.min(100, Number(pct))) / 100])
-);
+function flagMap(prefix, clamp) {
+  return new Map(
+    process.argv.slice(2)
+      .filter(a => a.startsWith(prefix))
+      .map(a => a.slice(prefix.length).split(':'))
+      .filter(p => p.length === 2)
+      .map(([id, value]) => [id, clamp(Number(value))])
+  );
+}
+
+const tops = flagMap('--top=', v => Math.max(0, Math.min(100, v)) / 100);
+
+/* Photographs are framed very differently. A studio portrait leaves half the
+   frame empty above the head while a phone snap fills it, and side by side on
+   the wall that reads as a mistake. --zoom=<id>:<percent> tightens one crop so
+   every head lands at roughly the same scale. */
+const zooms = flagMap('--zoom=', v => Math.max(20, Math.min(100, v)) / 100);
 
 if (!existsSync(portraitDir)) {
   mkdirSync(portraitDir, { recursive: true });
@@ -63,7 +73,20 @@ const sharp = loadSharp();
 const data = JSON.parse(readFileSync(dataFile, 'utf8'));
 const byId = new Map(data.entries.map(e => [e.id, e]));
 
-const files = readdirSync(portraitDir).filter(f => ACCEPT.has(extname(f).toLowerCase()));
+/* One source per person. The tool writes <id>.webp into the same folder it
+   reads from, so after one run a .webp output sits alongside the original and
+   would otherwise be picked up as a second source for the same person. Where
+   both exist the original wins, since re-cropping a crop loses quality. */
+const allFiles = readdirSync(portraitDir).filter(f => ACCEPT.has(extname(f).toLowerCase()));
+const byPerson = new Map();
+for (const file of allFiles) {
+  const id = basename(file, extname(file));
+  const isOutput = extname(file).toLowerCase() === '.webp';
+  const held = byPerson.get(id);
+  if (!held || (extname(held).toLowerCase() === '.webp' && !isOutput)) byPerson.set(id, file);
+}
+const files = [...byPerson.values()].sort();
+
 if (!files.length) {
   console.log(`No photographs in assets/portraits/.\n`);
   console.log('Expected one file per person, named after their id:');
@@ -91,11 +114,19 @@ for (const file of files) {
     // from, and on Windows the still-open source cannot be replaced.
     const img = sharp(readFileSync(join(portraitDir, file)));
     const { width, height } = await img.metadata();
-    // Take the widest 3:4 box we can, anchored high for the face.
-    const cropW = Math.min(width, Math.round(height * 0.75));
-    const cropH = Math.min(height, Math.round(cropW / 0.75));
-    const left = Math.round((width - cropW) / 2);
-    const top = Math.round(Math.min(Math.max(0, (height - cropH) * gravityTop), height - cropH));
+    // Take the widest 3:4 box we can, anchored high for the face, then tighten
+    // it if this one was given a zoom.
+    const zoom = zooms.has(id) ? zooms.get(id) : 1;
+    // Fit the largest 3:4 box inside the image, then apply the zoom, then clamp
+    // back inside the bounds. Without the final clamp a source that is already
+    // 3:4 produces a crop one pixel taller than itself and a negative offset.
+    let cropW = Math.round(Math.min(width, height * 0.75) * zoom);
+    let cropH = Math.round(cropW / 0.75);
+    if (cropH > height) { cropH = height; cropW = Math.round(cropH * 0.75); }
+    if (cropW > width)  { cropW = width;  cropH = Math.round(cropW / 0.75); }
+
+    const left = Math.max(0, Math.min(Math.round((width - cropW) / 2), width - cropW));
+    const top  = Math.max(0, Math.min(Math.round((height - cropH) * gravityTop), height - cropH));
 
     const webp = await img
       .extract({ left, top, width: cropW, height: cropH })
