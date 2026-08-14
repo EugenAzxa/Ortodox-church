@@ -23,6 +23,67 @@
     }
   };
 
+  /* =========================================================== The opening
+     Name, then icons, then the arch opens and you pass through it.
+
+     ?intro=0 skips it, which is what you want while working on a section
+     halfway down the page. ?intro=1 forces it back on. */
+  (function opening() {
+    const intro = $('#intro');
+    if (!intro) return;
+
+    const forced = new URLSearchParams(location.search).get('intro');
+    if (forced === '0' || (reduced && forced !== '1')) { intro.remove(); return; }
+
+    // Wrap each letter so it can lift on its own beat. Built as nodes rather
+    // than markup: esc() is declared further down and would still be in its
+    // temporal dead zone here.
+    const name = $('#introName');
+    if (name) {
+      const chars = [...name.textContent];
+      name.textContent = '';
+      chars.forEach((ch, i) => {
+        const span = document.createElement('span');
+        if (ch === ' ') {
+          span.className = 'sp';
+        } else {
+          span.className = 'ch';
+          span.style.setProperty('--i', i);
+          span.textContent = ch;
+        }
+        name.appendChild(span);
+      });
+    }
+
+    document.body.classList.add('intro-on');
+
+    let done = false;
+    const enter = () => {
+      if (done) return;
+      done = true;
+      document.body.classList.add('intro-leaving');
+      // Unlock the page as the arch opens, not after it finishes.
+      setTimeout(() => document.body.classList.remove('intro-on'), 260);
+      setTimeout(() => {
+        document.body.classList.remove('intro-leaving');
+        intro.remove();
+      }, 1600);
+    };
+
+    // ?intro=hold leaves the opening on screen so it can be looked at properly.
+    const timer = forced === 'hold' ? null : setTimeout(enter, 3100);
+    const skip = () => { clearTimeout(timer); enter(); };
+
+    $('#introSkip')?.addEventListener('click', skip);
+    intro.addEventListener('click', skip);
+    addEventListener('keydown', function once(e) {
+      if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') {
+        removeEventListener('keydown', once);
+        skip();
+      }
+    });
+  })();
+
   /* ------------------------------------------------------------------- Nav */
   const nav = $('#nav');
   const onScroll = () => nav.classList.toggle('is-stuck', scrollY > 40);

@@ -28,6 +28,17 @@ Serve it rather than opening `index.html` from disk – the memorial wall fetche
 
 ## What is in it
 
+**The opening.** The emblem, then the name letter by letter, then the subtitle, then the six icons
+of what is inside. A gold arch draws itself around all of it, and then the arch opens: it swallows
+the screen while the wordmark rushes past you and the hero settles back from an oversize scale
+behind it. You arrive through the door rather than at a splash screen, which is the point of using
+the site's own motif for it.
+
+About three seconds, skippable by clicking anywhere or pressing a key. `?intro=0` skips it,
+`?intro=1` forces it back under reduced motion, and `?intro=hold` leaves it on screen to be looked
+at. It is hidden by default in CSS and only shown once the script turns it on, so a JavaScript
+failure cannot strand anyone behind a black screen.
+
 **The memorial wall.** Each departed person is an arch – a portrait niche borrowed from the
 iconostasis – filterable by Zadušnice list, founders, or recently added, and searchable by name or
 year. Press `/` to jump to the search.

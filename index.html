@@ -54,6 +54,30 @@
   </defs>
 </svg>
 
+<!-- ====================== OPENING ======================
+     Hidden unless script.js turns it on, so a JavaScript failure can never
+     leave a visitor stranded behind a black screen. -->
+<div class="intro" id="intro" aria-hidden="true">
+  <span class="intro__arch" id="introArch"></span>
+
+  <div class="intro__inner">
+    <img class="intro__emblem" src="assets/angel.webp" alt="" width="96" height="96">
+    <h2 class="intro__name" id="introName">Вечан спомен</h2>
+    <p class="intro__sub">Eternal Memory</p>
+
+    <div class="intro__icons">
+      <svg class="i" aria-hidden="true"><use href="#i-arch"/></svg>
+      <svg class="i" aria-hidden="true"><use href="#i-candle"/></svg>
+      <svg class="i" aria-hidden="true"><use href="#i-mic"/></svg>
+      <svg class="i" aria-hidden="true"><use href="#i-book"/></svg>
+      <svg class="i" aria-hidden="true"><use href="#i-calendar"/></svg>
+      <svg class="i" aria-hidden="true"><use href="#i-church"/></svg>
+    </div>
+  </div>
+
+  <button class="intro__skip" id="introSkip" type="button">Skip</button>
+</div>
+
 <!-- ====================== NAV ====================== -->
 <nav class="nav" id="nav">
   <a class="brand" href="#top">
