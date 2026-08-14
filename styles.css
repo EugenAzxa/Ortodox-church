@@ -1779,6 +1779,22 @@ body.intro-on .hero { transform: scale(1.16); }
   color: var(--bone-faint);
 }
 
+/* The softer step: a real published page, before anyone is asked to sign in. */
+.sy__sample {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.9rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--hair-gold);
+  font-size: 0.82rem;
+  color: var(--gold);
+  transition: color 0.22s var(--ease), gap 0.22s var(--ease);
+}
+.sy__sample:hover { color: var(--gold-pale); gap: 0.75rem; }
+.sy__sample .i { width: 1rem; height: 1rem; }
+
 /* An item in the menu that leaves the site. */
 .sm__item--out .sm__t::after {
   content: "↗";

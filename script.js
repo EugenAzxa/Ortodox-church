@@ -217,6 +217,9 @@
      literal in index.html for the links that must survive without JavaScript;
      both are listed in the README. */
   const SAYLAVY_SIGNIN = 'https://saylavy.com/auth/sign-in?redirect=/app';
+  /* A published page on Saylavy itself. Worth showing before asking anyone to
+     sign in: this demonstration is fictional, and that one is the real thing. */
+  const SAYLAVY_SAMPLE = 'https://saylavy.com/memory-page-sample';
 
   /* ------------------------------------------------------------- Payments
      Stripe Payment Links. Paste a link from the Stripe dashboard and that
@@ -567,6 +570,12 @@
           </a>
           <p class="sy__signin">${t('Takes you to the Saylavy sign-in.',
                                     'Води вас на пријаву на Saylavy.')}</p>
+
+          <a class="sy__sample" href="${SAYLAVY_SAMPLE}" target="_blank" rel="noopener">
+            <svg class="i" aria-hidden="true"><use href="#i-photos"/></svg>
+            <span>${t('Or see a real published page first',
+                      'Или прво погледајте праву објављену страницу')}</span>
+          </a>
         </div>
 
         <div class="mp__actions">
