@@ -44,6 +44,17 @@ blockchain anchor, which family holds it, the terms, and a link out to
 on this wall is hosted and anchored by Saylavy* – so a visitor learns it where the pages are, not
 only in the section that explains them.
 
+**The way into Saylavy.** The last tile on the wall is not a person. It is a dashed empty arch, the
+space for one, reading *Add someone to this wall*, and it goes to
+`https://saylavy.com/auth/sign-in?redirect=/app`. Six routes lead there in total: that arch, the
+Memory Page itself (*Open a page like this on Saylavy*, placed directly under the Saylavy card,
+which is the moment somebody wants their own), the wall footer, the *Who holds what* call to action,
+the super menu, and the site footer.
+
+These open in the **same tab**, because signing in is a task you leave to do rather than a reference
+you glance at. Change the two places listed under [Structure](#structure) to make them open in a new
+tab instead.
+
 **Who holds what.** The question every family asks second, answered in three cards: the **family**
 owns the page and decides what is public, **Saylavy** hosts and anchors it and runs Proof of Life
 and the time capsules, and the **parish** holds the remembrance – the arch, the candles, the name on
@@ -123,6 +134,11 @@ assets/portraits/     Empty. Faces go here (see Portraits)
 tools/generate-portraits.py  Generates six synthetic faces via Gemini
 tools/portraits.mjs   Crops, converts and wires portraits into the data
 ```
+
+The Saylavy sign-in URL lives in exactly two places, and both need changing together:
+
+- `script.js` — the `SAYLAVY_SIGNIN` constant, used by the empty arch and the Memory Page button
+- `index.html` — four literal `href`s, so those links still work if JavaScript does not
 
 ## Design
 

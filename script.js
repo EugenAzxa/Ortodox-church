@@ -152,6 +152,11 @@
   const esc = str => String(str).replace(/[&<>"']/g, c =>
     ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 
+  /* Where every "open your own page" route leads. One constant here and one
+     literal in index.html for the links that must survive without JavaScript;
+     both are listed in the README. */
+  const SAYLAVY_SIGNIN = 'https://saylavy.com/auth/sign-in?redirect=/app';
+
   /* ------------------------------------------------------------ Memorial data */
   let entries = [];
   let filter = 'all';
@@ -250,7 +255,19 @@
           <span class="card__role">${esc(t(e.role, e.roleSr))}</span>
         </span>
       </button>
-    `).join('');
+    `).join('') + `
+      <a class="card card--add" href="${SAYLAVY_SIGNIN}">
+        <span class="card__frame card__frame--add">
+          <svg class="i i--xl" aria-hidden="true"><use href="#i-plus"/></svg>
+          <span class="card__ph">${t('Opens on Saylavy', 'Отвара се на Saylavy')}</span>
+        </span>
+        <span class="card__body">
+          <span class="card__name">${t('Add someone', 'Додајте некога')}</span>
+          <span class="card__years">${t('to this wall', 'на овај зид')}</span>
+          <span class="card__role">${t('Sign in to Saylavy and open a Memory Page for them',
+                                       'Пријавите се на Saylavy и отворите спомен-страницу')}</span>
+        </span>
+      </a>`;
 
     empty.classList.toggle('is-shown', visible.length === 0);
   }
@@ -271,8 +288,9 @@
   });
 
   grid.addEventListener('click', e => {
+    // The last tile in the grid is a link out to Saylavy, not a Memory Page.
     const card = e.target.closest('.card');
-    if (card) openMemoryPage(card.dataset.id);
+    if (card && card.dataset.id) openMemoryPage(card.dataset.id);
   });
 
   /* -------------------------------------------------- Saylavy Memory Page */
@@ -382,11 +400,14 @@
             'The family owns this page. Saylavy hosts and anchors it, so it cannot be altered. The parish keeps it on the wall and reads the name aloud.',
             'Породица је власник ове странице. Saylavy је чува и усидрава, тако да се не може изменити. Парохија је држи на зиду и чита име наглас.')}</p>
 
-          <a class="sy__link" href="https://saylavy.com/" target="_blank" rel="noopener">
-            <span>${t('How Memory Pages work on saylavy.com',
-                      'Како спомен-странице раде на saylavy.com')}</span>
+          <a class="btn btn--gold btn--block sy__cta" href="${SAYLAVY_SIGNIN}">
+            <svg class="i" aria-hidden="true"><use href="#i-page"/></svg>
+            <span>${t('Open a page like this on Saylavy',
+                      'Отворите овакву страницу на Saylavy')}</span>
             <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg>
           </a>
+          <p class="sy__signin">${t('Takes you to the Saylavy sign-in.',
+                                    'Води вас на пријаву на Saylavy.')}</p>
         </div>
 
         <div class="mp__actions">
