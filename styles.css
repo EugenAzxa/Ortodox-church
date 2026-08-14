@@ -1130,8 +1130,10 @@ body.intro-on .hero { transform: scale(1.16); }
 .mp__frame.has-portrait .card__monogram,
 .mp__frame.has-portrait .card__halo { display: none; }
 
-/* On the Memory Page the portrait is the subject, so it starts far less muted. */
+/* On the Memory Page the portrait is the subject, so it starts far less muted
+   and is given more room than a monogram needs. */
 .mp__frame .card__portrait { filter: grayscale(0.25) sepia(0.1) contrast(1.04); }
+.mp__frame.has-portrait { width: min(272px, 66%); }
 
 /* Gold monogram, for a family that has no usable photograph. */
 .card__monogram {
@@ -1356,14 +1358,39 @@ body.intro-on .hero { transform: scale(1.16); }
   color: var(--gold-pale);
   margin-top: 0.35rem;
 }
+/* Life span above the name, the way a Saylavy Memory Page leads. */
 .mp__years {
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0.12em;
-  font-size: 0.86rem;
+  font-variant-numeric: lining-nums tabular-nums;
+  letter-spacing: 0.22em;
+  font-size: 0.82rem;
   color: var(--gold);
-  margin-top: 0.9rem;
+  margin-bottom: 0.5rem;
 }
-.mp__places { font-size: 0.8rem; color: var(--bone-faint); margin-top: 0.35rem; }
+.mp__places {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--bone-soft);
+  margin-top: 0.5rem;
+}
+.mp__dates {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  color: var(--bone-faint);
+  margin-top: 0.8rem;
+}
+.mp__where { font-size: 0.78rem; color: var(--bone-faint); margin-top: 0.2rem; }
+
+.mp__quick {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.2rem;
+}
+.mp__qr { margin-inline: auto; }
 
 .mp__epitaph {
   font-family: var(--serif);
@@ -1501,13 +1528,6 @@ body.intro-on .hero { transform: scale(1.16); }
   font-variant-numeric: tabular-nums;
 }
 
-.mp__share {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.7rem;
-  margin-top: 0.9rem;
-}
 .mp__share-note {
   font-family: var(--mono);
   font-size: 0.64rem;

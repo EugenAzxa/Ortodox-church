@@ -461,10 +461,33 @@
           <span>${t('Demonstration · this person is fictional',
                     'Приказ · ова особа је измишљена')}</span>
         </p>
+
+        <!-- Dates above the name, then the name, then who they were: the order
+             a Saylavy Memory Page uses. -->
+        <div class="mp__years">${born.getFullYear()} &nbsp;–&nbsp; ${died.getFullYear()}</div>
         <h2 class="mp__name" id="mpName">${esc(name)}</h2>
         <div class="mp__name-alt">${esc(nameAlt)}</div>
-        <div class="mp__years">${longDate(born)} &nbsp;·&nbsp; ${longDate(died)}</div>
-        <div class="mp__places">${esc(e.bornPlace)} → ${esc(e.diedPlace)} · ${esc(t(e.role, e.roleSr))}</div>
+        <div class="mp__places">${esc(t(e.role, e.roleSr))}</div>
+        <div class="mp__dates">${longDate(born)} &nbsp;·&nbsp; ${longDate(died)}</div>
+        <div class="mp__where">${esc(e.bornPlace)} → ${esc(e.diedPlace)}</div>
+
+        <div class="mp__quick">
+          <button class="btn btn--ghost btn--sm" type="button" id="mpQr" aria-expanded="false">
+            <svg class="i" aria-hidden="true"><use href="#i-map"/></svg>
+            <span>${t('QR code', 'QR код')}</span>
+          </button>
+          <button class="btn btn--ghost btn--sm" type="button" id="mpShare" data-id="${e.id}">
+            <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg>
+            <span>${t('Copy link', 'Копирај везу')}</span>
+          </button>
+          <span class="mp__share-note" id="mpShareNote"></span>
+        </div>
+
+        <figure class="mp__qr" id="mpQrPanel">
+          <img src="assets/qr/${esc(e.id)}.svg" alt="${t('QR code opening this Memory Page', 'QR код који отвара ову спомен-страницу')}" width="132" height="132">
+          <figcaption><span>${t('For a forty-day notice, or a grave', 'За помен на четрдесет дана, или за гроб')}</span></figcaption>
+        </figure>
+
         <p class="mp__epitaph">“${esc(t(e.epitaph, e.epitaphSr))}”</p>
       </div>
 
@@ -555,22 +578,6 @@
           </a>
         </div>
 
-        <div class="mp__share">
-          <button class="btn btn--ghost btn--sm" type="button" id="mpShare" data-id="${e.id}">
-            <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg>
-            <span>${t('Copy link', 'Копирај везу')}</span>
-          </button>
-          <button class="btn btn--ghost btn--sm" type="button" id="mpQr" aria-expanded="false">
-            <svg class="i" aria-hidden="true"><use href="#i-map"/></svg>
-            <span>${t('QR code', 'QR код')}</span>
-          </button>
-          <span class="mp__share-note" id="mpShareNote"></span>
-        </div>
-
-        <figure class="mp__qr" id="mpQrPanel">
-          <img src="assets/qr/${esc(e.id)}.svg" alt="${t('QR code opening this Memory Page', 'QR код који отвара ову спомен-страницу')}" width="132" height="132">
-          <figcaption><span>${t('For a forty-day notice, or a grave', 'За помен на четрдесет дана, или за гроб')}</span></figcaption>
-        </figure>
       </div>`;
   }
 
