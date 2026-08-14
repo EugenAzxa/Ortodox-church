@@ -1336,11 +1336,14 @@ body.intro-on .hero { transform: scale(1.16); }
 .mp__demo {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.6rem;
   margin: 0 0 0.9rem;
-  padding: 0.24rem 0.8rem;
+  /* Generous left padding: in a fully rounded pill this short, the cap curves
+     back in and a gold icon sitting close to a gold dashed border reads as one
+     smudge. Squarer corners give the icon somewhere to sit. */
+  padding: 0.34rem 1rem;
   border: 1px dashed var(--hair-gold-lit);
-  border-radius: 999px;
+  border-radius: var(--r);
   font-family: var(--mono);
   font-size: 0.62rem;
   letter-spacing: 0.12em;
