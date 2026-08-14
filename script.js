@@ -1141,16 +1141,41 @@
   let speechVoice = null;   // a Serbian or near-Serbian voice, if one exists
   let speakingBtn = null;
 
+  /* Score every installed voice rather than taking the first match. The old
+     local SAPI voices are the flat robotic ones; the network voices Chrome
+     exposes (Google, and the Microsoft Natural set) sound like a person, and
+     picking one of those is most of what "a natural voice" means here. */
+  function scoreVoice(v) {
+    const lang = (v.lang || '').toLowerCase().replace('_', '-');
+    let score = 0;
+
+    if (lang.startsWith('sr')) score += 1000;                  // Serbian
+    else if (/^(hr|bs|me)/.test(lang)) score += 800;            // near enough to read it
+    else if (/^(mk|sl|ru|bg|uk)/.test(lang)) score += 600;      // Slavic, recognisably off
+    else if (lang.startsWith('en')) score += 100;               // the honest fallback
+    else return -1;                                             // never read Cyrillic in French
+
+    if (!v.localService) score += 300;                          // network voices are far better
+    if (/natural|neural/i.test(v.name)) score += 250;
+    if (/google/i.test(v.name)) score += 200;
+    if (/zira|linda|aria|jenny|sonia|libby/i.test(v.name)) score += 40;  // softer than David
+    return score;
+  }
+
   function pickVoice() {
     if (!synth) return null;
-    const voices = synth.getVoices() || [];
-    // Serbian first, then the languages whose phonetics are close enough to be
-    // worth hearing, and never an English voice reading Cyrillic.
-    for (const code of ['sr', 'hr', 'bs', 'mk', 'sl', 'ru', 'bg', 'uk']) {
-      const v = voices.find(x => (x.lang || '').toLowerCase().replace('_', '-').startsWith(code));
-      if (v) return v;
-    }
-    return null;
+    const voices = (synth.getVoices() || []).filter(v => scoreVoice(v) >= 0);
+    if (!voices.length) return null;
+    const best = voices.slice().sort((a, b) => scoreVoice(b) - scoreVoice(a))[0];
+    // Only treat it as "the Serbian voice" if it can actually read Cyrillic.
+    return /^(sr|hr|bs|me|mk|sl|ru|bg|uk)/.test((best.lang || '').toLowerCase()) ? best : null;
+  }
+
+  /* The best voice available for English, used when nothing can read Serbian. */
+  function pickEnglishVoice() {
+    if (!synth) return null;
+    const en = (synth.getVoices() || []).filter(v => (v.lang || '').toLowerCase().startsWith('en'));
+    return en.sort((a, b) => scoreVoice(b) - scoreVoice(a))[0] || null;
   }
 
   function speechReady() {
@@ -1168,9 +1193,11 @@
         `Read aloud by a synthesised voice (${speechVoice.name}), not by the parish choir. Recordings from the choir replace it when they are made.`,
         `Чита синтетички глас (${speechVoice.name}), не парохијски хор. Снимци хора ће га заменити када буду направљени.`) + '</span>';
     } else {
+      const en = pickEnglishVoice();
+      const named = en ? ` (${en.name})` : '';
       notice.innerHTML = icon + '<span>' + t(
-        'No Serbian voice is installed on this device, so the listen buttons read the English translation. The Serbian text is still below, in both alphabets.',
-        'На овом уређају нема српског гласа, па дугмад читају енглески превод. Српски текст је и даље испод, у оба писма.') + '</span>';
+        `No Serbian voice is installed on this device, so the listen buttons read the English translation${named}. To hear the Serbian, add a Serbian voice in Windows Settings under Time & Language, Speech, then reload.`,
+        `На овом уређају нема српског гласа, па дугмад читају енглески превод${named}. За српски, додајте српски глас у Windows подешавањима (Време и језик, Говор) па освежите страницу.`) + '</span>';
     }
     // Reflect the language the buttons will actually speak.
     $$('.listen').forEach(b => { if (b.dataset.kind === 'prayer') labelListen(b); });
@@ -1201,34 +1228,54 @@
     btn.innerHTML = (stop ? eq : mic) + '<span>' + word + '</span>';
   }
 
+  /* Chrome stops speaking after about fifteen seconds unless it is nudged, and
+     these are prayers, not sentences. */
+  let keepAlive = null;
+  function startKeepAlive() {
+    clearInterval(keepAlive);
+    keepAlive = setInterval(() => {
+      if (!synth.speaking) { clearInterval(keepAlive); keepAlive = null; return; }
+      synth.pause();
+      synth.resume();
+    }, 9000);
+  }
+
   function speak(text, btn, forceLang) {
     if (!synth) return;
     const wasSame = speakingBtn === btn;
+    const wasSpeaking = synth.speaking || synth.pending;
     stopSpeaking();
     if (wasSame) return;                 // pressing it again just stops
 
     const u = new SpeechSynthesisUtterance(text);
-    if (forceLang === 'en' || !speechVoice) {
-      u.lang = 'en-GB';
-    } else {
-      u.voice = speechVoice;
-      u.lang = speechVoice.lang;
-    }
-    u.rate = 0.82;                       // prayers are not read at speaking pace
-    u.pitch = 0.95;
+    const english = forceLang === 'en' || !speechVoice;
+    const voice = english ? pickEnglishVoice() : speechVoice;
+    if (voice) { u.voice = voice; u.lang = voice.lang; }
+    else u.lang = english ? 'en-GB' : 'sr-RS';
+
+    u.rate = 0.9;                        // slower than speech, but not a dirge
+    u.pitch = 1;
 
     speakingBtn = btn;
     btn.classList.add('is-speaking');
     labelListen(btn);
 
-    u.onend = u.onerror = () => {
+    const finish = () => {
+      clearInterval(keepAlive); keepAlive = null;
       if (speakingBtn === btn) {
         btn.classList.remove('is-speaking');
         labelListen(btn);
         speakingBtn = null;
       }
     };
-    synth.speak(u);
+    u.onend = finish;
+    u.onerror = e => { if (e.error !== 'interrupted' && e.error !== 'canceled') finish(); else finish(); };
+    u.onstart = startKeepAlive;
+
+    // cancel() followed by speak() in the same tick is silently dropped by
+    // Chrome, so when something was already talking, wait a frame first.
+    if (wasSpeaking) setTimeout(() => synth.speak(u), 120);
+    else synth.speak(u);
   }
 
   // Stop the voice if the reader leaves or navigates away mid-prayer.

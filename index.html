@@ -16,7 +16,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <!-- Bump v= when styles.css or script.js changes, so browsers do not serve a
      stale copy from cache. -->
-<link rel="stylesheet" href="styles.css?v=19">
+<link rel="stylesheet" href="styles.css?v=20">
 <link rel="icon" href="assets/angel.webp" type="image/webp">
 </head>
 <body>
@@ -91,12 +91,12 @@
   </a>
 
   <div class="nav__links" id="navLinks">
-    <a href="#wall" data-sr="Спомен">Memorial</a>
-    <a href="#stand" data-sr="Свећњак">Candles</a>
     <a href="#prayers" data-sr="Молитве">Prayers</a>
+    <a href="#children" data-sr="Деца">Children</a>
     <a href="#remembrance" data-sr="Задушнице">Remembrance</a>
     <a href="#parastos" data-sr="Парастос">Parastos</a>
-    <a href="#children" data-sr="Деца">Children</a>
+    <a href="#stand" data-sr="Свећњак">Candles</a>
+    <a href="#wall" data-sr="Спомен">Memorial</a>
     <a href="#saylavy" data-sr="Како ради">How it works</a>
     <a href="#visit" data-sr="Посетите нас">Visit</a>
   </div>
@@ -321,94 +321,366 @@
   </div>
 </section>
 
-<!-- ====================== MEMORIAL WALL ====================== -->
-<section class="section wall" id="wall">
+<!-- ====================== VOICES: PRAYERS & SPEAKING ICONS ====================== -->
+<section class="section prayers" id="prayers">
   <div class="wrap">
-    <div class="wall__head reveal">
-      <div>
-        <!-- The hero belongs to the parish, so the memorial names itself here,
-             where it actually begins. -->
-        <p data-n="I" class="eyebrow" data-sr="Вечан спомен · Спомен-зид">Вечан спомен · The Memorial Wall</p>
-        <h2 data-sr="Оне које носимо на светој Литургији">Those we carry to the Holy Liturgy</h2>
-      </div>
-      <p class="lede" data-sr="Свака арка испод отвара спомен-страницу Saylavy – животопис, снимљен глас, фотографије и, где је породица тако одредила, временска капсула која се отвара на одређени дан. Трајно, и никада наплаћивано по месецу.">
-        Each arch below opens a Saylavy Memory Page – a life written down, a recorded voice,
-        photographs, and where a family has chosen it, a time capsule that opens on a set day.
-        Kept for good, and never charged by the month.
+    <div class="head--split reveal">
+      <p data-n="I" class="eyebrow" data-sr="Гласови">Voices</p>
+      <h2 data-sr="Оно што се говори наглас">The things said out loud</h2>
+      <p class="lede dropcap" data-sr="Парохија ове речи не чита, него их зна. Оне се уче слухом, у цркви, стојећи поред некога ко их већ зна. Ево их писане ћирилицом и латиницом, са преводом, и са гласом за оне који су далеко или тек почињу.">
+        A parish does not read these words. It knows them. They are learned by ear, in church,
+        standing next to somebody who already knows them. Here they are in Cyrillic and in Latin
+        letters, with a translation, and with a voice for anyone far away or just starting.
       </p>
+    </div>
 
-      <p class="powered">
-        <svg class="i" aria-hidden="true"><use href="#i-shield"/></svg>
-        <span data-sr="Сваку страницу на овом зиду чува">Every page on this wall is kept by</span>
-        <a class="saylavy-mark" href="https://saylavy.com/" target="_blank" rel="noopener">Saylavy</a>
+    <p class="pr__notice" id="speechNotice" role="status"></p>
+
+    <div class="pr__list" id="prayerList"></div>
+
+    <div class="cross-rule" aria-hidden="true">☦</div>
+
+    <div class="head--split reveal">
+      <p class="eyebrow" data-sr="Иконе">The icons</p>
+      <h2 data-sr="Иконе говоре">The icons speak</h2>
+      <p class="lede" data-sr="Икона није слика него запис. Свака ознака на њој нешто значи, и када се једном научи да се чита, иконостас престаје да буде украс. Ове три висе у нашој цркви.">
+        An icon is not a picture, it is a record. Every mark on it means something, and once you can
+        read them the iconostasis stops being decoration. These three hang in our church.
       </p>
+    </div>
 
-      <div class="notice">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/>
-        </svg>
-        <p data-sr="<strong>Ово је приказ дизајна.</strong> Свих шест људи испод су измишљени – имена, датуми и животописи су написани само зато да покажу како спомен-страница изгледа. Ниједан стварни парохијанин овде није представљен.">
-          <strong>This is a design demonstration.</strong> All six people below are fictional –
-          the names, dates and life stories were written only to show how a Memory Page looks.
-          No real parishioner is represented here.
+    <div class="ic__list" id="iconList"></div>
+
+    <div class="cross-rule" aria-hidden="true">☦</div>
+
+    <!-- The live version of all this, on Saylavy's own Orthodox page -->
+    <div class="sofia reveal">
+      <div class="sofia__txt">
+        <p class="eyebrow" data-sr="На Saylavy">On Saylavy</p>
+        <h3 data-sr="Иконе овде говоре. Тамо одговарају.">The icons here speak. There, they answer.</h3>
+        <p data-sr="Ова страница вам каже шта се на икони види. Saylavy иде корак даље: Софија вас води, а свети Јован Златоусти, свети Василије Велики, свети Серафим Саровски и свети Никола одговарају на питања, наглас, гласом који је ваша црква одобрила.">
+          This page tells you what to look for in an icon. Saylavy goes a step further: Sofia guides
+          you, and St. John Chrysostom, St. Basil the Great, St. Seraphim of Sarov and St. Nicholas
+          answer questions out loud, in a voice your own church has approved.
         </p>
-      </div>
-    </div>
+        <p class="sofia__note" data-sr="За дете које не чита ћирилицу и не сме да прекине службу питањем, ово је начин да ипак пита.">
+          For a child who cannot read Cyrillic and would not interrupt a service to ask, this is how
+          the question still gets asked.
+        </p>
 
-    <div class="wall__tools reveal">
-      <div class="filters" role="group" aria-label="Filter the memorial wall">
-        <button type="button" data-filter="all" aria-pressed="true" data-sr="Сви">All</button>
-        <button type="button" data-filter="zadusnice" aria-pressed="false" data-sr="Ове задушнице">This Zadušnice</button>
-        <button type="button" data-filter="founders" aria-pressed="false" data-sr="Оснивачи">Founders</button>
-        <button type="button" data-filter="recent" aria-pressed="false" data-sr="Недавно додати">Recently added</button>
-      </div>
-
-      <div class="search">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <circle cx="11" cy="11" r="7"/><path d="m20 20-4.3-4.3"/>
-        </svg>
-        <label class="sr-only" for="wallSearch">Search the memorial</label>
-        <input type="search" id="wallSearch" placeholder="Search by name or year…" data-sr-ph="Тражи по имену или години…">
-      </div>
-    </div>
-
-    <div class="wall__grid" id="wallGrid"></div>
-    <p class="wall__empty" id="wallEmpty" data-sr="Нема резултата за ту претрагу.">No one matches that search.</p>
-
-    <div class="wall__foot reveal">
-      <p data-sr="Породице парохије могу да поднесу спомен-страницу у канцеларији или преко Saylavy. Парохија чува архиву; породица чува власништво.">
-        Parish families may submit a Memory Page through the church office or directly with
-        Saylavy. The parish keeps the archive; the family keeps ownership.
-      </p>
-      <div class="wall__foot-cta">
-        <a class="btn btn--gold" href="https://saylavy.com/auth/sign-in?redirect=/app">
-          <svg class="i" aria-hidden="true"><use href="#i-plus"/></svg>
-          <span data-sr="Отворите спомен-страницу">Open a Memory Page</span>
+        <a class="btn btn--gold" href="https://saylavy.world/orthodox.html" target="_blank" rel="noopener">
+          <svg class="i" aria-hidden="true"><use href="#i-mic"/></svg>
+          <span data-sr="Разговарајте са Софијом">Speak with Sofia</span>
+          <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg>
         </a>
-        <a class="btn btn--ghost" href="#saylavy" data-sr="Како се додаје страница">How a page is added</a>
+      </div>
+
+      <div class="sofia__cast">
+        <!-- Sofia herself is a live avatar on their page rather than a picture,
+             so she is named in the copy instead of shown as the wrong face. -->
+        <ul class="sofia__saints">
+          <li><img src="assets/saints/john-chrysostom.webp" alt="Icon of St. John Chrysostom" loading="lazy" decoding="async"><span>St. John Chrysostom</span></li>
+          <li><img src="assets/saints/basil-the-great.webp" alt="Icon of St. Basil the Great" loading="lazy" decoding="async"><span>St. Basil the Great</span></li>
+          <li><img src="assets/saints/seraphim-of-sarov.webp" alt="Icon of St. Seraphim of Sarov" loading="lazy" decoding="async"><span>St. Seraphim of Sarov</span></li>
+          <li><img src="assets/saints/saint-nicholas.webp" alt="Icon of St. Nicholas" loading="lazy" decoding="async"><span>St. Nicholas</span></li>
+        </ul>
+        <p class="sofia__cap" data-sr="Четири гласа која одговарају">
+          Four of the voices that answer
+        </p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ====================== MEMORY PAGE PANEL ====================== -->
-<div class="mp" id="mp" hidden role="dialog" aria-modal="true" aria-labelledby="mpName">
-  <button class="mp__scrim" id="mpScrim" tabindex="-1" aria-label="Close"></button>
-  <div class="mp__panel" id="mpPanel">
-    <button class="mp__close" id="mpClose">
-      <span data-sr="Затвори">Close</span>
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-        <path d="M18 6 6 18M6 6l12 12"/>
-      </svg>
-    </button>
-    <div id="mpContent"></div>
+<!-- ====================== CHILDREN ====================== -->
+<section class="section kids" id="children">
+  <div class="wrap">
+    <div class="kids__head reveal">
+      <p data-n="II" class="eyebrow eyebrow--center" data-sr="Деца и памћење">Children &amp; Remembrance</p>
+      <h2 data-sr="Архива је и учионица">The archive is also a classroom</h2>
+      <p class="lede dropcap" data-sr="Дете које са осам година сними бакину причу неће морати да је се сећа – имаће је. Ту се спомен-зид и веронаука сусрећу: оно што деца прикупе постаје архива парохије, а оно што је у архиви постаје оно што деца уче.">
+        A child who records their grandmother's story at eight will not have to remember it – they
+        will have it. This is where the memorial wall and the Sunday school meet: what the children
+        gather becomes the parish archive, and what is in the archive becomes what the children learn.
+      </p>
+    </div>
+
+    <!-- The three Sunday school groups -->
+    <div class="classes reveal">
+      <article class="klass">
+        <span class="klass__top">
+          <span class="klass__age">4 – 7</span>
+          <svg class="i i--lg klass__i" aria-hidden="true"><use href="#i-flame"/></svg>
+        </span>
+        <h3 data-sr="Најмлађи">The youngest</h3>
+        <p data-sr="Приче о светима, восак и филц, певање напамет. У овом узрасту се не објашњава – показује се и понавља, док не постане своје.">
+          Stories of the saints, beeswax and felt, singing by heart. At this age nothing is
+          explained – it is shown and repeated until it becomes theirs.
+        </p>
+      </article>
+
+      <article class="klass">
+        <span class="klass__top">
+          <span class="klass__age">8 – 11</span>
+          <svg class="i i--lg klass__i" aria-hidden="true"><use href="#i-pencil"/></svg>
+        </span>
+        <h3 data-sr="Азбука и појање">Azbuka and chant</h3>
+        <p data-sr="Ћирилица, српски као језик а не као успомена, и прво читање на служби. Ово је узраст у ком почиње Мали летописац.">
+          Cyrillic, Serbian as a language rather than a memory, and a first reading at a service.
+          This is the age at which the Little Chronicler begins.
+        </p>
+      </article>
+
+      <article class="klass">
+        <span class="klass__top">
+          <span class="klass__age">12 – 15</span>
+          <svg class="i i--lg klass__i" aria-hidden="true"><use href="#i-mic"/></svg>
+        </span>
+        <h3 data-sr="Чувари архиве">Keepers of the archive</h3>
+        <p data-sr="Снимање, преписивање и уређивање. Старија деца воде интервјуе са најстаријим парохијанима и припремају материјал за спомен-странице.">
+          Recording, transcribing and editing. The older children conduct the interviews with the
+          oldest parishioners and prepare the material for the Memory Pages.
+        </p>
+      </article>
+    </div>
+
+    <div class="cross-rule" aria-hidden="true">☦</div>
+
+    <!-- The Little Chronicler -->
+    <div class="chron reveal">
+      <div class="chron__intro">
+        <p class="eyebrow" data-sr="Пројекат">The project</p>
+        <h3 data-sr="Мали летописац">The Little Chronicler</h3>
+        <p data-sr="Дете добије списак питања и једног старијег парохијанина. Пита, снима, и донесе назад. Одговори – са дозволом породице – улазе у спомен-страницу те особе, а дете се потписује као летописац.">
+          A child is given a list of questions and one older parishioner. They ask, they record, and
+          they bring it back. The answers – with the family's permission – go into that person's
+          Memory Page, and the child is credited as its chronicler.
+        </p>
+        <p data-sr="Војислав Костић је ово радио сам, педесет година пре него што је постојала реч за то. Његова архива од тридесет једног снимка је разлог што и данас знамо како је звучао торонтски српски његовог оца.">
+          Vojislav Kostić did this on his own, fifty years before there was a word for it. His
+          archive of thirty-one recordings is the reason we still know what his father's Toronto
+          Serbian sounded like.
+        </p>
+
+        <p class="chron__consent" data-sr="Снимци остају власништво породице која их је дала. Парохија их чува само уз дозволу, а дете и родитељ увек одлучују шта се објављује.">
+          Recordings remain the property of the family who gave them. The parish holds them only by
+          permission, and the child and their parent always decide what is published.
+        </p>
+      </div>
+
+      <!-- The question deck -->
+      <div class="deck">
+        <div class="deck__top">
+          <!-- data-sr must sit on a text-only element: the language pass rewrites
+               innerHTML, which would replace the counter nodes below. -->
+          <span class="deck__count"><span data-sr="Питање">Question</span>
+            <b><span id="qNow">1</span> / <span id="qTotal">12</span></b></span>
+          <span class="deck__asked"><b id="qAsked">0</b>
+            <span data-sr="постављено">asked</span></span>
+        </div>
+
+        <div class="deck__bar" aria-hidden="true"><i id="qBar" style="width:0%"></i></div>
+
+        <div class="deck__card" id="qCard">
+          <span class="deck__label" data-sr="Питај">Ask</span>
+          <p class="deck__q" id="qText" aria-live="polite">–</p>
+        </div>
+
+        <div class="deck__nav">
+          <button class="btn btn--outline btn--sm" type="button" id="qPrev" data-sr="Претходно">Previous</button>
+          <!-- label is managed by script.js, so no data-sr here -->
+          <button class="btn btn--gold btn--sm" type="button" id="qMark">I asked this</button>
+          <button class="btn btn--outline btn--sm" type="button" id="qNext" data-sr="Следеће">Next</button>
+        </div>
+
+        <p class="deck__badge" id="qBadge" hidden data-sr="Све дванаест питања су постављена. Ти си летописац.">
+          All twelve questions asked. You are a chronicler.
+        </p>
+      </div>
+    </div>
+
+    <div class="cross-rule" aria-hidden="true">☦</div>
+
+    <!-- Azbuka -->
+    <div class="azbuka reveal">
+      <div class="azbuka__head">
+        <p class="eyebrow" data-sr="Учионица">Classroom</p>
+        <h3 data-sr="Азбука">The Azbuka</h3>
+        <p data-sr="Тридесет слова српске ћирилице – једно слово, једно слово. Додирните било које.">
+          Thirty letters of Serbian Cyrillic, and one word for each. Tap any of them.
+        </p>
+      </div>
+
+      <div class="azbuka__show" id="azShow" aria-live="polite">
+        <span class="azbuka__letter" id="azLetter">А</span>
+        <div>
+          <div class="azbuka__word" id="azWord">Анђео</div>
+          <div class="azbuka__gloss" id="azGloss">angel</div>
+        </div>
+      </div>
+
+      <div class="azbuka__grid" id="azGrid" role="group" aria-label="Serbian Cyrillic alphabet"></div>
+    </div>
   </div>
-</div>
+</section>
+
+<!-- ====================== REMEMBRANCE ====================== -->
+<section class="section remem" id="remembrance">
+  <div class="wrap">
+    <div class="remem__grid">
+      <div class="reveal">
+        <p data-n="III" class="eyebrow" data-sr="Задушнице">Days of Remembrance</p>
+        <h2 data-sr="Суботе на које се цела парохија моли за упокојене">The Saturdays when the whole parish prays for the departed</h2>
+        <p class="lede" style="margin-top:1.2rem" data-sr="Задушнице су покретне – везане су за Васкрс и за календар, не за дан у месецу. Обележја су испод; тачне датуме потврђује парохија сваке године.">
+          Zadušnice are movable – they follow Pascha and the calendar rather than a fixed day of
+          the month. The reckoning is below; the exact dates are confirmed by the parish each year.
+        </p>
+
+        <div class="zadusnice">
+          <div class="zad">
+            <svg class="i zad__i" aria-hidden="true"><use href="#i-calendar"/></svg>
+            <span class="zad__name">Месопусне задушнице
+              <small data-sr="Mesopusne zadušnice">Meatfare Zadušnice</small></span>
+            <span class="zad__date" data-sr="Субота пред Месопусну недељу">Saturday before Meatfare Sunday</span>
+          </div>
+          <div class="zad">
+            <svg class="i zad__i" aria-hidden="true"><use href="#i-calendar"/></svg>
+            <span class="zad__name">Духовске задушнице
+              <small data-sr="Duhovske zadušnice">Pentecost Zadušnice</small></span>
+            <span class="zad__date" data-sr="Субота пред Духове">Saturday before Pentecost</span>
+          </div>
+          <div class="zad">
+            <svg class="i zad__i" aria-hidden="true"><use href="#i-calendar"/></svg>
+            <span class="zad__name">Михољске задушнице
+              <small data-sr="Miholjske zadušnice">Michaelmas Zadušnice</small></span>
+            <span class="zad__date" data-sr="Субота у јесен, око Св. арханђела Михаила">Autumn, near St. Michael</span>
+          </div>
+          <div class="zad">
+            <svg class="i zad__i" aria-hidden="true"><use href="#i-calendar"/></svg>
+            <span class="zad__name">Ђурђевске задушнице
+              <small data-sr="Đurđevske zadušnice">St. George Zadušnice</small></span>
+            <span class="zad__date" data-sr="Субота пред Ђурђевдан">Saturday before St. George's Day</span>
+          </div>
+        </div>
+
+        <p style="margin-top:1.6rem;font-size:0.86rem;color:var(--ink-soft)" data-sr="На задушнице се доноси кољиво, свеће и списак имена. Спомен-зид се тог дана сам поставља на филтер „ове задушнице“, тако да свештеник и хор имају списак пред собом.">
+          On Zadušnice the faithful bring koljivo, candles and a list of names. On those days the
+          memorial wall sets itself to the <em>This Zadušnice</em> filter, so that the priest and
+          choir have the list in front of them.
+        </p>
+      </div>
+
+      <!-- Reckoner -->
+      <div class="reckon reveal">
+        <h3 data-sr="Рачунање помена">Reckoning the memorials</h3>
+        <p class="hint" data-sr="Унесите дан упокојења и добићете дане помена по православном рачунању, где се сам дан упокојења рачуна као први дан.">
+          Enter the day of repose and this returns the memorial days by Orthodox reckoning, in
+          which the day of repose itself counts as the first day.
+        </p>
+
+        <div class="field">
+          <label for="reposeDate" data-sr="Дан упокојења">Day of repose</label>
+          <input type="date" id="reposeDate">
+        </div>
+
+        <div class="reckon__out" id="reckonOut" aria-live="polite"></div>
+
+        <p class="hint" style="margin-top:1.2rem" data-sr="Датуми су израчунати по грегоријанском календару. Ако породица држи јулијански, потврдите у канцеларији.">
+          Dates are computed on the Gregorian calendar. If a family keeps the Julian reckoning,
+          confirm with the parish office.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== PARASTOS ====================== -->
+<section class="section parastos" id="parastos">
+  <div class="wrap">
+    <div class="parastos__grid">
+      <div class="reveal">
+        <p data-n="IV" class="eyebrow" data-sr="Захтев">Request</p>
+        <h2 data-sr="Закажите парастос">Arrange a Parastos</h2>
+        <p class="lede" style="margin-top:1.2rem" data-sr="Свештеник служи парастос за упокојене на молбу породице – на четрдесети дан, на годишњицу, на задушнице, или кад год породица затражи.">
+          The priest serves a Parastos for the departed at a family's request – on the fortieth
+          day, on an anniversary, on Zadušnice, or whenever a family asks.
+        </p>
+
+        <div class="koljivo">
+          <p><b data-sr="О кољиву.">On koljivo.</b>
+            <span data-sr="Кувано жито, заслађено и посуто, стоји пред иконом током службе. Зрно које падне у земљу не остаје само зрно – то је оно што кољиво говори, и зато се доноси. Ако вам је потребно да га припреми парохијска кухиња, обележите то испод.">
+            Boiled wheat, sweetened and dressed, stands before the icon during the service. A grain
+            that falls into the earth does not remain only a grain – that is what the koljivo says,
+            and why it is brought. If you would like the parish kitchen to prepare it, mark the box below.</span>
+          </p>
+        </div>
+
+        <p style="margin-top:1.6rem;font-size:0.86rem;color:rgba(246,239,230,0.62)" data-sr="Ово је демонстрација – образац не шаље ништа. У правој постави он долази у канцеларију парохије и на календар свештеника.">
+          This is a demonstration – the form sends nothing. In a live installation it arrives at
+          the parish office and on the priest's calendar.
+        </p>
+      </div>
+
+      <form class="form-card reveal" id="parastosForm" novalidate>
+        <div class="field">
+          <label for="pName" data-sr="Име упокојеног">Name of the departed</label>
+          <input type="text" id="pName" required autocomplete="off">
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="pRepose" data-sr="Дан упокојења">Day of repose</label>
+            <input type="date" id="pRepose">
+          </div>
+          <div class="field">
+            <label for="pOccasion" data-sr="Повод">Occasion</label>
+            <select id="pOccasion">
+              <option data-sr="Четрдесети дан">Fortieth day</option>
+              <option data-sr="Шест месеци">Six months</option>
+              <option data-sr="Годишњица">Anniversary</option>
+              <option data-sr="Задушнице">Zadušnice</option>
+              <option data-sr="Друго">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="pYou" data-sr="Ваше име">Your name</label>
+            <input type="text" id="pYou" required autocomplete="name">
+          </div>
+          <div class="field">
+            <label for="pContact" data-sr="Телефон или е-пошта">Phone or email</label>
+            <input type="text" id="pContact" required autocomplete="email">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="pNames" data-sr="Остала имена за помен">Other names to be commemorated</label>
+          <textarea id="pNames" placeholder="One name per line" data-sr-ph="Једно име у сваком реду"></textarea>
+        </div>
+
+        <label class="check">
+          <input type="checkbox" id="pKoljivo">
+          <span data-sr="Молим да парохијска кухиња припреми кољиво">Please have the parish kitchen prepare the koljivo</span>
+        </label>
+
+        <label class="check">
+          <input type="checkbox" id="pPage">
+          <span data-sr="Желимо да отворимо спомен-страницу Saylavy за ову особу">We would like to open a Saylavy Memory Page for this person</span>
+        </label>
+
+        <button class="btn btn--gold btn--block" type="submit" style="margin-top:1.6rem" data-sr="Пошаљи молбу">Send the request</button>
+        <p class="form-status" id="parastosStatus" role="status"></p>
+      </form>
+    </div>
+  </div>
+</section>
 
 <!-- ====================== CANDLE STAND ====================== -->
 <section class="section stand" id="stand">
   <div class="wrap">
-    <p data-n="II" class="eyebrow eyebrow--center" data-sr="Свећњак">The Candle Stand</p>
+    <p data-n="V" class="eyebrow eyebrow--center" data-sr="Свећњак">The Candle Stand</p>
     <h2 data-sr="Упалите свећу за упокојене">Light a candle for the departed</h2>
     <p class="lede" style="margin:1.2rem auto 0;text-align:center" data-sr="Свећа стоји овде на четрдесет дана. Ако сте далеко од Ричмонд Хила – а многи јесу – ово је исти чин, забележен и изнесен на Литургију.">
       A candle stands here for forty days. If you are far from Richmond Hill – and many are –
@@ -468,7 +740,7 @@
 <section class="section proof" id="proof">
   <div class="wrap">
     <div class="proof__head reveal">
-      <p data-n="III" class="eyebrow eyebrow--center" data-sr="Из даљине">From far away</p>
+      <p data-n="VI" class="eyebrow eyebrow--center" data-sr="Из даљине">From far away</p>
       <h2 data-sr="Права свећа, и фотографија да је горела">A real candle, and a photograph that it burned</h2>
       <p class="lede" data-sr="Свећа на екрану је намера. Ово је свећа од воска, на свећњаку, у Ричмонд Хилу – коју упали парохијанин на првој Литургији, фотографише на свећњаку, и пошаље вам слику. Ако сте у Београду, Ванкуверу или Мелбурну, то је најближе што можете доћи.">
         A candle on a screen is an intention. This is a wax candle, on the stand, in Richmond Hill –
@@ -614,235 +886,95 @@
   </div>
 </section>
 
-<!-- ====================== VOICES: PRAYERS & SPEAKING ICONS ====================== -->
-<section class="section prayers" id="prayers">
+<!-- ====================== MEMORIAL WALL ====================== -->
+<section class="section wall" id="wall">
   <div class="wrap">
-    <div class="head--split reveal">
-      <p class="eyebrow" data-n="IV" data-sr="Гласови">Voices</p>
-      <h2 data-sr="Оно што се говори наглас">The things said out loud</h2>
-      <p class="lede dropcap" data-sr="Парохија ове речи не чита, него их зна. Оне се уче слухом, у цркви, стојећи поред некога ко их већ зна. Ево их писане ћирилицом и латиницом, са преводом, и са гласом за оне који су далеко или тек почињу.">
-        A parish does not read these words. It knows them. They are learned by ear, in church,
-        standing next to somebody who already knows them. Here they are in Cyrillic and in Latin
-        letters, with a translation, and with a voice for anyone far away or just starting.
+    <div class="wall__head reveal">
+      <div>
+        <!-- The hero belongs to the parish, so the memorial names itself here,
+             where it actually begins. -->
+        <p data-n="VII" class="eyebrow" data-sr="Вечан спомен · Спомен-зид">Вечан спомен · The Memorial Wall</p>
+        <h2 data-sr="Оне које носимо на светој Литургији">Those we carry to the Holy Liturgy</h2>
+      </div>
+      <p class="lede" data-sr="Свака арка испод отвара спомен-страницу Saylavy – животопис, снимљен глас, фотографије и, где је породица тако одредила, временска капсула која се отвара на одређени дан. Трајно, и никада наплаћивано по месецу.">
+        Each arch below opens a Saylavy Memory Page – a life written down, a recorded voice,
+        photographs, and where a family has chosen it, a time capsule that opens on a set day.
+        Kept for good, and never charged by the month.
       </p>
+
+      <p class="powered">
+        <svg class="i" aria-hidden="true"><use href="#i-shield"/></svg>
+        <span data-sr="Сваку страницу на овом зиду чува">Every page on this wall is kept by</span>
+        <a class="saylavy-mark" href="https://saylavy.com/" target="_blank" rel="noopener">Saylavy</a>
+      </p>
+
+      <div class="notice">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/>
+        </svg>
+        <p data-sr="<strong>Ово је приказ дизајна.</strong> Свих шест људи испод су измишљени – имена, датуми и животописи су написани само зато да покажу како спомен-страница изгледа. Ниједан стварни парохијанин овде није представљен.">
+          <strong>This is a design demonstration.</strong> All six people below are fictional –
+          the names, dates and life stories were written only to show how a Memory Page looks.
+          No real parishioner is represented here.
+        </p>
+      </div>
     </div>
 
-    <p class="pr__notice" id="speechNotice" role="status"></p>
+    <div class="wall__tools reveal">
+      <div class="filters" role="group" aria-label="Filter the memorial wall">
+        <button type="button" data-filter="all" aria-pressed="true" data-sr="Сви">All</button>
+        <button type="button" data-filter="zadusnice" aria-pressed="false" data-sr="Ове задушнице">This Zadušnice</button>
+        <button type="button" data-filter="founders" aria-pressed="false" data-sr="Оснивачи">Founders</button>
+        <button type="button" data-filter="recent" aria-pressed="false" data-sr="Недавно додати">Recently added</button>
+      </div>
 
-    <div class="pr__list" id="prayerList"></div>
-
-    <div class="cross-rule" aria-hidden="true">☦</div>
-
-    <div class="head--split reveal">
-      <p class="eyebrow" data-sr="Иконе">The icons</p>
-      <h2 data-sr="Иконе говоре">The icons speak</h2>
-      <p class="lede" data-sr="Икона није слика него запис. Свака ознака на њој нешто значи, и када се једном научи да се чита, иконостас престаје да буде украс. Ове три висе у нашој цркви.">
-        An icon is not a picture, it is a record. Every mark on it means something, and once you can
-        read them the iconostasis stops being decoration. These three hang in our church.
-      </p>
+      <div class="search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"/><path d="m20 20-4.3-4.3"/>
+        </svg>
+        <label class="sr-only" for="wallSearch">Search the memorial</label>
+        <input type="search" id="wallSearch" placeholder="Search by name or year…" data-sr-ph="Тражи по имену или години…">
+      </div>
     </div>
 
-    <div class="ic__list" id="iconList"></div>
+    <div class="wall__grid" id="wallGrid"></div>
+    <p class="wall__empty" id="wallEmpty" data-sr="Нема резултата за ту претрагу.">No one matches that search.</p>
 
-    <div class="cross-rule" aria-hidden="true">☦</div>
-
-    <!-- The live version of all this, on Saylavy's own Orthodox page -->
-    <div class="sofia reveal">
-      <div class="sofia__txt">
-        <p class="eyebrow" data-sr="На Saylavy">On Saylavy</p>
-        <h3 data-sr="Иконе овде говоре. Тамо одговарају.">The icons here speak. There, they answer.</h3>
-        <p data-sr="Ова страница вам каже шта се на икони види. Saylavy иде корак даље: Софија вас води, а свети Јован Златоусти, свети Василије Велики, свети Серафим Саровски и свети Никола одговарају на питања, наглас, гласом који је ваша црква одобрила.">
-          This page tells you what to look for in an icon. Saylavy goes a step further: Sofia guides
-          you, and St. John Chrysostom, St. Basil the Great, St. Seraphim of Sarov and St. Nicholas
-          answer questions out loud, in a voice your own church has approved.
-        </p>
-        <p class="sofia__note" data-sr="За дете које не чита ћирилицу и не сме да прекине службу питањем, ово је начин да ипак пита.">
-          For a child who cannot read Cyrillic and would not interrupt a service to ask, this is how
-          the question still gets asked.
-        </p>
-
-        <a class="btn btn--gold" href="https://saylavy.world/orthodox.html" target="_blank" rel="noopener">
-          <svg class="i" aria-hidden="true"><use href="#i-mic"/></svg>
-          <span data-sr="Разговарајте са Софијом">Speak with Sofia</span>
-          <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg>
+    <div class="wall__foot reveal">
+      <p data-sr="Породице парохије могу да поднесу спомен-страницу у канцеларији или преко Saylavy. Парохија чува архиву; породица чува власништво.">
+        Parish families may submit a Memory Page through the church office or directly with
+        Saylavy. The parish keeps the archive; the family keeps ownership.
+      </p>
+      <div class="wall__foot-cta">
+        <a class="btn btn--gold" href="https://saylavy.com/auth/sign-in?redirect=/app">
+          <svg class="i" aria-hidden="true"><use href="#i-plus"/></svg>
+          <span data-sr="Отворите спомен-страницу">Open a Memory Page</span>
         </a>
-      </div>
-
-      <div class="sofia__cast">
-        <!-- Sofia herself is a live avatar on their page rather than a picture,
-             so she is named in the copy instead of shown as the wrong face. -->
-        <ul class="sofia__saints">
-          <li><img src="assets/saints/john-chrysostom.webp" alt="Icon of St. John Chrysostom" loading="lazy" decoding="async"><span>St. John Chrysostom</span></li>
-          <li><img src="assets/saints/basil-the-great.webp" alt="Icon of St. Basil the Great" loading="lazy" decoding="async"><span>St. Basil the Great</span></li>
-          <li><img src="assets/saints/seraphim-of-sarov.webp" alt="Icon of St. Seraphim of Sarov" loading="lazy" decoding="async"><span>St. Seraphim of Sarov</span></li>
-          <li><img src="assets/saints/saint-nicholas.webp" alt="Icon of St. Nicholas" loading="lazy" decoding="async"><span>St. Nicholas</span></li>
-        </ul>
-        <p class="sofia__cap" data-sr="Четири гласа која одговарају">
-          Four of the voices that answer
-        </p>
+        <a class="btn btn--ghost" href="#saylavy" data-sr="Како се додаје страница">How a page is added</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ====================== REMEMBRANCE ====================== -->
-<section class="section remem" id="remembrance">
-  <div class="wrap">
-    <div class="remem__grid">
-      <div class="reveal">
-        <p data-n="V" class="eyebrow" data-sr="Задушнице">Days of Remembrance</p>
-        <h2 data-sr="Суботе на које се цела парохија моли за упокојене">The Saturdays when the whole parish prays for the departed</h2>
-        <p class="lede" style="margin-top:1.2rem" data-sr="Задушнице су покретне – везане су за Васкрс и за календар, не за дан у месецу. Обележја су испод; тачне датуме потврђује парохија сваке године.">
-          Zadušnice are movable – they follow Pascha and the calendar rather than a fixed day of
-          the month. The reckoning is below; the exact dates are confirmed by the parish each year.
-        </p>
-
-        <div class="zadusnice">
-          <div class="zad">
-            <svg class="i zad__i" aria-hidden="true"><use href="#i-calendar"/></svg>
-            <span class="zad__name">Месопусне задушнице
-              <small data-sr="Mesopusne zadušnice">Meatfare Zadušnice</small></span>
-            <span class="zad__date" data-sr="Субота пред Месопусну недељу">Saturday before Meatfare Sunday</span>
-          </div>
-          <div class="zad">
-            <svg class="i zad__i" aria-hidden="true"><use href="#i-calendar"/></svg>
-            <span class="zad__name">Духовске задушнице
-              <small data-sr="Duhovske zadušnice">Pentecost Zadušnice</small></span>
-            <span class="zad__date" data-sr="Субота пред Духове">Saturday before Pentecost</span>
-          </div>
-          <div class="zad">
-            <svg class="i zad__i" aria-hidden="true"><use href="#i-calendar"/></svg>
-            <span class="zad__name">Михољске задушнице
-              <small data-sr="Miholjske zadušnice">Michaelmas Zadušnice</small></span>
-            <span class="zad__date" data-sr="Субота у јесен, око Св. арханђела Михаила">Autumn, near St. Michael</span>
-          </div>
-          <div class="zad">
-            <svg class="i zad__i" aria-hidden="true"><use href="#i-calendar"/></svg>
-            <span class="zad__name">Ђурђевске задушнице
-              <small data-sr="Đurđevske zadušnice">St. George Zadušnice</small></span>
-            <span class="zad__date" data-sr="Субота пред Ђурђевдан">Saturday before St. George's Day</span>
-          </div>
-        </div>
-
-        <p style="margin-top:1.6rem;font-size:0.86rem;color:var(--ink-soft)" data-sr="На задушнице се доноси кољиво, свеће и списак имена. Спомен-зид се тог дана сам поставља на филтер „ове задушнице“, тако да свештеник и хор имају списак пред собом.">
-          On Zadušnice the faithful bring koljivo, candles and a list of names. On those days the
-          memorial wall sets itself to the <em>This Zadušnice</em> filter, so that the priest and
-          choir have the list in front of them.
-        </p>
-      </div>
-
-      <!-- Reckoner -->
-      <div class="reckon reveal">
-        <h3 data-sr="Рачунање помена">Reckoning the memorials</h3>
-        <p class="hint" data-sr="Унесите дан упокојења и добићете дане помена по православном рачунању, где се сам дан упокојења рачуна као први дан.">
-          Enter the day of repose and this returns the memorial days by Orthodox reckoning, in
-          which the day of repose itself counts as the first day.
-        </p>
-
-        <div class="field">
-          <label for="reposeDate" data-sr="Дан упокојења">Day of repose</label>
-          <input type="date" id="reposeDate">
-        </div>
-
-        <div class="reckon__out" id="reckonOut" aria-live="polite"></div>
-
-        <p class="hint" style="margin-top:1.2rem" data-sr="Датуми су израчунати по грегоријанском календару. Ако породица држи јулијански, потврдите у канцеларији.">
-          Dates are computed on the Gregorian calendar. If a family keeps the Julian reckoning,
-          confirm with the parish office.
-        </p>
-      </div>
-    </div>
+<!-- ====================== MEMORY PAGE PANEL ====================== -->
+<div class="mp" id="mp" hidden role="dialog" aria-modal="true" aria-labelledby="mpName">
+  <button class="mp__scrim" id="mpScrim" tabindex="-1" aria-label="Close"></button>
+  <div class="mp__panel" id="mpPanel">
+    <button class="mp__close" id="mpClose">
+      <span data-sr="Затвори">Close</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M18 6 6 18M6 6l12 12"/>
+      </svg>
+    </button>
+    <div id="mpContent"></div>
   </div>
-</section>
-
-<!-- ====================== PARASTOS ====================== -->
-<section class="section parastos" id="parastos">
-  <div class="wrap">
-    <div class="parastos__grid">
-      <div class="reveal">
-        <p data-n="VI" class="eyebrow" data-sr="Захтев">Request</p>
-        <h2 data-sr="Закажите парастос">Arrange a Parastos</h2>
-        <p class="lede" style="margin-top:1.2rem" data-sr="Свештеник служи парастос за упокојене на молбу породице – на четрдесети дан, на годишњицу, на задушнице, или кад год породица затражи.">
-          The priest serves a Parastos for the departed at a family's request – on the fortieth
-          day, on an anniversary, on Zadušnice, or whenever a family asks.
-        </p>
-
-        <div class="koljivo">
-          <p><b data-sr="О кољиву.">On koljivo.</b>
-            <span data-sr="Кувано жито, заслађено и посуто, стоји пред иконом током службе. Зрно које падне у земљу не остаје само зрно – то је оно што кољиво говори, и зато се доноси. Ако вам је потребно да га припреми парохијска кухиња, обележите то испод.">
-            Boiled wheat, sweetened and dressed, stands before the icon during the service. A grain
-            that falls into the earth does not remain only a grain – that is what the koljivo says,
-            and why it is brought. If you would like the parish kitchen to prepare it, mark the box below.</span>
-          </p>
-        </div>
-
-        <p style="margin-top:1.6rem;font-size:0.86rem;color:rgba(246,239,230,0.62)" data-sr="Ово је демонстрација – образац не шаље ништа. У правој постави он долази у канцеларију парохије и на календар свештеника.">
-          This is a demonstration – the form sends nothing. In a live installation it arrives at
-          the parish office and on the priest's calendar.
-        </p>
-      </div>
-
-      <form class="form-card reveal" id="parastosForm" novalidate>
-        <div class="field">
-          <label for="pName" data-sr="Име упокојеног">Name of the departed</label>
-          <input type="text" id="pName" required autocomplete="off">
-        </div>
-
-        <div class="form-row">
-          <div class="field">
-            <label for="pRepose" data-sr="Дан упокојења">Day of repose</label>
-            <input type="date" id="pRepose">
-          </div>
-          <div class="field">
-            <label for="pOccasion" data-sr="Повод">Occasion</label>
-            <select id="pOccasion">
-              <option data-sr="Четрдесети дан">Fortieth day</option>
-              <option data-sr="Шест месеци">Six months</option>
-              <option data-sr="Годишњица">Anniversary</option>
-              <option data-sr="Задушнице">Zadušnice</option>
-              <option data-sr="Друго">Other</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="field">
-            <label for="pYou" data-sr="Ваше име">Your name</label>
-            <input type="text" id="pYou" required autocomplete="name">
-          </div>
-          <div class="field">
-            <label for="pContact" data-sr="Телефон или е-пошта">Phone or email</label>
-            <input type="text" id="pContact" required autocomplete="email">
-          </div>
-        </div>
-
-        <div class="field">
-          <label for="pNames" data-sr="Остала имена за помен">Other names to be commemorated</label>
-          <textarea id="pNames" placeholder="One name per line" data-sr-ph="Једно име у сваком реду"></textarea>
-        </div>
-
-        <label class="check">
-          <input type="checkbox" id="pKoljivo">
-          <span data-sr="Молим да парохијска кухиња припреми кољиво">Please have the parish kitchen prepare the koljivo</span>
-        </label>
-
-        <label class="check">
-          <input type="checkbox" id="pPage">
-          <span data-sr="Желимо да отворимо спомен-страницу Saylavy за ову особу">We would like to open a Saylavy Memory Page for this person</span>
-        </label>
-
-        <button class="btn btn--gold btn--block" type="submit" style="margin-top:1.6rem" data-sr="Пошаљи молбу">Send the request</button>
-        <p class="form-status" id="parastosStatus" role="status"></p>
-      </form>
-    </div>
-  </div>
-</section>
+</div>
 
 <!-- ====================== SAYLAVY ====================== -->
 <section class="section saylavy" id="saylavy">
   <div class="wrap">
     <div class="saylavy__head reveal">
-      <p class="eyebrow eyebrow--center" data-n="VII">
+      <p data-n="VIII" class="eyebrow eyebrow--center">
         <a class="saylavy-mark" href="https://saylavy.com/" target="_blank" rel="noopener">Saylavy</a>
       </p>
       <h2 data-sr="Шта чини спомен-страницу">What makes a Memory Page</h2>
@@ -982,138 +1114,6 @@
           <span data-sr="Или питајте у канцеларији парохије">Or ask at the parish office</span>
         </a>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- ====================== CHILDREN ====================== -->
-<section class="section kids" id="children">
-  <div class="wrap">
-    <div class="kids__head reveal">
-      <p data-n="VIII" class="eyebrow eyebrow--center" data-sr="Деца и памћење">Children &amp; Remembrance</p>
-      <h2 data-sr="Архива је и учионица">The archive is also a classroom</h2>
-      <p class="lede dropcap" data-sr="Дете које са осам година сними бакину причу неће морати да је се сећа – имаће је. Ту се спомен-зид и веронаука сусрећу: оно што деца прикупе постаје архива парохије, а оно што је у архиви постаје оно што деца уче.">
-        A child who records their grandmother's story at eight will not have to remember it – they
-        will have it. This is where the memorial wall and the Sunday school meet: what the children
-        gather becomes the parish archive, and what is in the archive becomes what the children learn.
-      </p>
-    </div>
-
-    <!-- The three Sunday school groups -->
-    <div class="classes reveal">
-      <article class="klass">
-        <span class="klass__top">
-          <span class="klass__age">4 – 7</span>
-          <svg class="i i--lg klass__i" aria-hidden="true"><use href="#i-flame"/></svg>
-        </span>
-        <h3 data-sr="Најмлађи">The youngest</h3>
-        <p data-sr="Приче о светима, восак и филц, певање напамет. У овом узрасту се не објашњава – показује се и понавља, док не постане своје.">
-          Stories of the saints, beeswax and felt, singing by heart. At this age nothing is
-          explained – it is shown and repeated until it becomes theirs.
-        </p>
-      </article>
-
-      <article class="klass">
-        <span class="klass__top">
-          <span class="klass__age">8 – 11</span>
-          <svg class="i i--lg klass__i" aria-hidden="true"><use href="#i-pencil"/></svg>
-        </span>
-        <h3 data-sr="Азбука и појање">Azbuka and chant</h3>
-        <p data-sr="Ћирилица, српски као језик а не као успомена, и прво читање на служби. Ово је узраст у ком почиње Мали летописац.">
-          Cyrillic, Serbian as a language rather than a memory, and a first reading at a service.
-          This is the age at which the Little Chronicler begins.
-        </p>
-      </article>
-
-      <article class="klass">
-        <span class="klass__top">
-          <span class="klass__age">12 – 15</span>
-          <svg class="i i--lg klass__i" aria-hidden="true"><use href="#i-mic"/></svg>
-        </span>
-        <h3 data-sr="Чувари архиве">Keepers of the archive</h3>
-        <p data-sr="Снимање, преписивање и уређивање. Старија деца воде интервјуе са најстаријим парохијанима и припремају материјал за спомен-странице.">
-          Recording, transcribing and editing. The older children conduct the interviews with the
-          oldest parishioners and prepare the material for the Memory Pages.
-        </p>
-      </article>
-    </div>
-
-    <div class="cross-rule" aria-hidden="true">☦</div>
-
-    <!-- The Little Chronicler -->
-    <div class="chron reveal">
-      <div class="chron__intro">
-        <p class="eyebrow" data-sr="Пројекат">The project</p>
-        <h3 data-sr="Мали летописац">The Little Chronicler</h3>
-        <p data-sr="Дете добије списак питања и једног старијег парохијанина. Пита, снима, и донесе назад. Одговори – са дозволом породице – улазе у спомен-страницу те особе, а дете се потписује као летописац.">
-          A child is given a list of questions and one older parishioner. They ask, they record, and
-          they bring it back. The answers – with the family's permission – go into that person's
-          Memory Page, and the child is credited as its chronicler.
-        </p>
-        <p data-sr="Војислав Костић је ово радио сам, педесет година пре него што је постојала реч за то. Његова архива од тридесет једног снимка је разлог што и данас знамо како је звучао торонтски српски његовог оца.">
-          Vojislav Kostić did this on his own, fifty years before there was a word for it. His
-          archive of thirty-one recordings is the reason we still know what his father's Toronto
-          Serbian sounded like.
-        </p>
-
-        <p class="chron__consent" data-sr="Снимци остају власништво породице која их је дала. Парохија их чува само уз дозволу, а дете и родитељ увек одлучују шта се објављује.">
-          Recordings remain the property of the family who gave them. The parish holds them only by
-          permission, and the child and their parent always decide what is published.
-        </p>
-      </div>
-
-      <!-- The question deck -->
-      <div class="deck">
-        <div class="deck__top">
-          <!-- data-sr must sit on a text-only element: the language pass rewrites
-               innerHTML, which would replace the counter nodes below. -->
-          <span class="deck__count"><span data-sr="Питање">Question</span>
-            <b><span id="qNow">1</span> / <span id="qTotal">12</span></b></span>
-          <span class="deck__asked"><b id="qAsked">0</b>
-            <span data-sr="постављено">asked</span></span>
-        </div>
-
-        <div class="deck__bar" aria-hidden="true"><i id="qBar" style="width:0%"></i></div>
-
-        <div class="deck__card" id="qCard">
-          <span class="deck__label" data-sr="Питај">Ask</span>
-          <p class="deck__q" id="qText" aria-live="polite">–</p>
-        </div>
-
-        <div class="deck__nav">
-          <button class="btn btn--outline btn--sm" type="button" id="qPrev" data-sr="Претходно">Previous</button>
-          <!-- label is managed by script.js, so no data-sr here -->
-          <button class="btn btn--gold btn--sm" type="button" id="qMark">I asked this</button>
-          <button class="btn btn--outline btn--sm" type="button" id="qNext" data-sr="Следеће">Next</button>
-        </div>
-
-        <p class="deck__badge" id="qBadge" hidden data-sr="Све дванаест питања су постављена. Ти си летописац.">
-          All twelve questions asked. You are a chronicler.
-        </p>
-      </div>
-    </div>
-
-    <div class="cross-rule" aria-hidden="true">☦</div>
-
-    <!-- Azbuka -->
-    <div class="azbuka reveal">
-      <div class="azbuka__head">
-        <p class="eyebrow" data-sr="Учионица">Classroom</p>
-        <h3 data-sr="Азбука">The Azbuka</h3>
-        <p data-sr="Тридесет слова српске ћирилице – једно слово, једно слово. Додирните било које.">
-          Thirty letters of Serbian Cyrillic, and one word for each. Tap any of them.
-        </p>
-      </div>
-
-      <div class="azbuka__show" id="azShow" aria-live="polite">
-        <span class="azbuka__letter" id="azLetter">А</span>
-        <div>
-          <div class="azbuka__word" id="azWord">Анђео</div>
-          <div class="azbuka__gloss" id="azGloss">angel</div>
-        </div>
-      </div>
-
-      <div class="azbuka__grid" id="azGrid" role="group" aria-label="Serbian Cyrillic alphabet"></div>
     </div>
   </div>
 </section>
@@ -1285,6 +1285,6 @@
   </div>
 </footer>
 
-<script src="script.js?v=19"></script>
+<script src="script.js?v=20"></script>
 </body>
 </html>
