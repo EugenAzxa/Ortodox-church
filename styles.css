@@ -3302,6 +3302,59 @@ body.intro-on .hero { transform: scale(1.16); }
 }
 
 /* --------------------------------------------------------------------------
+   How to get there
+   OpenStreetMap rather than an embed that needs a key, warmed slightly so a
+   daylight map does not fight the rest of the page.
+   -------------------------------------------------------------------------- */
+
+.map { margin-top: clamp(2.4rem, 5vw, 3.6rem); }
+.map__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.1rem;
+}
+
+.map__frame {
+  position: relative;
+  border-radius: var(--r);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  box-shadow: var(--sh);
+  background: var(--parchment);
+}
+.map__frame iframe {
+  display: block;
+  width: 100%;
+  height: clamp(19rem, 42vw, 27rem);
+  border: 0;
+  filter: sepia(0.28) saturate(0.85) contrast(0.96);
+}
+/* A hairline of the parish gold around the inside edge. */
+.map__frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(231, 175, 35, 0.35);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.map__note {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0.9rem 0 0;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+}
+.map__note .i { width: 1rem; height: 1rem; color: var(--gold-dark); }
+
+/* --------------------------------------------------------------------------
    Footer
    -------------------------------------------------------------------------- */
 

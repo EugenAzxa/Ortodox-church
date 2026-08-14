@@ -16,7 +16,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <!-- Bump v= when styles.css or script.js changes, so browsers do not serve a
      stale copy from cache. -->
-<link rel="stylesheet" href="styles.css?v=28">
+<link rel="stylesheet" href="styles.css?v=29">
 <link rel="icon" href="assets/angel.webp" type="image/webp">
 </head>
 <body>
@@ -1235,6 +1235,29 @@
         <figcaption data-sr="Парохија Светог арханђела Гаврила, Ричмонд Хил, Онтарио">St. Archangel Gabriel Parish, Richmond Hill, Ontario</figcaption>
       </figure>
     </div>
+
+    <!-- How to get there -->
+    <div class="map reveal">
+      <div class="map__head">
+        <p class="eyebrow" style="margin:0" data-sr="Како доћи">How to get there</p>
+        <a class="btn btn--gold btn--sm" href="https://maps.google.com/?q=49+N+Lake+Rd,+Richmond+Hill,+ON+L4E+2Z8" target="_blank" rel="noopener">
+          <svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>
+          <span data-sr="Отвори у мапама">Open in Maps</span>
+        </a>
+      </div>
+
+      <div class="map__frame">
+        <iframe
+          title="Map showing St. Archangel Gabriel Serbian Orthodox Parish at 49 North Lake Road, Richmond Hill, Ontario"
+          src="https://www.openstreetmap.org/export/embed.html?bbox=-79.4616%2C43.9428%2C-79.4456%2C43.9508&amp;layer=mapnik&amp;marker=43.9467805%2C-79.4535843"
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+
+      <p class="map__note">
+        <svg class="i" aria-hidden="true"><use href="#i-church"/></svg>
+        <span data-sr="49 N Lake Rd, Ричмонд Хил, ON L4E 2Z8 — у Оак Риџису, северно од Торонта.">49 N Lake Rd, Richmond Hill, ON L4E 2Z8 — in Oak Ridges, north of Toronto.</span>
+      </p>
+    </div>
   </div>
 </section>
 
@@ -1298,6 +1321,6 @@
   </div>
 </footer>
 
-<script src="script.js?v=28"></script>
+<script src="script.js?v=29"></script>
 </body>
 </html>
