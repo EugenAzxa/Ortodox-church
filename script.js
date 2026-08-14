@@ -233,6 +233,7 @@
       entries = data.entries || [];
       applyLang(lang);          // first paint, in the stored language
       renderStats();
+      syncFromHash();           // arrived on a link straight to one person
     })
     .catch(() => {
       $('#wallGrid').innerHTML =
@@ -424,6 +425,11 @@
           <span class="card__halo" aria-hidden="true"></span>
           <span class="card__monogram" aria-hidden="true">${esc(e.monogram)}</span>
         </div>
+        <p class="mp__demo">
+          <svg class="i" aria-hidden="true"><use href="#i-shield"/></svg>
+          <span>${t('Demonstration · this person is fictional',
+                    'Приказ · ова особа је измишљена')}</span>
+        </p>
         <h2 class="mp__name" id="mpName">${esc(name)}</h2>
         <div class="mp__name-alt">${esc(nameAlt)}</div>
         <div class="mp__years">${longDate(born)} &nbsp;·&nbsp; ${longDate(died)}</div>
@@ -517,6 +523,23 @@
             ${t('Request a Parastos', 'Затражи парастос')}
           </a>
         </div>
+
+        <div class="mp__share">
+          <button class="btn btn--ghost btn--sm" type="button" id="mpShare" data-id="${e.id}">
+            <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg>
+            <span>${t('Copy link', 'Копирај везу')}</span>
+          </button>
+          <button class="btn btn--ghost btn--sm" type="button" id="mpQr" aria-expanded="false">
+            <svg class="i" aria-hidden="true"><use href="#i-map"/></svg>
+            <span>${t('QR code', 'QR код')}</span>
+          </button>
+          <span class="mp__share-note" id="mpShareNote"></span>
+        </div>
+
+        <figure class="mp__qr" id="mpQrPanel">
+          <img src="assets/qr/${esc(e.id)}.svg" alt="${t('QR code opening this Memory Page', 'QR код који отвара ову спомен-страницу')}" width="132" height="132">
+          <figcaption><span>${t('For a forty-day notice, or a grave', 'За помен на четрдесет дана, или за гроб')}</span></figcaption>
+        </figure>
       </div>`;
   }
 
@@ -726,14 +749,42 @@
     });
   }
 
-  function openMemoryPage(id, keepScroll = false) {
+  /* The hash is the address of a person. #milica-p opens her page, so a family
+     can send a link to their own grandmother, and Back closes the panel
+     instead of leaving the site. Section anchors like #wall are left alone. */
+  let hashLock = false;
+
+  function setHash(value) {
+    hashLock = true;
+    if (value) history.pushState(null, '', '#' + value);
+    else history.pushState(null, '', location.pathname + location.search);
+    setTimeout(() => { hashLock = false; }, 0);
+  }
+
+  function syncFromHash() {
+    if (hashLock) return;
+    const id = decodeURIComponent(location.hash.slice(1));
+    const entry = entries.find(e => e.id === id);
+    if (entry) {
+      if (openId !== id) openMemoryPage(id, false, true);
+    } else if (openId) {
+      closeMemoryPage(true);
+    }
+  }
+
+  addEventListener('hashchange', syncFromHash);
+  addEventListener('popstate', syncFromHash);
+
+  function openMemoryPage(id, keepScroll = false, fromHash = false) {
     const entry = entries.find(e => e.id === id);
     if (!entry) return;
 
+    if (!keepScroll && !fromHash) setHash(id);
     if (!keepScroll) lastFocused = document.activeElement;
     const y = keepScroll ? mpPanel.scrollTop : 0;
 
     openId = id;
+    mp.dataset.person = id;          // inspectable from the DOM
     mpContent.innerHTML = memoryPageHTML(entry);
     mp.hidden = false;
     requestAnimationFrame(() => mp.classList.add('is-open'));
@@ -768,15 +819,38 @@
 
     initTalk(entry);
 
+    $('#mpQr')?.addEventListener('click', ev => {
+      const panel = $('#mpQrPanel');
+      const shown = panel.classList.toggle('is-shown');
+      ev.currentTarget.setAttribute('aria-expanded', String(shown));
+    });
+
+    $('#mpShare')?.addEventListener('click', async () => {
+      const url = location.origin + location.pathname + location.search + '#' + entry.id;
+      const note = $('#mpShareNote');
+      try {
+        await navigator.clipboard.writeText(url);
+        note.textContent = t('Copied', 'Копирано');
+      } catch {
+        // Clipboard is blocked on insecure origins and in some browsers.
+        note.textContent = url;
+      }
+      setTimeout(() => { if (note) note.textContent = ''; }, 4000);
+    });
+
     $('#mpParastos')?.addEventListener('click', () => {
       const field = $('#pName');
       if (field) field.value = t(entry.name, entry.nameSr);
       if (entry.died) $('#pRepose').value = entry.died;
-      closeMemoryPage();
+      // The anchor sets its own hash, so this must not push one of its own.
+      closeMemoryPage(true);
     });
   }
 
-  function closeMemoryPage() {
+  function closeMemoryPage(fromHash = false) {
+    // Only clear the hash if it is still pointing at this person, so a click
+    // on a section link that closes the panel keeps its own destination.
+    if (!fromHash && location.hash.slice(1) === openId) setHash('');
     openId = null;
     mp.classList.remove('is-open');
     document.body.style.overflow = '';
@@ -785,8 +859,10 @@
     lastFocused?.focus();
   }
 
-  $('#mpClose').addEventListener('click', closeMemoryPage);
-  $('#mpScrim').addEventListener('click', closeMemoryPage);
+  // Wrapped, because passing the function directly hands the click event in as
+  // `fromHash`, which is truthy, and the address would never be cleared.
+  $('#mpClose').addEventListener('click', () => closeMemoryPage());
+  $('#mpScrim').addEventListener('click', () => closeMemoryPage());
 
   // Keep tabbing inside the open panel.
   mp.addEventListener('keydown', e => {

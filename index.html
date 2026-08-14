@@ -14,7 +14,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+<!-- Bump v= when styles.css or script.js changes, so browsers do not serve a
+     stale copy from cache. -->
+<link rel="stylesheet" href="styles.css?v=9">
 <link rel="icon" href="assets/angel.webp" type="image/webp">
 </head>
 <body>
@@ -240,6 +242,11 @@
             <span><span class="sm__t" data-sr="Посетите нас">Visit us</span>
               <span class="sm__d">49 N Lake Rd, Richmond Hill</span></span>
           </a>
+          <a class="sm__item sm__item--out" href="https://arhangelgavrilotoronto.com/donate" target="_blank" rel="noopener">
+            <svg class="i" aria-hidden="true"><use href="#i-church"/></svg>
+            <span><span class="sm__t" data-sr="Приложите парохији">Support the parish</span>
+              <span class="sm__d" data-sr="Прилог иде директно парохији">Your gift goes straight to the parish</span></span>
+          </a>
         </div>
       </div>
 
@@ -410,10 +417,39 @@
         <input type="text" id="candleFrom" placeholder="From whom? (your name)" maxlength="40" data-sr-ph="Од кога? (ваше име)">
         <button class="btn btn--gold" type="submit" data-sr="Упали">Light it</button>
       </form>
-      <p class="stand__note" data-sr="У овом приказу свеће се чувају само у вашем прегледачу. У правој постави, свећа стиже у канцеларију парохије и на диптих који свештеник помиње.">
+      <p class="stand__note stand__note--first" data-sr="У овом приказу свеће се чувају само у вашем прегледачу. У правој постави, свећа стиже у канцеларију парохије и на диптих који свештеник помиње.">
         In this demonstration candles are kept in your browser only. In a live installation the
         candle reaches the parish office and the diptych the priest reads from.
       </p>
+    </div>
+
+    <!-- The bridge back to the building itself -->
+    <div class="qrblock reveal">
+      <div class="qrblock__txt">
+        <p class="eyebrow" data-sr="За цркву">For the church</p>
+        <h3 data-sr="Картица која стоји поред свећњака">A card that stands by the candle stand</h3>
+        <p data-sr="Одштампајте је, ставите у стаклени држач поред свећа, и сваки посетилац са телефоном има цео спомен у руци. Дете скенира, и отвори му се страница. Тако црква и ова страница постају једно место, а не два.">
+          Print it, stand it in a glass holder beside the candles, and anyone with a telephone has
+          the whole memorial in their hand. A child scans it and the page opens. That is what makes
+          the church and this page one place rather than two.
+        </p>
+        <p class="qrblock__note" data-sr="Постоји и по једна за сваку особу, за помен на четрдесет дана или за гроб, и за молитве и за молбу за парастос.">
+          There is one for each person as well, for a forty-day notice or a grave, and one each for
+          the prayers and the Parastos request.
+        </p>
+        <a class="btn btn--outline btn--sm" href="assets/qr/memorial.svg" download="saylavy-memorial-card.svg">
+          <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg>
+          <span data-sr="Преузмите код">Download the code</span>
+        </a>
+      </div>
+
+      <figure class="qrcard">
+        <img class="qrcard__emblem" src="assets/angel.webp" alt="" width="44" height="44">
+        <figcaption class="qrcard__name">Вечан спомен</figcaption>
+        <span class="qrcard__sub">St. Archangel Gabriel Parish</span>
+        <img class="qrcard__code" src="assets/qr/memorial.svg" alt="QR code opening the parish memorial" width="150" height="150">
+        <span class="qrcard__cta" data-sr="Скенирајте и упалите свећу">Scan to light a candle</span>
+      </figure>
     </div>
   </div>
 </section>
@@ -1105,6 +1141,10 @@
 
         <div class="visit__cta">
           <a class="btn btn--burgundy" href="https://maps.google.com/?q=49+N+Lake+Rd,+Richmond+Hill,+ON+L4E+2Z8" target="_blank" rel="noopener" data-sr="Упутства за пут">Get directions</a>
+          <a class="btn btn--gold" href="https://arhangelgavrilotoronto.com/donate" target="_blank" rel="noopener">
+            <svg class="i" aria-hidden="true"><use href="#i-church"/></svg>
+            <span data-sr="Приложите парохији">Support the parish</span>
+          </a>
           <a class="btn btn--outline" href="https://arhangelgavrilotoronto.com/" target="_blank" rel="noopener" data-sr="Званични сајт парохије">Parish website</a>
         </div>
       </div>
@@ -1150,6 +1190,7 @@
       <div>
         <h4 data-sr="Парохија">Parish</h4>
         <ul>
+          <li><a href="https://arhangelgavrilotoronto.com/donate" target="_blank" rel="noopener" data-sr="Приложите парохији">Support the parish</a></li>
           <li><a href="https://arhangelgavrilotoronto.com/" target="_blank" rel="noopener" data-sr="Званични сајт">Official website</a></li>
           <li><a href="mailto:info@arhangelgavrilotoronto.com" data-sr="Пишите нам">Email the office</a></li>
           <li><a href="#visit" data-sr="Посетите нас">Visit</a></li>
@@ -1176,6 +1217,6 @@
   </div>
 </footer>
 
-<script src="script.js"></script>
+<script src="script.js?v=9"></script>
 </body>
 </html>
