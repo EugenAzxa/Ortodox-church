@@ -3124,12 +3124,19 @@ body.intro-on .hero { transform: scale(1.16); }
 
 .gallery { background: var(--night); color: var(--bone); }
 .gallery h2 { color: #fff; font-size: clamp(1.9rem, 4.6vw, 2.9rem); }
+/* The church itself, given room. The first photograph runs tall down the left
+   and the other two stack beside it, so the block reads as a wall of the
+   building rather than three thumbnails in a row. */
 .gallery__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1rem;
-  margin-top: 2.4rem;
+  grid-template-columns: 1.25fr 1fr;
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.9rem, 1.8vw, 1.4rem);
+  margin-top: clamp(2.4rem, 5vw, 3.4rem);
+  min-height: clamp(26rem, 46vw, 40rem);
 }
+.gallery__grid .shot:first-child { grid-row: span 2; }
+
 .shot {
   position: relative;
   border: 0;
@@ -3138,7 +3145,28 @@ body.intro-on .hero { transform: scale(1.16); }
   border-radius: var(--r);
   overflow: hidden;
   cursor: zoom-in;
-  aspect-ratio: 4 / 3;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+  transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+}
+.shot:hover { transform: translateY(-4px); box-shadow: 0 28px 66px rgba(0, 0, 0, 0.55); }
+.shot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--hair-gold);
+  border-radius: inherit;
+  pointer-events: none;
+  transition: border-color 0.4s var(--ease);
+}
+.shot:hover::after { border-color: var(--hair-gold-lit); }
+
+@media (max-width: 720px) {
+  .gallery__grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+    min-height: 0;
+  }
+  .gallery__grid .shot { grid-row: auto; aspect-ratio: 4 / 3; }
 }
 .shot img {
   width: 100%; height: 100%;
@@ -3150,12 +3178,16 @@ body.intro-on .hero { transform: scale(1.16); }
 .shot figcaption {
   position: absolute;
   inset: auto 0 0;
-  padding: 1.6rem 0.9rem 0.75rem;
-  background: linear-gradient(transparent, rgba(20, 6, 9, 0.88));
-  font-size: 0.78rem;
-  color: var(--bone-soft);
+  padding: 3rem 1.2rem 1rem;
+  background: linear-gradient(transparent, rgba(20, 6, 9, 0.92));
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  color: #fff;
   text-align: left;
+  transform: translateY(4px);
+  transition: transform 0.45s var(--ease);
 }
+.shot:hover figcaption { transform: none; }
 
 .lightbox {
   position: fixed;

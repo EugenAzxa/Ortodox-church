@@ -16,7 +16,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <!-- Bump v= when styles.css or script.js changes, so browsers do not serve a
      stale copy from cache. -->
-<link rel="stylesheet" href="styles.css?v=27">
+<link rel="stylesheet" href="styles.css?v=28">
 <link rel="icon" href="assets/angel.webp" type="image/webp">
 </head>
 <body>
@@ -405,11 +405,57 @@
   </div>
 </section>
 
+<!-- ====================== GALLERY ====================== -->
+<section class="section gallery" id="gallery">
+  <div class="wrap">
+    <p data-n="II" class="eyebrow" data-sr="Наша црква">Our Church</p>
+    <h2 data-sr="Место где се имена читају наглас">The place where the names are read aloud</h2>
+
+    <div class="gallery__grid reveal">
+      <figure class="shot" tabindex="0" role="button" data-full="assets/church-7.webp"
+              data-cap="The iconostasis at St. Archangel Gabriel, Richmond Hill.">
+        <img src="assets/church-7.webp" alt="The iconostasis of the parish, with icons of the Theotokos and Christ in gilded arches" loading="lazy" decoding="async">
+        <figcaption data-sr="Иконостас у Ричмонд Хилу">The iconostasis</figcaption>
+      </figure>
+
+      <figure class="shot" tabindex="0" role="button" data-full="assets/church-3.webp"
+              data-cap="Candles held during a service at the parish.">
+        <img src="assets/church-3.webp" alt="Clergy and faithful holding lit beeswax candles during a service" loading="lazy" decoding="async">
+        <figcaption data-sr="Свеће током службе">Candles during a service</figcaption>
+      </figure>
+
+      <figure class="shot" tabindex="0" role="button" data-full="assets/church-exterior.webp"
+              data-cap="The parish church at 49 N Lake Road, Richmond Hill.">
+        <img src="assets/church-exterior.webp" alt="The exterior of the parish church, an arcaded building among trees" loading="lazy" decoding="async">
+        <figcaption data-sr="Црква, 49 N Lake Road">The church, 49 N Lake Road</figcaption>
+      </figure>
+    </div>
+
+    <p style="margin-top:1.6rem;font-size:0.8rem;color:var(--bone-faint)" data-sr="Фотографије су парохијске, преузете са arhangelgavrilotoronto.com и коришћене овде само за приказ дизајна.">
+      Photographs belong to the parish, taken from arhangelgavrilotoronto.com and used here only
+      for the purpose of this design demonstration.
+    </p>
+  </div>
+</section>
+
+<!-- ====================== LIGHTBOX ====================== -->
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Photograph">
+  <button class="lightbox__close" id="lbClose" aria-label="Close">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <path d="M18 6 6 18M6 6l12 12"/>
+    </svg>
+  </button>
+  <figure style="margin:0">
+    <img id="lbImg" src="" alt="">
+    <figcaption id="lbCap"></figcaption>
+  </figure>
+</div>
+
 <!-- ====================== CHILDREN ====================== -->
 <section class="section kids" id="children">
   <div class="wrap">
     <div class="kids__head reveal">
-      <p data-n="II" class="eyebrow eyebrow--center" data-sr="Деца и памћење">Children &amp; Remembrance</p>
+      <p data-n="III" class="eyebrow eyebrow--center" data-sr="Деца и памћење">Children &amp; Remembrance</p>
       <h2 data-sr="Архива је и учионица">The archive is also a classroom</h2>
       <p class="lede dropcap" data-sr="Дете које са осам година сними бакину причу неће морати да је се сећа – имаће је. Ту се спомен-зид и веронаука сусрећу: оно што деца прикупе постаје архива парохије, а оно што је у архиви постаје оно што деца уче.">
         A child who records their grandmother's story at eight will not have to remember it – they
@@ -542,7 +588,7 @@
   <div class="wrap">
     <div class="remem__grid">
       <div class="reveal">
-        <p data-n="III" class="eyebrow" data-sr="Задушнице">Days of Remembrance</p>
+        <p data-n="IV" class="eyebrow" data-sr="Задушнице">Days of Remembrance</p>
         <h2 data-sr="Суботе на које се цела парохија моли за упокојене">The Saturdays when the whole parish prays for the departed</h2>
         <p class="lede" style="margin-top:1.2rem" data-sr="Задушнице су покретне – везане су за Васкрс и за календар, не за дан у месецу. Обележја су испод; тачне датуме потврђује парохија сваке године.">
           Zadušnice are movable – they follow Pascha and the calendar rather than a fixed day of
@@ -612,7 +658,7 @@
   <div class="wrap">
     <div class="parastos__grid">
       <div class="reveal">
-        <p data-n="IV" class="eyebrow" data-sr="Захтев">Request</p>
+        <p data-n="V" class="eyebrow" data-sr="Захтев">Request</p>
         <h2 data-sr="Закажите парастос">Arrange a Parastos</h2>
         <p class="lede" style="margin-top:1.2rem" data-sr="Свештеник служи парастос за упокојене на молбу породице – на четрдесети дан, на годишњицу, на задушнице, или кад год породица затражи.">
           The priest serves a Parastos for the departed at a family's request – on the fortieth
@@ -693,7 +739,7 @@
 <!-- ====================== CANDLE STAND ====================== -->
 <section class="section stand" id="stand">
   <div class="wrap">
-    <p data-n="V" class="eyebrow eyebrow--center" data-sr="Свећњак">The Candle Stand</p>
+    <p data-n="VI" class="eyebrow eyebrow--center" data-sr="Свећњак">The Candle Stand</p>
     <h2 data-sr="Упалите свећу за упокојене">Light a candle for the departed</h2>
     <p class="lede" style="margin:1.2rem auto 0;text-align:center" data-sr="Свећа стоји овде на четрдесет дана. Ако сте далеко од Ричмонд Хила – а многи јесу – ово је исти чин, забележен и изнесен на Литургију.">
       A candle stands here for forty days. If you are far from Richmond Hill – and many are –
@@ -753,7 +799,7 @@
 <section class="section proof" id="proof">
   <div class="wrap">
     <div class="proof__head reveal">
-      <p data-n="VI" class="eyebrow eyebrow--center" data-sr="Из даљине">From far away</p>
+      <p data-n="VII" class="eyebrow eyebrow--center" data-sr="Из даљине">From far away</p>
       <h2 data-sr="Права свећа, и фотографија да је горела">A real candle, and a photograph that it burned</h2>
       <p class="lede" data-sr="Свећа на екрану је намера. Ово је свећа од воска, на свећњаку, у Ричмонд Хилу – коју упали парохијанин на првој Литургији, фотографише на свећњаку, и пошаље вам слику. Ако сте у Београду, Ванкуверу или Мелбурну, то је најближе што можете доћи.">
         A candle on a screen is an intention. This is a wax candle, on the stand, in Richmond Hill –
@@ -906,7 +952,7 @@
       <div>
         <!-- The hero belongs to the parish, so the memorial names itself here,
              where it actually begins. -->
-        <p data-n="VII" class="eyebrow" data-sr="Вечан спомен · Спомен-зид">Вечан спомен · The Memorial Wall</p>
+        <p data-n="VIII" class="eyebrow" data-sr="Вечан спомен · Спомен-зид">Вечан спомен · The Memorial Wall</p>
         <h2 data-sr="Оне које носимо на светој Литургији">Those we carry to the Holy Liturgy</h2>
       </div>
       <p class="lede" data-sr="Свака арка испод отвара спомен-страницу Saylavy – животопис, снимљен глас, фотографије и, где је породица тако одредила, временска капсула која се отвара на одређени дан. Трајно, и никада наплаћивано по месецу.">
@@ -987,7 +1033,7 @@
 <section class="section saylavy" id="saylavy">
   <div class="wrap">
     <div class="saylavy__head reveal">
-      <p data-n="VIII" class="eyebrow eyebrow--center">
+      <p data-n="IX" class="eyebrow eyebrow--center">
         <a class="saylavy-mark" href="https://saylavy.com/" target="_blank" rel="noopener">Saylavy</a>
       </p>
       <h2 data-sr="Шта чини спомен-страницу">What makes a Memory Page</h2>
@@ -1131,52 +1177,6 @@
   </div>
 </section>
 
-<!-- ====================== GALLERY ====================== -->
-<section class="section gallery" id="gallery">
-  <div class="wrap">
-    <p data-n="IX" class="eyebrow" data-sr="Наша црква">Our Church</p>
-    <h2 data-sr="Место где се имена читају наглас">The place where the names are read aloud</h2>
-
-    <div class="gallery__grid reveal">
-      <figure class="shot" tabindex="0" role="button" data-full="assets/church-7.webp"
-              data-cap="The iconostasis at St. Archangel Gabriel, Richmond Hill.">
-        <img src="assets/church-7.webp" alt="The iconostasis of the parish, with icons of the Theotokos and Christ in gilded arches" loading="lazy" decoding="async">
-        <figcaption data-sr="Иконостас у Ричмонд Хилу">The iconostasis</figcaption>
-      </figure>
-
-      <figure class="shot" tabindex="0" role="button" data-full="assets/church-3.webp"
-              data-cap="Candles held during a service at the parish.">
-        <img src="assets/church-3.webp" alt="Clergy and faithful holding lit beeswax candles during a service" loading="lazy" decoding="async">
-        <figcaption data-sr="Свеће током службе">Candles during a service</figcaption>
-      </figure>
-
-      <figure class="shot" tabindex="0" role="button" data-full="assets/church-exterior.webp"
-              data-cap="The parish church at 49 N Lake Road, Richmond Hill.">
-        <img src="assets/church-exterior.webp" alt="The exterior of the parish church, an arcaded building among trees" loading="lazy" decoding="async">
-        <figcaption data-sr="Црква, 49 N Lake Road">The church, 49 N Lake Road</figcaption>
-      </figure>
-    </div>
-
-    <p style="margin-top:1.6rem;font-size:0.8rem;color:var(--bone-faint)" data-sr="Фотографије су парохијске, преузете са arhangelgavrilotoronto.com и коришћене овде само за приказ дизајна.">
-      Photographs belong to the parish, taken from arhangelgavrilotoronto.com and used here only
-      for the purpose of this design demonstration.
-    </p>
-  </div>
-</section>
-
-<!-- ====================== LIGHTBOX ====================== -->
-<div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Photograph">
-  <button class="lightbox__close" id="lbClose" aria-label="Close">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-      <path d="M18 6 6 18M6 6l12 12"/>
-    </svg>
-  </button>
-  <figure style="margin:0">
-    <img id="lbImg" src="" alt="">
-    <figcaption id="lbCap"></figcaption>
-  </figure>
-</div>
-
 <!-- ====================== VISIT ====================== -->
 <section class="section visit" id="visit">
   <div class="wrap">
@@ -1298,6 +1298,6 @@
   </div>
 </footer>
 
-<script src="script.js?v=27"></script>
+<script src="script.js?v=28"></script>
 </body>
 </html>
