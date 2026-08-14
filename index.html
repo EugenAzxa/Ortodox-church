@@ -16,7 +16,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <!-- Bump v= when styles.css or script.js changes, so browsers do not serve a
      stale copy from cache. -->
-<link rel="stylesheet" href="styles.css?v=26">
+<link rel="stylesheet" href="styles.css?v=27">
 <link rel="icon" href="assets/angel.webp" type="image/webp">
 </head>
 <body>
@@ -295,9 +295,22 @@
       Their stories, their voices, and a candle you can light from anywhere.
     </p>
 
+    <!-- The parish leads with these three, so this does too. -->
     <div class="hero__cta">
-      <a class="btn btn--gold" href="#wall" data-sr="Уђите у спомен">Enter the memorial</a>
-      <a class="btn btn--ghost" href="#stand" data-sr="Упалите свећу">Light a candle</a>
+      <a class="btn btn--glass btn--lg" href="#prayers">
+        <svg class="i" aria-hidden="true"><use href="#i-arch"/></svg>
+        <span data-sr="Први пут сам овде">I'm new here</span>
+      </a>
+
+      <a class="btn btn--gold btn--lg" href="#stand">
+        <svg class="i" aria-hidden="true"><use href="#i-flame"/></svg>
+        <span data-sr="Упалите свећу">Light a candle</span>
+      </a>
+
+      <a class="btn btn--glass btn--lg" href="https://arhangelgavrilotoronto.com/donate" target="_blank" rel="noopener">
+        <svg class="i" aria-hidden="true"><use href="#i-church"/></svg>
+        <span data-sr="Приложите">Donate</span>
+      </a>
     </div>
 
     <div class="hero__meta">
@@ -1285,6 +1298,6 @@
   </div>
 </footer>
 
-<script src="script.js?v=26"></script>
+<script src="script.js?v=27"></script>
 </body>
 </html>

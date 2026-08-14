@@ -327,8 +327,45 @@ body::after {
 .btn:hover { transform: translateY(-2px); }
 .btn:active { transform: translateY(0); }
 
-.btn--gold { background: var(--gold); color: var(--ink); font-weight: 600; }
-.btn--gold:hover { background: var(--gold-pale); box-shadow: var(--glow); }
+/* Gold, with a light passing over it on hover, the way gilding behaves. */
+.btn--gold {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #F2C245, var(--gold) 55%, #D9A017);
+  color: var(--ink);
+  font-weight: 600;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 6px 18px rgba(20, 6, 9, 0.28);
+}
+.btn--gold:hover { box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), var(--glow), 0 10px 26px rgba(20, 6, 9, 0.3); }
+.btn--gold::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 36%, rgba(255, 255, 255, 0.5) 50%, transparent 64%);
+  transform: translateX(-130%);
+  transition: transform 0.85s var(--ease);
+  pointer-events: none;
+}
+.btn--gold:hover::after, .btn--gold:focus-visible::after { transform: translateX(130%); }
+.btn--gold > * { position: relative; z-index: 1; }
+
+/* Over a photograph, a translucent panel reads better than a flat outline. */
+.btn--glass {
+  border-color: rgba(231, 175, 35, 0.42);
+  background: rgba(20, 6, 9, 0.3);
+  backdrop-filter: blur(9px) saturate(1.25);
+  color: var(--bone);
+}
+.btn--glass:hover {
+  background: rgba(231, 175, 35, 0.14);
+  border-color: var(--gold);
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(20, 6, 9, 0.3);
+}
+.btn--glass .i { color: var(--gold); }
+
+.btn--lg { padding: 0.95rem 1.65rem; font-size: 0.9rem; }
+.btn--lg .i { width: 1.15rem; height: 1.15rem; }
 
 .btn--burgundy { background: var(--burgundy); color: #fff; }
 .btn--burgundy:hover { background: var(--burgundy-lit); }
@@ -885,14 +922,18 @@ body.intro-on .hero { transform: scale(1.16); }
   animation: rise 1.3s 0.24s var(--ease) both;
 }
 
+/* Each button arrives just after the one before it. */
 .hero__cta {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: 0.7rem;
   justify-content: center;
   margin-top: 2.2rem;
-  animation: rise 1.3s 0.32s var(--ease) both;
 }
+.hero__cta .btn { animation: rise 1s var(--ease) both; }
+.hero__cta .btn:nth-child(1) { animation-delay: 0.32s; }
+.hero__cta .btn:nth-child(2) { animation-delay: 0.42s; }
+.hero__cta .btn:nth-child(3) { animation-delay: 0.52s; }
 
 .hero__meta {
   display: flex;
