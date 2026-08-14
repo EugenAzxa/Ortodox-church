@@ -2267,6 +2267,79 @@ body.intro-on .hero { transform: scale(1.16); }
   margin-bottom: 0.35rem;
 }
 
+/* --- Speak with Sofia, on Saylavy --------------------------------------
+   The saints are in arches like everything else here, so the block reads as
+   part of this church rather than as an advert dropped into it.
+   ---------------------------------------------------------------------- */
+
+.sofia {
+  display: grid;
+  grid-template-columns: 1fr minmax(0, 460px);
+  gap: clamp(1.8rem, 4vw, 3.4rem);
+  align-items: center;
+}
+.sofia h3 { font-size: clamp(1.5rem, 3.4vw, 2.1rem); color: #fff; margin-bottom: 0.9rem; }
+.sofia p { font-size: 0.95rem; line-height: 1.78; color: var(--bone-soft); max-width: 52ch; }
+.sofia__note {
+  margin-top: 1rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--gold-leaf);
+  font-size: 0.88rem !important;
+  color: var(--bone-faint) !important;
+}
+.sofia .btn { margin-top: 1.5rem; }
+.sofia .btn .i:last-child { transition: transform 0.25s var(--ease); }
+.sofia .btn:hover .i:last-child { transform: translateX(3px); }
+
+.sofia__cast { display: grid; gap: 1rem; }
+
+.sofia__saints {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(0.8rem, 2vw, 1.2rem);
+  width: 100%;
+}
+.sofia__saints li { display: grid; gap: 0.5rem; justify-items: center; text-align: center; }
+/* Square, because these are icon panels rather than portraits and a 3:4 crop
+   cuts the halo off the top. */
+.sofia__saints img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--hair-gold);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.42);
+  transition: border-color 0.3s var(--ease), transform 0.4s var(--ease);
+}
+.sofia__cap {
+  font-family: var(--mono);
+  font-size: 0.62rem !important;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--bone-faint) !important;
+  text-align: center;
+  margin: 0.2rem 0 0;
+}
+.sofia__saints li:hover img { border-color: var(--gold); transform: translateY(-3px); }
+.sofia__saints span {
+  font-family: var(--serif);
+  font-size: 0.88rem;
+  line-height: 1.3;
+  color: var(--bone-soft);
+}
+
+@media (max-width: 860px) {
+  .sofia { grid-template-columns: 1fr; }
+  .sofia__saints { grid-template-columns: repeat(4, 1fr); }
+  .sofia__saints span { font-size: 0.72rem; }
+}
+@media (max-width: 520px) {
+  .sofia__saints { grid-template-columns: repeat(2, 1fr); }
+}
+
 /* Speaking icons – alternating sides, so the page stops marching */
 .ic__list { display: grid; gap: clamp(2.2rem, 5vw, 3.4rem); }
 .ic {

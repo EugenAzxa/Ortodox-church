@@ -16,7 +16,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <!-- Bump v= when styles.css or script.js changes, so browsers do not serve a
      stale copy from cache. -->
-<link rel="stylesheet" href="styles.css?v=13">
+<link rel="stylesheet" href="styles.css?v=15">
 <link rel="icon" href="assets/angel.webp" type="image/webp">
 </head>
 <body>
@@ -638,6 +638,45 @@
     </div>
 
     <div class="ic__list" id="iconList"></div>
+
+    <div class="cross-rule" aria-hidden="true">☦</div>
+
+    <!-- The live version of all this, on Saylavy's own Orthodox page -->
+    <div class="sofia reveal">
+      <div class="sofia__txt">
+        <p class="eyebrow" data-sr="На Saylavy">On Saylavy</p>
+        <h3 data-sr="Иконе овде говоре. Тамо одговарају.">The icons here speak. There, they answer.</h3>
+        <p data-sr="Ова страница вам каже шта се на икони види. Saylavy иде корак даље: Софија вас води, а свети Јован Златоусти, свети Василије Велики, свети Серафим Саровски и свети Никола одговарају на питања, наглас, гласом који је ваша црква одобрила.">
+          This page tells you what to look for in an icon. Saylavy goes a step further: Sofia guides
+          you, and St. John Chrysostom, St. Basil the Great, St. Seraphim of Sarov and St. Nicholas
+          answer questions out loud, in a voice your own church has approved.
+        </p>
+        <p class="sofia__note" data-sr="За дете које не чита ћирилицу и не сме да прекине службу питањем, ово је начин да ипак пита.">
+          For a child who cannot read Cyrillic and would not interrupt a service to ask, this is how
+          the question still gets asked.
+        </p>
+
+        <a class="btn btn--gold" href="https://saylavy.world/orthodox.html" target="_blank" rel="noopener">
+          <svg class="i" aria-hidden="true"><use href="#i-mic"/></svg>
+          <span data-sr="Разговарајте са Софијом">Speak with Sofia</span>
+          <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg>
+        </a>
+      </div>
+
+      <div class="sofia__cast">
+        <!-- Sofia herself is a live avatar on their page rather than a picture,
+             so she is named in the copy instead of shown as the wrong face. -->
+        <ul class="sofia__saints">
+          <li><img src="assets/saints/john-chrysostom.webp" alt="Icon of St. John Chrysostom" loading="lazy" decoding="async"><span>St. John Chrysostom</span></li>
+          <li><img src="assets/saints/basil-the-great.webp" alt="Icon of St. Basil the Great" loading="lazy" decoding="async"><span>St. Basil the Great</span></li>
+          <li><img src="assets/saints/seraphim-of-sarov.webp" alt="Icon of St. Seraphim of Sarov" loading="lazy" decoding="async"><span>St. Seraphim of Sarov</span></li>
+          <li><img src="assets/saints/saint-nicholas.webp" alt="Icon of St. Nicholas" loading="lazy" decoding="async"><span>St. Nicholas</span></li>
+        </ul>
+        <p class="sofia__cap" data-sr="Четири гласа која одговарају">
+          Four of the voices that answer
+        </p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1241,6 +1280,6 @@
   </div>
 </footer>
 
-<script src="script.js?v=13"></script>
+<script src="script.js?v=15"></script>
 </body>
 </html>
