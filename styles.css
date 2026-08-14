@@ -851,10 +851,12 @@ body.intro-on .hero { transform: scale(1.16); }
   animation: rise 1.3s 0.08s var(--ease) both;
 }
 
+/* Their h1 is 60px with -1.2px tracking and sits on one line. Matched, so the
+   parish name breaks the same way here as it does on their own site. */
 .hero h1 {
-  font-size: clamp(2.9rem, 9.5vw, 6rem);
+  font-size: clamp(2rem, 4.2vw, 3.75rem);
   color: #fff;
-  letter-spacing: -0.03em;
+  letter-spacing: -1.2px;
   animation: rise 1.3s 0.16s var(--ease) both;
 }
 .hero h1 .in-latin {
