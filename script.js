@@ -305,6 +305,7 @@
   function memoryPageHTML(e) {
     const name    = t(e.name, e.nameSr);
     const nameAlt = t(e.nameSr, e.name);
+    const first   = name.split(' ')[0];
     const born    = parseDate(e.born);
     const died    = parseDate(e.died);
 
@@ -338,6 +339,19 @@
           <div class="capsule__date">${t('Sealed until', 'Запечаћено до')} ${longDate(parseDate(e.capsule.unlocks))}</div>
         </div>
       </div>` : '';
+
+    const timeline = (e.timeline || []).length ? `
+      <h3>${t('Timeline', 'Временски след')}</h3>
+      <ol class="tl">
+        ${e.timeline.map(ev => {
+          const d = parseDate(ev.date);
+          return `<li class="tl__i${ev.published ? ' tl__i--pub' : ''}">
+            <span class="tl__dot" aria-hidden="true"></span>
+            <span class="tl__when">${longDate(d)}</span>
+            <span class="tl__what">${esc(t(ev.title, ev.titleSr))}</span>
+          </li>`;
+        }).join('')}
+      </ol>` : '';
 
     return `
       <div class="mp__hero">
@@ -377,6 +391,30 @@
 
         ${voice}
         ${capsule}
+        ${timeline}
+
+        <h3>${t('Speak with', 'Разговарајте са')} ${esc(first)}</h3>
+        <div class="talk" data-id="${e.id}">
+          <p class="talk__note">
+            <svg class="i" aria-hidden="true"><use href="#i-shield"/></svg>
+            <span>${t(
+              `${first} answers only from what the family and this parish wrote down. Where the record says nothing, ${first} says so. Nothing is invented on ${first}'s behalf.`,
+              `${first} одговара само из онога што су породица и ова парохија записале. Где запис ћути, то и каже. Ништа овде није измишљено уместо ње.`
+            )}</span>
+          </p>
+
+          <div class="talk__thread" id="talkThread" aria-live="polite"></div>
+          <div class="talk__chips" id="talkChips"></div>
+
+          <form class="talk__form" id="talkForm">
+            <label class="sr-only" for="talkInput">${t('Ask a question', 'Поставите питање')}</label>
+            <input type="text" id="talkInput" autocomplete="off"
+                   placeholder="${t('Ask ' + first + ' something…', 'Питајте нешто…')}">
+            <button class="btn btn--gold btn--sm" type="submit" aria-label="${t('Ask', 'Питај')}">
+              <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg>
+            </button>
+          </form>
+        </div>
 
         <h3>${t('This page on Saylavy', 'Ова страница на Saylavy')}</h3>
         <div class="sy">
@@ -421,6 +459,212 @@
       </div>`;
   }
 
+  /* ====================================================== Speak with them
+     A memorial that holds a voice ought to answer when spoken to. This one
+     answers only out of that person's own record: the life their family wrote,
+     the recording they left, the lines they were known for. When a question
+     falls outside it, it says so rather than inventing a person.
+
+     Deliberately no language model. Not because one would not write prettier
+     sentences, but because a model asked about a dead man will always produce
+     something, and a memorial that quietly makes things up is worse than one
+     that admits the record is short.
+     ====================================================================== */
+
+  /* Each intent has two kinds of keyword. `strong` are the topic itself, and
+     `weak` are the ways people wrap a question around a topic. A strong match
+     always beats a weak one, whatever the lengths: "tell me about the church"
+     is about the church, not about telling. */
+  const INTENTS = [
+    { key: 'greeting',
+      strong: [],
+      weak: ['hello', 'hi ', 'hey', 'good morning', 'good evening',
+             'здраво', 'добар дан', 'помаже бог', 'добро вече'] },
+
+    { key: 'home',
+      strong: ['born', 'home', 'village', 'town', 'city', 'serbia', 'country', 'grow up',
+               'одакле', 'рођен', 'рођена', 'кућа', 'село', 'град', 'србиј'],
+      weak: ['where', 'from', 'come', 'came', 'arrive', 'leave', 'left',
+             'где', 'дош', 'стиг', 'отиш'] },
+
+    { key: 'work',
+      strong: ['work', 'job', 'trade', 'occupation', 'profession', 'kitchen', 'cook',
+               'brick', 'build', 'choir', 'sing', 'teach', 'taught', 'books', 'treasurer',
+               'bell', 'epistle', 'stairs',
+               // Stems, so радио / радила / радили / радите all land here.
+               'посао', 'ради', 'занат', 'кухињ', 'кувал', 'зида', 'хор',
+               'пева', 'предава', 'књиг', 'звон'],
+      weak: ['do for', 'did you do', 'do here', 'do you do', 'living'] },
+
+    { key: 'church',
+      strong: ['church', 'god', 'faith', 'pray', 'believe', 'liturgy', 'parish', 'religion',
+               'icon', 'saint', 'priest', 'slava',
+               'цркв', 'бог', 'вер', 'молитв', 'литургиј', 'парохиј', 'икон', 'свештеник'],
+      weak: [] },
+
+    { key: 'hardest',
+      strong: ['hard', 'hardest', 'difficult', 'worst', 'struggle', 'suffer', 'winter',
+               'war', 'lonely', 'afraid', 'regret',
+               'тешк', 'најтеж', 'зим', 'рат', 'страх', 'жао'],
+      weak: ['miss', 'alone', 'sad', 'недостај', 'туг'] },
+
+    { key: 'advice',
+      strong: ['advice', 'advise', 'wisdom', 'lesson',
+               'савет', 'порук', 'мудрост'],
+      weak: ['tell me', 'tell us', 'would you tell', 'tell you', 'teach me', 'learn',
+             'message', 'remember', 'should i', 'leave us', 'say to',
+             'научи', 'запамт', 'да кажеш'] }
+  ];
+
+  function findIntent(question) {
+    const q = ' ' + question.toLowerCase().trim() + ' ';
+    const best = { strong: [null, 0], weak: [null, 0] };
+
+    for (const intent of INTENTS) {
+      for (const tier of ['strong', 'weak']) {
+        for (const word of intent[tier]) {
+          if (q.includes(word) && word.length > best[tier][1]) {
+            best[tier] = [intent.key, word.length];
+          }
+        }
+      }
+    }
+    return best.strong[0] || best.weak[0];
+  }
+
+  function speakLine(entry, key) {
+    const s = entry.speaks || {};
+    return t(s[key], s[key + 'Sr']) || null;
+  }
+
+  /* Answers assembled from fields rather than written twice. */
+  function answerFor(entry, question) {
+    const q = question.toLowerCase();
+    const born = parseDate(entry.born), died = parseDate(entry.died);
+    const has = w => q.includes(w);
+
+    // Their own recording, quoted rather than paraphrased.
+    if (entry.voice && (has('voice') || has('recording') || has('hear') || has('sound') ||
+                        has('глас') || has('снимак') || has('чути'))) {
+      return t(
+        `There is a recording of me, ${entry.voice.title.toLowerCase()}. On it I say: “${entry.voice.transcript}”`,
+        `Постоји снимак, ${entry.voice.titleSr.toLowerCase()}. На њему кажем: „${entry.voice.transcript}”`);
+    }
+
+    if (entry.capsule && (has('letter') || has('capsule') || has('sealed') || has('grandchild') ||
+                          has('писм') || has('капсул') || has('запечаћ') || has('унуц'))) {
+      return t(
+        `I left something sealed: ${entry.capsule.label.toLowerCase()}. It opens on ${longDate(parseDate(entry.capsule.unlocks))}, and not before. Not even for you.`,
+        `Оставила сам нешто запечаћено: ${entry.capsule.labelSr.toLowerCase()}. Отвара се ${longDate(parseDate(entry.capsule.unlocks))}, и не пре тога.`);
+    }
+
+    if (has('candle') || has('свећ')) {
+      return t(
+        `${candleCount(entry)} candles have been lit for me. I never counted anything except plates, but thank you.`,
+        `За мене је упаљено ${candleCount(entry)} свећа. Никада ништа нисам бројала осим тањира, али хвала.`);
+    }
+
+    if (has('who are you') || has('your name') || has('ко си') || has('како се зовеш')) {
+      return t(
+        `${entry.name}. ${entry.role}. Born in ${entry.bornPlace}, and I died in ${entry.diedPlace}.`,
+        `${entry.nameSr}. ${entry.roleSr}. Рођена у ${entry.bornPlace}, а умрла у ${entry.diedPlace}.`);
+    }
+
+    if (has('when') || has('age') || has('old were') || has('die') || has('died') ||
+        has('када') || has('колико') || has('годин') || has('умро') || has('умрла')) {
+      return t(
+        `I was born on ${longDate(born)} and I reposed on ${longDate(died)}. That is ${died.getFullYear() - born.getFullYear()} years, which sounds longer than it felt.`,
+        `Рођена сам ${longDate(born)}, а упокојила се ${longDate(died)}. То је ${died.getFullYear() - born.getFullYear()} година, што звучи дуже него што је било.`);
+    }
+
+    const intent = findIntent(question);
+    if (intent) {
+      const line = speakLine(entry, intent);
+      if (line) return line;
+    }
+
+    // The honest end of the road.
+    return t(
+      `That is not in what was written down for me, and I will not invent it. Ask me about where I came from, what I did, this church, or what I would tell you.`,
+      `То није у ономе што је за мене записано, и нећу то измишљати. Питајте ме одакле сам, шта сам радила, о овој цркви, или шта бих вам рекла.`);
+  }
+
+  const CHIPS = [
+    ['Where did you come from?', 'Одакле сте?', 'home'],
+    ['What did you do here?', 'Шта сте радили овде?', 'work'],
+    ['What was hardest?', 'Шта је било најтеже?', 'hardest'],
+    ['What would you tell us?', 'Шта бисте нам рекли?', 'advice']
+  ];
+
+  function talkSay(who, text, opts = {}) {
+    const thread = $('#talkThread');
+    if (!thread) return;
+    const row = document.createElement('div');
+    row.className = 'msg msg--' + who;
+    if (who === 'them') {
+      row.innerHTML = `<span class="msg__body"></span>
+        <button class="listen listen--tiny" type="button" data-kind="say"
+                data-text="${esc(text)}" aria-label="${t('Read this aloud', 'Прочитај наглас')}"></button>`;
+    } else {
+      row.innerHTML = `<span class="msg__body"></span>`;
+    }
+    thread.appendChild(row);
+    const body = $('.msg__body', row);
+    const btn = $('.listen', row);
+    if (btn) labelListen(btn);
+
+    if (who === 'you' || reduced || opts.instant) {
+      body.textContent = text;
+      thread.scrollTop = thread.scrollHeight;
+      return;
+    }
+
+    // Typed out, because a wall of text appearing at once reads as a lookup
+    // and this should read as somebody answering.
+    let i = 0;
+    row.classList.add('is-typing');
+    const tick = () => {
+      body.textContent = text.slice(0, i);
+      thread.scrollTop = thread.scrollHeight;
+      if (i++ < text.length) {
+        setTimeout(tick, text[i] === ' ' ? 8 : 14);
+      } else {
+        row.classList.remove('is-typing');
+      }
+    };
+    tick();
+  }
+
+  function initTalk(entry) {
+    const chips = $('#talkChips');
+    if (!chips) return;
+
+    chips.innerHTML = CHIPS.map(([en, sr]) =>
+      `<button class="chip" type="button">${esc(t(en, sr))}</button>`).join('');
+
+    const greeting = speakLine(entry, 'greeting');
+    if (greeting) talkSay('them', greeting, { instant: true });
+
+    const ask = question => {
+      const text = question.trim();
+      if (!text) return;
+      talkSay('you', text);
+      setTimeout(() => talkSay('them', answerFor(entry, text)), 380);
+    };
+
+    chips.addEventListener('click', e => {
+      const chip = e.target.closest('.chip');
+      if (chip) ask(chip.textContent);
+    });
+
+    $('#talkForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const input = $('#talkInput');
+      ask(input.value);
+      input.value = '';
+    });
+  }
+
   function openMemoryPage(id, keepScroll = false) {
     const entry = entries.find(e => e.id === id);
     if (!entry) return;
@@ -460,6 +704,8 @@
       renderWall();
       renderStats();
     });
+
+    initTalk(entry);
 
     $('#mpParastos')?.addEventListener('click', () => {
       const field = $('#pName');
@@ -877,6 +1123,14 @@
 
     const btn = e.target.closest('.listen');
     if (!btn) return;
+
+    // A line the memorial just spoke. It follows the page language.
+    if (btn.dataset.kind === 'say') {
+      const useSerbian = lang === 'sr' && speechVoice;
+      speak(btn.dataset.text, btn, useSerbian ? null : 'en');
+      return;
+    }
+
     const i = +btn.dataset.i;
     if (btn.dataset.kind === 'prayer') {
       const p = PRAYERS[i];

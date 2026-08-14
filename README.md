@@ -37,6 +37,26 @@ voice with a transcript, the photograph count, and a sealed time capsule where t
 One-time purchase, no subscription – the Saylavy model, which is the whole reason it suits a
 memorial rather than a social feed.
 
+**Speak with them.** A memorial that holds a voice ought to answer when it is spoken to. Open any
+arch and you can ask that person a question. They answer in the first person, out of their own
+record: the life their family wrote, the recording they left, the lines they were known for. Four
+suggested questions to start, free text after that, and every answer can be read aloud by the same
+speech engine the prayers use.
+
+There is **deliberately no language model behind it**. Not because one would not write prettier
+sentences, but because a model asked about a dead man will always produce something, and a memorial
+that quietly invents is worse than one that admits the record is short. So when a question falls
+outside what was written down, the answer is *"That is not in what was written down for me, and I
+will not invent it"* — followed by what it can talk about. The panel says so before you type a word.
+
+Matching is two-tier: topic nouns beat conversational framing, so *"tell me about the church"* is
+about the church rather than about telling. Serbian keywords are stemmed, so радио / радила /
+радили / радите all reach the same answer.
+
+**Timeline.** The dated spine of a life, following the structure of Saylavy's own
+[Memory Page sample](https://saylavy.com/memory-page-sample) — birth, arrival, the things that
+mattered, repose, and the day the family opened the page, which closes the timeline in gold.
+
 Each page closes with a **This page on Saylavy** card, because the memorial is only as durable as
 whatever holds it up. The card names the thing doing that: the page's Saylavy reference, its
 blockchain anchor, which family holds it, the terms, and a link out to

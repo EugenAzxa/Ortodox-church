@@ -38,7 +38,54 @@
       "anchor": "0x7f3a…c04e",
       "candles": 214,
       "photos": 46,
-      "added": "2024-03-02"
+      "added": "2024-03-02",
+      "speaks": {
+        "greeting": "Sit down. There is always something on the stove.",
+        "greetingSr": "Седи. Увек има нешто на шпорету.",
+        "home": "Kraljevo. I left in 1968 with one suitcase and my mother’s copper pot. The pot is still in the parish hall.",
+        "homeSr": "Краљево. Отишла сам 1968. са једним кофером и мајчиним бакарним лонцем. Лонац је још у сали.",
+        "work": "I cooked. Thirty-one years, after every Liturgy. I kept a notebook of who was ill and who was newly arrived, and I cooked accordingly.",
+        "workSr": "Кувала сам. Тридесет једну годину, после сваке Литургије. Водила сам бележницу о томе ко је болестан и ко је нов, и према томе сам кувала.",
+        "church": "I did not sit through the service thinking about God. I thought about whether there would be enough. That was my praying.",
+        "churchSr": "Нисам седела на служби и мислила о Богу. Мислила сам да ли ће бити довољно. То је била моја молитва.",
+        "hardest": "The first winter. I did not have the language, and nobody’s mother was here.",
+        "hardestSr": "Прва зима. Нисам имала језик, а ничија мајка није била овде.",
+        "advice": "Feed people before you ask them anything. They will tell you the rest themselves.",
+        "adviceSr": "Нахрани људе пре него што их било шта питаш. Остало ће ти сами рећи."
+      },
+      "timeline": [
+        {
+          "date": "1931-04-12",
+          "title": "Born in Kraljevo",
+          "titleSr": "Рођена у Краљеву"
+        },
+        {
+          "date": "1968-06-14",
+          "title": "Arrived in Toronto with one suitcase",
+          "titleSr": "Стигла у Торонто са једним кофером"
+        },
+        {
+          "date": "1970-09-06",
+          "title": "Took over the parish kitchen",
+          "titleSr": "Преузела парохијску кухињу"
+        },
+        {
+          "date": "2001-11-21",
+          "title": "Thirty years of Sundays without missing one",
+          "titleSr": "Тридесет година недеља без иједног пропуштеног"
+        },
+        {
+          "date": "2019-11-08",
+          "title": "Reposed in Richmond Hill",
+          "titleSr": "Упокојила се у Ричмонд Хилу"
+        },
+        {
+          "date": "2024-03-02",
+          "title": "Memory Page opened by the family",
+          "titleSr": "Породица отворила спомен-страницу",
+          "published": true
+        }
+      ]
     },
     {
       "id": "dragoljub-j",
@@ -72,7 +119,54 @@
       "anchor": "0x21bd…9a17",
       "candles": 168,
       "photos": 12,
-      "added": "2024-05-19"
+      "added": "2024-05-19",
+      "speaks": {
+        "greeting": "Ask, but be quick. I was never one for talking.",
+        "greetingSr": "Питај, али кратко. Никада нисам био за причу.",
+        "home": "Užice. Stone country. You learn early what holds and what does not.",
+        "homeSr": "Ужице. Камени крај. Рано научиш шта држи, а шта не.",
+        "work": "I laid brick. In 1979 the parish could not pay a contractor, so I came on the Saturday with my two nephews and left on the Monday. The stairs have not shifted since.",
+        "workSr": "Зидао сам. Године 1979. парохија није могла да плати извођача, па сам дошао у суботу са два нећака и отишао у понедељак. Степенице се од тада нису помериле.",
+        "church": "I was not a pious man. I built the steps that people walk up. That is a kind of prayer.",
+        "churchSr": "Нисам био побожан човек. Саградио сам степенице којима људи улазе. И то је нека молитва.",
+        "hardest": "The mortar would not set in that cold. We lit a fire beside it and took turns watching through the night, like shepherds.",
+        "hardestSr": "Малтер није хтео да се веже на тој хладноћи. Запалили смо ватру поред и смењивали се целе ноћи, као пастири.",
+        "advice": "Measure twice. And do not take money from a church.",
+        "adviceSr": "Мери двапут. И не узимај новац од цркве."
+      },
+      "timeline": [
+        {
+          "date": "1925-08-30",
+          "title": "Born in Užice",
+          "titleSr": "Рођен у Ужицу"
+        },
+        {
+          "date": "1957-04-14",
+          "title": "Came to Canada",
+          "titleSr": "Дошао у Канаду"
+        },
+        {
+          "date": "1979-11-17",
+          "title": "Built the parish hall stairs over one weekend",
+          "titleSr": "Сазидао степенице парохијске сале за један викенд"
+        },
+        {
+          "date": "1990-06-10",
+          "title": "Laid down the trowel",
+          "titleSr": "Оставио мистрију"
+        },
+        {
+          "date": "2008-01-14",
+          "title": "Reposed in Toronto",
+          "titleSr": "Упокојио се у Торонту"
+        },
+        {
+          "date": "2024-05-19",
+          "title": "Memory Page opened by the family",
+          "titleSr": "Породица отворила спомен-страницу",
+          "published": true
+        }
+      ]
     },
     {
       "id": "jelena-m",
@@ -110,7 +204,54 @@
       "anchor": "0x9c40…f7b2",
       "candles": 301,
       "photos": 88,
-      "added": "2024-01-11"
+      "added": "2024-01-11",
+      "speaks": {
+        "greeting": "You are late. We have started already. Sit anywhere.",
+        "greetingSr": "Касниш. Већ смо почели. Седи било где.",
+        "home": "Novi Sad. I was singing before I could read.",
+        "homeSr": "Нови Сад. Певала сам пре него што сам научила да читам.",
+        "work": "I directed the choir from 1988 until the spring before I reposed. Rehearsal on Thursdays, whether four people came or twenty.",
+        "workSr": "Водила сам хор од 1988. до пролећа пре упокојења. Проба четвртком, било да их дође четворо или двадесет.",
+        "church": "I was never interested in beautiful voices. I was interested in the people who showed up.",
+        "churchSr": "Никада ме нису занимали лепи гласови. Занимали су ме људи који долазе.",
+        "hardest": "The year the older singers stopped coming. You cannot rehearse your way out of that.",
+        "hardestSr": "Година када су старији певачи престали да долазе. Из тога се не можеш извежбати.",
+        "advice": "Sing it until you no longer need the book. Then it is yours.",
+        "adviceSr": "Певај док ти књига више не буде потребна. Онда је твоја."
+      },
+      "timeline": [
+        {
+          "date": "1947-02-03",
+          "title": "Born in Novi Sad",
+          "titleSr": "Рођена у Новом Саду"
+        },
+        {
+          "date": "1971-08-22",
+          "title": "Arrived in Toronto",
+          "titleSr": "Стигла у Торонто"
+        },
+        {
+          "date": "1988-01-14",
+          "title": "Took the parish choir",
+          "titleSr": "Преузела парохијски хор"
+        },
+        {
+          "date": "1994-05-01",
+          "title": "Recorded the Paschal service on a cassette deck",
+          "titleSr": "Снимила васкршњу службу на касетофон"
+        },
+        {
+          "date": "2022-06-27",
+          "title": "Reposed in Richmond Hill",
+          "titleSr": "Упокојила се у Ричмонд Хилу"
+        },
+        {
+          "date": "2024-01-11",
+          "title": "Memory Page opened by the family",
+          "titleSr": "Породица отворила спомен-страницу",
+          "published": true
+        }
+      ]
     },
     {
       "id": "stanoje-r",
@@ -142,7 +283,54 @@
       "anchor": "0x4e18…20da",
       "candles": 97,
       "photos": 9,
-      "added": "2025-02-08"
+      "added": "2025-02-08",
+      "speaks": {
+        "greeting": "I am here. I was always here early.",
+        "greetingSr": "Ту сам. Увек сам био ту раније.",
+        "home": "Leskovac. I arrived with nothing to declare.",
+        "homeSr": "Лесковац. Дошао сам без ичега за пријаву.",
+        "work": "I read the Epistle and I rang the bell. Forty years of Saturdays, and I was never once late.",
+        "workSr": "Читао сам Апостол и звонио. Четрдесет година субота, и ниједном нисам закаснио.",
+        "church": "I held the keys so long that the newer families assumed I lived in the building.",
+        "churchSr": "Држао сам кључеве толико дуго да су нове породице мислиле да живим у згради.",
+        "hardest": "Being alone with the building. A church at six in the morning is very large.",
+        "hardestSr": "Самоћа са зградом. Црква у шест ујутру је веома велика.",
+        "advice": "Turn up. That is most of it.",
+        "adviceSr": "Дођи. То је већина свега."
+      },
+      "timeline": [
+        {
+          "date": "1938-12-19",
+          "title": "Born in Leskovac",
+          "titleSr": "Рођен у Лесковцу"
+        },
+        {
+          "date": "1969-03-02",
+          "title": "Arrived in Toronto",
+          "titleSr": "Стигао у Торонто"
+        },
+        {
+          "date": "1974-09-15",
+          "title": "Blessed as reader",
+          "titleSr": "Благословен за чтеца"
+        },
+        {
+          "date": "2011-10-16",
+          "title": "Recorded reading the Epistle, from the third row",
+          "titleSr": "Снимљен док чита Апостол, из трећег реда"
+        },
+        {
+          "date": "2015-09-05",
+          "title": "Reposed in Toronto",
+          "titleSr": "Упокојио се у Торонту"
+        },
+        {
+          "date": "2025-02-08",
+          "title": "Memory Page opened by the family",
+          "titleSr": "Породица отворила спомен-страницу",
+          "published": true
+        }
+      ]
     },
     {
       "id": "radmila-v",
@@ -181,7 +369,54 @@
       "anchor": "0xba77…3e51",
       "candles": 142,
       "photos": 460,
-      "added": "2025-06-14"
+      "added": "2025-06-14",
+      "speaks": {
+        "greeting": "Come in. Do not worry about your shoes.",
+        "greetingSr": "Уђи. Не брини за ципеле.",
+        "home": "Banja Luka. I still say some words the old way.",
+        "homeSr": "Бања Лука. Неке речи и данас изговарам по старински.",
+        "work": "I taught the youngest class for nineteen years. Felt, beeswax, and a great deal of patience.",
+        "workSr": "Деветнаест година сам предавала најмлађима. Филц, восак и много стрпљења.",
+        "church": "A child who is bored in church at six will not come back at twenty-six. That was my whole teaching.",
+        "churchSr": "Дете коме је досадно у цркви са шест година неће се вратити са двадесет шест. То је било цело моје учење.",
+        "hardest": "Watching a family stop coming, and not knowing what to say to them.",
+        "hardestSr": "Гледати како породица престаје да долази, а не знати шта да им кажеш.",
+        "advice": "Keep what they make you. I kept every drawing. Four hundred and sixty of them.",
+        "adviceSr": "Чувај оно што ти направе. Ја сам сачувала сваки цртеж. Четиристо шездесет њих."
+      },
+      "timeline": [
+        {
+          "date": "1955-07-21",
+          "title": "Born in Banja Luka",
+          "titleSr": "Рођена у Бањој Луци"
+        },
+        {
+          "date": "1993-04-11",
+          "title": "Arrived in Richmond Hill",
+          "titleSr": "Стигла у Ричмонд Хил"
+        },
+        {
+          "date": "2005-09-11",
+          "title": "First Sunday school class",
+          "titleSr": "Први час веронауке"
+        },
+        {
+          "date": "2024-06-02",
+          "title": "Last class taught",
+          "titleSr": "Последњи одржани час"
+        },
+        {
+          "date": "2024-12-02",
+          "title": "Reposed in Richmond Hill",
+          "titleSr": "Упокојила се у Ричмонд Хилу"
+        },
+        {
+          "date": "2025-06-14",
+          "title": "Memory Page opened by the family",
+          "titleSr": "Породица отворила спомен-страницу",
+          "published": true
+        }
+      ]
     },
     {
       "id": "vojislav-k",
@@ -219,7 +454,49 @@
       "anchor": "0x6d2c…81af",
       "candles": 76,
       "photos": 31,
-      "added": "2025-07-21"
+      "added": "2025-07-21",
+      "speaks": {
+        "greeting": "Yes? The books are open, but go on.",
+        "greetingSr": "Изволи? Књиге су отворене, али само ти питај.",
+        "home": "Toronto. I am the first of my family born here. That is its own country.",
+        "homeSr": "Торонто. Први сам у породици рођен овде. То је засебна земља.",
+        "work": "I kept the parish books for twenty-two years, to the cent. And I recorded the old people.",
+        "workSr": "Водио сам парохијске књиге двадесет две године, до последњег цента. И снимао сам старе људе.",
+        "church": "I translated for the adults when I was a boy, and I never really stopped.",
+        "churchSr": "Преводио сам одраслима док сам био дечак, и никада нисам стварно престао.",
+        "hardest": "Hearing my father’s Serbian get Toronto in it. I started recording that week.",
+        "hardestSr": "Када сам чуо да српски мог оца добија Торонто у себи. Те недеље сам почео да снимам.",
+        "advice": "Record them now. The accents go first, and nobody notices until they are gone.",
+        "adviceSr": "Снимајте их сада. Нагласци први одлазе, а нико не примети док не нестану."
+      },
+      "timeline": [
+        {
+          "date": "1962-05-09",
+          "title": "Born in Toronto, first of his family born here",
+          "titleSr": "Рођен у Торонту, први у породици рођен овде"
+        },
+        {
+          "date": "1985-11-03",
+          "title": "Began recording the oldest parishioners",
+          "titleSr": "Почео да снима најстарије парохијане"
+        },
+        {
+          "date": "2003-02-16",
+          "title": "Became parish treasurer",
+          "titleSr": "Постао благајник парохије"
+        },
+        {
+          "date": "2025-03-30",
+          "title": "Reposed in Toronto",
+          "titleSr": "Упокојио се у Торонту"
+        },
+        {
+          "date": "2025-07-21",
+          "title": "Memory Page opened by the family",
+          "titleSr": "Породица отворила спомен-страницу",
+          "published": true
+        }
+      ]
     }
   ]
 }
