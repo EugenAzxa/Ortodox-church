@@ -153,6 +153,113 @@
   // The cross rules draw their lines outward when they come into view.
   $$('.cross-rule').forEach(el => io.observe(el));
 
+  /* ------------------------------------------- Letter-by-letter headings
+     Section headings arrive a letter at a time out of a blur, and ledes a
+     word at a time. Both are rebuilt after every language switch, because
+     applyLang rewrites innerHTML and would otherwise eat the spans.
+
+     Letters are wrapped in a word span first, so a heading still breaks at
+     spaces rather than mid-word: inline-block letters on their own would
+     let a line wrap anywhere. */
+  const splitObserver = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (!en.isIntersecting) return;
+      en.target.classList.add('is-in');
+      splitObserver.unobserve(en.target);
+    });
+  }, { rootMargin: '0px 0px -10% 0px', threshold: 0.15 });
+
+  function splitInto(el, mode) {
+    const text = el.textContent;
+    if (!text.trim()) return;
+
+    // Screen readers would otherwise announce a heading letter by letter.
+    el.setAttribute('aria-label', text.trim());
+    el.textContent = '';
+
+    const frag = document.createDocumentFragment();
+    let i = 0;
+
+    text.split(/(\s+)/).forEach(part => {
+      if (!part) return;
+      if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+
+      const word = document.createElement('span');
+      word.className = 'wd';
+      word.setAttribute('aria-hidden', 'true');
+
+      if (mode === 'chars') {
+        // Iterating the string by code point keeps Ђ, ћ and đ in one piece.
+        for (const ch of part) {
+          const glyph = document.createElement('span');
+          glyph.className = 'ch';
+          glyph.style.setProperty('--i', i++);
+          glyph.textContent = ch;
+          word.appendChild(glyph);
+        }
+      } else {
+        word.style.setProperty('--i', i++);
+        word.textContent = part;
+      }
+      frag.appendChild(word);
+    });
+
+    el.appendChild(frag);
+    el.classList.add('split', mode === 'chars' ? 'split--ch' : 'split--wd');
+
+    // A long heading would otherwise take twice as long to arrive as a short
+    // one. Cap the cascade so every heading finishes in about the same beat.
+    const span = mode === 'chars' ? 780 : 900;
+    const step = i > 1 ? Math.min(mode === 'chars' ? 26 : 34, span / (i - 1)) : 0;
+    el.style.setProperty('--step', step.toFixed(2) + 'ms');
+
+    splitObserver.observe(el);
+  }
+
+  function splitAll() {
+    if (reduced) return;                     // a cascade is the first thing to go
+    $$('.section h2').forEach(el => {
+      if (el.children.length && !el.classList.contains('split')) return;  // leave markup alone
+      splitInto(el, 'chars');
+    });
+    $$('.section .lede').forEach(el => {
+      if (el.children.length && !el.classList.contains('split')) return;
+      splitInto(el, 'words');
+    });
+  }
+
+  /* --------------------------------------------------------- Gallery drift
+     The photographs sit a little larger than their frame and move against
+     the scroll, so the church appears to hold still while the page passes. */
+  function galleryDrift() {
+    if (reduced) return;
+    const shots = $$('.gallery .shot img');
+    if (!shots.length) return;
+    let queued = false;
+
+    const paint = () => {
+      queued = false;
+      const h = innerHeight;
+      shots.forEach(img => {
+        const r = img.parentElement.getBoundingClientRect();
+        if (r.bottom < -200 || r.top > h + 200) return;
+        // -1 when the frame is entering at the bottom, +1 when leaving at the top.
+        // Clamped, because a frame scrolled well past would keep on travelling.
+        const raw = (h / 2 - (r.top + r.height / 2)) / (h / 2 + r.height / 2);
+        const progress = Math.max(-1, Math.min(1, raw));
+        img.style.setProperty('--drift', (progress * 5).toFixed(2) + '%');
+      });
+    };
+
+    addEventListener('scroll', () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(paint);
+    }, { passive: true });
+    addEventListener('resize', paint, { passive: true });
+    paint();
+  }
+
   /* ------------------------------------------------------ Language toggle
      Every translatable node carries data-sr. The English original is
      captured on first switch so we can always go back to it. */
@@ -186,6 +293,7 @@
     renderIcons();
     speechReady();
     if (openId) openMemoryPage(openId, true);
+    splitAll();              // last: the rewrite above just flattened the spans
   }
 
   langButtons.forEach(b => b.addEventListener('click', () => applyLang(b.dataset.lang)));
@@ -277,7 +385,10 @@
            The memorial could not be loaded. If you opened this file directly, serve the folder
            over HTTP instead – <code>npx serve</code> – so that data/memorials.json can be read.
          </p>`;
+      splitAll();             // the headings should still arrive even with no data
     });
+
+  galleryDrift();
 
   /* ------------------------------------------------------------ Hero counters */
   function renderStats() {
